@@ -7,7 +7,8 @@ import sys
 import json
 
 from kivy.resources import resource_add_path
-resource_add_path(os.path.dirname(os.path.realpath(__file__)))
+from app.tools import resource_path
+resource_add_path(resource_path(os.path.join('data', 'logo')))
 
 from kivymd.app import MDApp
 
