@@ -1,4 +1,5 @@
 #:import utils kivy.utils
+#:import os os
 
 <MainMenu>:
     name: 'mainmenu'
@@ -44,43 +45,30 @@
                 md_bg_color: utils.get_color_from_hex('#475D66')
                 adaptive_size: True
                 spacing: (10*(box.width/box.height)**3, 20)
-                MDIconButton:
-                    icon: "..\\..\\data\\logo\\wikipedia.png"
-                    user_font_size: "128sp"
-                    height: anchor_buttons.height/2.7
-                    width: self.height
-                MDIconButton:
-                    icon: "..\\..\\data\\logo\\youtube.png"
-                    user_font_size: "128sp"
-                    height: anchor_buttons.height/2.7
-                    width: self.height
-                MDIconButton:
-                    icon: "..\\..\\data\\logo\\translation.png"
-                    user_font_size: "128sp"
-                    height: anchor_buttons.height/2.7
-                    width: self.height
-                MDIconButton:
-                    icon: "..\\..\\data\\logo\\routine.png"
-                    user_font_size: "128sp"
-                    height: anchor_buttons.height/2.7
-                    width: self.height
-                MDIconButton:
-                    icon: "..\\..\\data\\logo\\notebook.png"
-                    user_font_size: "128sp"
-                    height: anchor_buttons.height/2.7
-                    width: self.height
-                MDIconButton:
-                    icon: "..\\..\\data\\logo\\books.png"
-                    user_font_size: "128sp"
-                    height: anchor_buttons.height/2.7
-                    width: self.height
-                MDIconButton:
-                    icon: "..\\..\\data\\logo\\about.png"
-                    user_font_size: "128sp"
-                    height: anchor_buttons.height/2.7
-                    width: self.height
-                MDIconButton:
-                    icon: "..\\..\\data\\logo\\settings.png"
-                    user_font_size: "128sp"
-                    height: anchor_buttons.height/2.7
-                    width: self.height
+                CustomIconButton:
+                    icon: os.path.join('..', '..', 'data', 'logo', 'wikipedia.png')
+                CustomIconButton:
+                    icon: os.path.join('..', '..', 'data', 'logo', 'youtube.png')
+                CustomIconButton:
+                    icon: os.path.join('..', '..', 'data', 'logo', 'translation.png')
+                CustomIconButton:
+                    icon: os.path.join('..', '..', 'data', 'logo', 'routine.png')
+                CustomIconButton:
+                    icon: os.path.join('..', '..', 'data', 'logo', 'notebook.png')
+                CustomIconButton:
+                    icon: os.path.join('..', '..', 'data', 'logo', 'books.png')
+                CustomIconButton:
+                    icon: os.path.join('..', '..', 'data', 'logo', 'about.png')
+                CustomIconButton:
+                    icon: os.path.join('..', '..', 'data', 'logo', 'settings.png')
+
+<CustomIconButton>:
+    height: self.parent.parent.height/3
+    width: self.height
+    canvas.before:
+        Color:
+            id: line_color
+            rgba: .5, .5, .5, root.canvas_opacity
+        Line:
+            width: 2
+            rectangle: self.x-5, self.y-5, self.width+10, self.height+10
