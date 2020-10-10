@@ -1,0 +1,86 @@
+#:import utils kivy.utils
+
+<MainMenu>:
+    name: 'mainmenu'
+    id: mainmenuscreen
+    md_bg_color: utils.get_color_from_hex('#475D66')
+    MDBoxLayout:
+        id: box
+        size_hint: (1, 1)
+        orientation: 'vertical'
+        md_bg_color: utils.get_color_from_hex('#475D66')
+        padding: 40
+        AnchorLayout:
+            id: anchor_label
+            size_hint: (1, 0.3)
+            anchor_x: 'center'
+            anchor_y: 'center'
+            canvas.before:
+                Color:
+                    rgba: utils.get_color_from_hex('#475D66')
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            MDLabel:
+                text: 'Student Portal'
+                theme_text_color: 'Primary'
+                halign: 'center'
+                valign: 'center'
+                font_size: str((box.height/720)*50) + 'sp'
+        AnchorLayout:
+            id: anchor_buttons
+            size_hint: (1, 1)
+            anchor_x: 'center'
+            anchor_y: 'center'
+            canvas.before:
+                Color:
+                    rgba: utils.get_color_from_hex('#475D66')
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            MDGridLayout:
+                id: grid
+                cols: 4
+                md_bg_color: utils.get_color_from_hex('#475D66')
+                adaptive_size: True
+                spacing: (10*(box.width/box.height)**3, 20)
+                MDIconButton:
+                    icon: "..\\..\\data\\logo\\wikipedia.png"
+                    user_font_size: "128sp"
+                    height: anchor_buttons.height/2.7
+                    width: self.height
+                MDIconButton:
+                    icon: "..\\..\\data\\logo\\youtube.png"
+                    user_font_size: "128sp"
+                    height: anchor_buttons.height/2.7
+                    width: self.height
+                MDIconButton:
+                    icon: "..\\..\\data\\logo\\translation.png"
+                    user_font_size: "128sp"
+                    height: anchor_buttons.height/2.7
+                    width: self.height
+                MDIconButton:
+                    icon: "..\\..\\data\\logo\\routine.png"
+                    user_font_size: "128sp"
+                    height: anchor_buttons.height/2.7
+                    width: self.height
+                MDIconButton:
+                    icon: "..\\..\\data\\logo\\notebook.png"
+                    user_font_size: "128sp"
+                    height: anchor_buttons.height/2.7
+                    width: self.height
+                MDIconButton:
+                    icon: "..\\..\\data\\logo\\books.png"
+                    user_font_size: "128sp"
+                    height: anchor_buttons.height/2.7
+                    width: self.height
+                MDIconButton:
+                    icon: "..\\..\\data\\logo\\about.png"
+                    user_font_size: "128sp"
+                    height: anchor_buttons.height/2.7
+                    width: self.height
+                MDIconButton:
+                    icon: "..\\..\\data\\logo\\settings.png"
+                    user_font_size: "128sp"
+                    height: anchor_buttons.height/2.7
+                    width: self.height
