@@ -1,5 +1,6 @@
 #:import utils kivy.utils
 #:import os os
+#:import resource_path app.tools.resource_path
 
 <MainMenu>:
     name: 'mainmenu'
@@ -10,20 +11,15 @@
         size_hint: (1, 1)
         orientation: 'vertical'
         md_bg_color: utils.get_color_from_hex('#475D66')
-        padding: 40
+        padding: 80
         AnchorLayout:
             id: anchor_label
             size_hint: (1, 0.3)
             anchor_x: 'center'
             anchor_y: 'center'
-            canvas.before:
-                Color:
-                    rgba: utils.get_color_from_hex('#475D66')
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
             MDLabel:
                 text: 'Student Portal'
+                font_name: resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
                 theme_text_color: 'Primary'
                 halign: 'center'
                 valign: 'center'
@@ -33,42 +29,38 @@
             size_hint: (1, 1)
             anchor_x: 'center'
             anchor_y: 'center'
-            canvas.before:
-                Color:
-                    rgba: utils.get_color_from_hex('#475D66')
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
             MDGridLayout:
                 id: grid
                 cols: 4
                 md_bg_color: utils.get_color_from_hex('#475D66')
                 adaptive_size: True
-                spacing: (10*(box.width/box.height)**3, 20)
+                spacing: (10*(box.width/box.height)**3, 40)
                 CustomIconButton:
                     icon: os.path.join('..', '..', 'data', 'logo', 'wikipedia.png')
+                    on_release:
+                        app.switch_screen('wikipedia')
                 CustomIconButton:
-                    icon: os.path.join('..', '..', 'data', 'logo', 'youtube.png')
+                    icon: resource_path(os.path.join('data', 'logo', 'youtube.png'))
                 CustomIconButton:
-                    icon: os.path.join('..', '..', 'data', 'logo', 'translation.png')
+                    icon: resource_path(os.path.join('data', 'logo', 'translation.png'))
                 CustomIconButton:
-                    icon: os.path.join('..', '..', 'data', 'logo', 'routine.png')
+                    icon: resource_path(os.path.join('data', 'logo', 'routine.png'))
                 CustomIconButton:
-                    icon: os.path.join('..', '..', 'data', 'logo', 'notebook.png')
+                    icon: resource_path(os.path.join('data', 'logo', 'notebook.png'))
                 CustomIconButton:
-                    icon: os.path.join('..', '..', 'data', 'logo', 'books.png')
+                    icon: resource_path(os.path.join('data', 'logo', 'books.png'))
                 CustomIconButton:
-                    icon: os.path.join('..', '..', 'data', 'logo', 'about.png')
+                    icon: resource_path(os.path.join('data', 'logo', 'about.png'))
                 CustomIconButton:
-                    icon: os.path.join('..', '..', 'data', 'logo', 'settings.png')
+                    icon: resource_path(os.path.join('data', 'logo', 'settings.png'))
 
 <CustomIconButton>:
     height: self.parent.parent.height/3
-    width: self.height
+    width: self.height*(748/552)
     canvas.before:
         Color:
             id: line_color
-            rgba: .5, .5, .5, root.canvas_opacity
+            rgba: .5, .7, .5, root.canvas_opacity
         Line:
             width: 2
-            rectangle: self.x-5, self.y-5, self.width+10, self.height+10
+            rectangle: self.x-dp(5), self.y-dp(5), self.width+dp(10), self.height+dp(10)
