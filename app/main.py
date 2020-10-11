@@ -15,17 +15,31 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 
-from app.screens import MainMenu
+from app.screens import MainMenu, Wikipedia
+import random
 
 class StudentPortal(MDApp):
     title = "Student Portal"
+
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
         self.root = ScreenManager()
         self.mainmenu = MainMenu()
+        self.wikipedia = Wikipedia()
+        self.screens = {
+            'mainmenu': self.mainmenu,
+            'wikipedia': self.wikipedia,
+        }
         self.root.switch_to(self.mainmenu)
         return self.root
+
+    def switch_screen(self, screen_name, direction='left'):
+        self.root.transition.direction = direction
+        self.root.switch_to(self.screens.get(screen_name))
+
+    def search_wikipedia(self, query):
+        return(str(random.randint(0,10))) # return result, should be string
 
 
 if __name__ == '__main__':
