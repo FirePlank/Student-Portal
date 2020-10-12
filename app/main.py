@@ -1,31 +1,37 @@
+# --- APP ---
 from kivy.config import Config
 Config.set('graphics','width',1280)
 Config.set('graphics','height',720)
+from kivy.core.window import Window
+Window.clearcolor = (71/255, 93/255, 102/255, 1)
+from kivymd.app import MDApp
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, WipeTransition
 
+# --- TOOLS ---
 import os
 import sys
 import json
-
 from kivy.resources import resource_add_path
-from tools import resource_path
-resource_add_path(resource_path(os.path.join('data', 'logo')))
-resource_add_path(resource_path(os.path.join('data', 'fonts')))
 
-from kivymd.app import MDApp
+# --- SCREENS ---
+if getattr(sys, 'frozen', False):
+    from app.screens import mainmenu, wikipedia
+else:
+    from screens import mainmenu, wikipedia
 
-from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager
-
-from screens import mainmenu, wikipedia
-import random
 
 class StudentPortal(MDApp):
     title = "Student Portal"
-
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
-        self.root = ScreenManager()
+        resource_add_path(self.resource_path(os.path.join('data', 'logo')))
+        resource_add_path(self.resource_path(os.path.join('data', 'fonts')))
+        resource_add_path(self.resource_path(os.path.join('data', 'database')))
+        resource_add_path(self.resource_path(os.path.join('screens', 'wikipedia')))
+        resource_add_path(self.resource_path(os.path.join('screens', 'mainmenu')))
+        self.root = ScreenManager(transition=WipeTransition())
         self.mainmenu = mainmenu.MainMenu()
         self.wikipedia = wikipedia.Wikipedia()
         self.screens = {
@@ -43,6 +49,14 @@ class StudentPortal(MDApp):
         wiki = wikipedia.WikipediaBackend(query)
         summary = wiki.summary()
         return(summary) # return result, should be string
+
+    def resource_path(self, relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
 
 
 if __name__ == '__main__':
