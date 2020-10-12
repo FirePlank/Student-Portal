@@ -19,7 +19,6 @@
                 app.switch_screen('mainmenu', 'right')
         MDLabel:
             text: 'Wikipedia'
-            font_name: resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
             theme_text_color: 'Primary'
             halign: 'center'
             valign: 'middle'
@@ -27,7 +26,6 @@
             pos_hint: {'y': 0.4}
         TextInput:
             id: searchbar
-            font_name: resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
             multiline: False
             size_hint: (0.6, 0.06)
             font_size: str((box_root.height/720)*30) + 'sp'
@@ -43,7 +41,6 @@
                 root.search(searchbar.text)
         TextInput:
             id: results
-            font_name: resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
             size_hint: (0.8, 0.6)
             font_size: str((box_root.height/720)*25) + 'sp'
             pos_hint: {'x': 0.1, 'y': 0.05}

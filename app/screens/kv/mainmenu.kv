@@ -1,6 +1,6 @@
 #:import utils kivy.utils
 #:import os os
-#:import resource_path app.tools.resource_path
+#:import resource_path tools.resource_path
 
 <MainMenu>:
     name: 'mainmenu'
@@ -19,7 +19,6 @@
             anchor_y: 'center'
             MDLabel:
                 text: 'Student Portal'
-                font_name: resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
                 theme_text_color: 'Primary'
                 halign: 'center'
                 valign: 'center'
