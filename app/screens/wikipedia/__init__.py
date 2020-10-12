@@ -8,7 +8,7 @@ import requests
 class Wikipedia(MDScreen):
     def search(self, query):
         if query.strip() == "":
-            toast('What to search? xD', duration=1)
+            toast('Please input a search query.', duration=1)
         else:
             self.ids.results.text = MDApp.get_running_app().search_wikipedia(query.strip())
 
@@ -29,21 +29,28 @@ class WikipediaBackend():
             "explaintext": True
         }
 
-        self.R = self.S.get(url=self.URL, params=self.PARAMS)
-        self.DATA = self.R.json()
+        try:
+            self.R = self.S.get(url=self.URL, params=self.PARAMS)
+            self.DATA = self.R.json()
+        except Exception:
+            self.DATA = None
 
     def summary(self):
-        try:
-            data = self.DATA["query"]["pages"]
-            for page in data:
-                if data[page]["index"] == 1:
-                    title = data[page]["title"]
-                    summary = data[page]["extract"]
-                    break
-            return title + '\n\n' + summary[:2000] + ('...' if len(summary) > 2000 else '')
+        if self.DATA != None:
+            try:
+                data = self.DATA["query"]["pages"]
+                for page in data:
+                    if data[page]["index"] == 1:
+                        title = data[page]["title"]
+                        summary = data[page]["extract"]
+                        break
+                return title + '\n\n' + summary[:2000] + ('...' if len(summary) > 2000 else '')
 
-        except:
-            return "Sorry, couldn't fetch any search result for that."
+            except:
+                return "Sorry, couldn't fetch any search result for that."
+        else:
+            toast('Not Connected to the internet.', duration=1)
+            return ''
 
     def titles(self):
         titles = []
