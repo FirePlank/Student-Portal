@@ -39,8 +39,10 @@ class StudentPortal(MDApp):
         self.root.switch_to(self.screens.get(screen_name))
 
     def search_wikipedia(self, query):
-        return(str(random.randint(0,10))) # return result, should be string
+        wiki = wikipedia.WikipediaBackend(query)
+        summary = wiki.summary()
+        return(summary) # return result, should be string
 
 
 if __name__ == '__main__':
-	StudentPortal().run()
+    StudentPortal().run()
