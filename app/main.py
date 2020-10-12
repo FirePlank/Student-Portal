@@ -7,7 +7,7 @@ import sys
 import json
 
 from kivy.resources import resource_add_path
-from app.tools import resource_path
+from tools import resource_path
 resource_add_path(resource_path(os.path.join('data', 'logo')))
 
 from kivymd.app import MDApp
@@ -15,7 +15,7 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 
-from app.screens import MainMenu, Wikipedia
+from screens import mainmenu, wikipedia
 import random
 
 class StudentPortal(MDApp):
@@ -25,8 +25,8 @@ class StudentPortal(MDApp):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
         self.root = ScreenManager()
-        self.mainmenu = MainMenu()
-        self.wikipedia = Wikipedia()
+        self.mainmenu = mainmenu.MainMenu()
+        self.wikipedia = wikipedia.Wikipedia()
         self.screens = {
             'mainmenu': self.mainmenu,
             'wikipedia': self.wikipedia,
