@@ -40,7 +40,7 @@ class WikipediaBackend():
                     title = data[page]["title"]
                     summary = data[page]["extract"]
                     break
-            return title + '\n' + summary[:2000] + '...'
+            return title + '\n\n' + summary[:2000] + ('...' if len(summary) > 2000 else '')
 
         except:
             return "Sorry, couldn't fetch any search result for that."
