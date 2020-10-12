@@ -15,7 +15,8 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 
-from app.screens import MainMenu, Wikipedia
+from app.screens.mainmenu import MainMenu
+from app.screens.wikipedia import Wikipedia
 import random
 
 class StudentPortal(MDApp):
