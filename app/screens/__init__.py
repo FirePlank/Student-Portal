@@ -1,4 +1,4 @@
-from app.tools import resource_path
+from tools import resource_path
 from kivy.lang import Builder
 import os
 

@@ -15,7 +15,7 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 
-from screens import MainMenu, Wikipedia_Main
+from screens import mainmenu, wikipedia
 import random
 
 class StudentPortal(MDApp):
@@ -25,8 +25,8 @@ class StudentPortal(MDApp):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
         self.root = ScreenManager()
-        self.mainmenu = MainMenu()
-        self.wikipedia = Wikipedia_Main()
+        self.mainmenu = mainmenu.MainMenu()
+        self.wikipedia = wikipedia.Wikipedia_Main()
         self.screens = {
             'mainmenu': self.mainmenu,
             'wikipedia': self.wikipedia,
