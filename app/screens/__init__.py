@@ -2,8 +2,8 @@ from app.tools import resource_path
 from kivy.lang import Builder
 import os
 
-from .mainmenu import MainMenu
-from .wikipedia import Wikipedia
+from app.screens.mainmenu import MainMenu
+from app.screens.wikipedia import Wikipedia
 
-Builder.load_file(resource_path(os.path.join('screens', 'kv', 'mainmenu.kv')))
-Builder.load_file(resource_path(os.path.join('screens', 'kv', 'wikipedia.kv')))
+Builder.load_file(resource_path(os.path.join('screens', 'mainmenu', 'mainmenu.kv')))
+Builder.load_file(resource_path(os.path.join('screens', 'wikipedia', 'wikipedia.kv')))
