@@ -9,6 +9,7 @@ import json
 from kivy.resources import resource_add_path
 from tools import resource_path
 resource_add_path(resource_path(os.path.join('data', 'logo')))
+resource_add_path(resource_path(os.path.join('data', 'fonts')))
 
 from kivymd.app import MDApp
 
