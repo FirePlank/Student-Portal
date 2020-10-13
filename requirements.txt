@@ -2,3 +2,4 @@ kivy_deps.sdl2==0.2.*
 kivy_deps.glew==0.2.*
 kivy==2.0.0rc3
 https://github.com/kivymd/KivyMD/archive/master.zip
+youtube-search-python
