@@ -4,7 +4,6 @@ from kivymd.app import MDApp
 import requests
 
 
-
 class Wikipedia(MDScreen):
     def search(self, query):
         if query.strip() == "":
