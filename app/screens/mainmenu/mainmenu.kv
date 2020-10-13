@@ -37,7 +37,7 @@
                 CustomIconButton:
                     icon: os.path.join('..', '..', 'data', 'logo', 'wikipedia.png')
                     on_release:
-                        app.switch_screen('wikipedia')
+                        app.switch_screen('wikipedia', 'left')
                         self.canvas_opacity = 0
                 CustomIconButton:
                     icon: app.resource_path(os.path.join('data', 'logo', 'youtube.png'))
@@ -47,6 +47,9 @@
                     icon: app.resource_path(os.path.join('data', 'logo', 'routine.png'))
                 CustomIconButton:
                     icon: app.resource_path(os.path.join('data', 'logo', 'notebook.png'))
+                    on_release:
+                        app.switch_screen('notebook', 'right')
+                        self.canvas_opacity = 0
                 CustomIconButton:
                     icon: app.resource_path(os.path.join('data', 'logo', 'books.png'))
                 CustomIconButton:
