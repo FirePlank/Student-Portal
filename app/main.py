@@ -20,20 +20,22 @@ class StudentPortal(MDApp):
     title = "Student Portal"
 
     def build(self):
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Green"
         if getattr(sys, 'frozen', False):
             from app.screens import mainmenu, wikipedia
         else:
             from screens import mainmenu, wikipedia
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Green"
+        self.mainmenu_module = mainmenu
+        self.wikipedia_module = wikipedia
         resource_add_path(self.resource_path(os.path.join('data', 'logo')))
         resource_add_path(self.resource_path(os.path.join('data', 'fonts')))
         resource_add_path(self.resource_path(os.path.join('data', 'database')))
         resource_add_path(self.resource_path(os.path.join('screens', 'wikipedia')))
         resource_add_path(self.resource_path(os.path.join('screens', 'mainmenu')))
         self.root = ScreenManager(transition=WipeTransition())
-        self.mainmenu = mainmenu.MainMenu()
-        self.wikipedia = wikipedia.Wikipedia()
+        self.mainmenu = self.mainmenu_module.MainMenu()
+        self.wikipedia = self.wikipedia_module.Wikipedia()
         self.screens = {
             'mainmenu': self.mainmenu,
             'wikipedia': self.wikipedia,
@@ -46,11 +48,7 @@ class StudentPortal(MDApp):
         self.root.switch_to(self.screens.get(screen_name))
 
     def search_wikipedia(self, query):
-        if getattr(sys, 'frozen', False):
-            from app.screens import wikipedia
-        else:
-            from screens import wikipedia
-        wiki = wikipedia.WikipediaBackend(query)
+        wiki = self.wikipedia_module.WikipediaBackend(query)
         summary = wiki.summary()
         return(summary) # return result, should be string
 
