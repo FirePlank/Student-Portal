@@ -14,63 +14,45 @@ class Wikipedia(MDScreen):
 
 
 class WikipediaBackend():
+
     def __init__(self, keyword):
+        self.keyword = keyword
         self.S = requests.Session()
 
         self.URL = "https://en.wikipedia.org/w/api.php"
 
         self.PARAMS = {
             "action": "query",
-            "generator": "search",
-            "gsrsearch": keyword,
-            "prop": "extracts",
-            "exintro": 1,
+            "titles": keyword,
+            "prop": "extracts|info",
+            "inprop": "url",
+            "redirects": 1,
             "format": "json",
+            "exintro": 1,
             "explaintext": True
         }
-
         try:
             self.R = self.S.get(url=self.URL, params=self.PARAMS)
-            self.DATA = self.R.json()
-        except Exception:
-            self.DATA = None
+            self.DATA = self.R.json()["query"]["pages"]
+            self.DATA = self.DATA[[i for i in self.DATA][0]]
+        except:
+            self.DATA=None
+
+    def title(self):
+        return self.DATA["title"]
+
+    def first_paragraph(self):
+        return self.DATA["extract"]
 
     def summary(self):
-        if self.DATA != None:
+        if self.DATA is not None:
             try:
-                data = self.DATA["query"]["pages"]
-                for page in data:
-                    if data[page]["index"] == 1:
-                        title = data[page]["title"]
-                        summary = data[page]["extract"]
-                        break
+                title=self.DATA["title"]
+                url=self.DATA["fullurl"]
+                summary=self.DATA["extract"]
                 return title + '\n\n' + summary[:2000] + ('...' if len(summary) > 2000 else '')
-
             except:
                 return "Sorry, couldn't fetch any search result for that."
         else:
             toast('Not Connected to the internet.', duration=1)
             return 'Please check your internet connection.'
-
-    def titles(self):
-        titles = []
-        for i in self.DATA["query"]["pages"]:
-            titles.append(self.DATA["query"]["pages"][i]["title"])
-        return titles
-
-    def first_paragraphs(self):
-        paragraphs = []
-        for i in self.DATA["query"]["pages"]:
-            paragraphs.append(self.DATA["query"]["pages"][i]["extract"])
-        return paragraphs
-
-    def urls(self):
-        urls = []
-        for i in self.DATA["query"]["pages"]:
-            urls.append(f'https://en.wikipedia.org/wiki/{self.DATA["query"]["pages"][i]["title"].replace(" ", "_")}')
-        return urls
-
-    def all(self):
-        all=[]
-        for i in self.DATA["query"]["pages"]:
-            all.append([self.DATA["query"]["pages"][i]["title"], f'https://en.wikipedia.org/wiki/{self.DATA["query"]["pages"][i]["title"].replace(" ", "_")}', self.DATA["query"]["pages"][i]["extract"]])
