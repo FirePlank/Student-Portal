@@ -21,6 +21,7 @@ else:
     from screens import mainmenu, wikipedia
 
 
+
 class StudentPortal(MDApp):
     title = "Student Portal"
     def build(self):

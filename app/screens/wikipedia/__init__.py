@@ -49,7 +49,7 @@ class WikipediaBackend():
                 return "Sorry, couldn't fetch any search result for that."
         else:
             toast('Not Connected to the internet.', duration=1)
-            return ''
+            return 'Please check your internet connection.'
 
     def titles(self):
         titles = []
