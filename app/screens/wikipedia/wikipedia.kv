@@ -7,8 +7,7 @@
     FloatLayout:
         id: box_root
         size_hint: (1, 1)
-        md_bg_color: utils.get_color_from_hex('#475D66')
-        MDIconButton:
+        HoverIconButton:
             icon: 'arrow-left-bold'
             theme_text_color: "Custom"
             text_color: 1, 1, 1, 1
@@ -35,7 +34,7 @@
             foreground_color: 0, 0, 0, 1
             background_color: 133/255, 144/255, 149/255, 1
             padding_y: [self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 0]
-        MDIconButton:
+        HoverIconButton:
             icon: 'magnify'
             user_font_size: str((box_root.height/720)*30) + 'sp'
             pos_hint: {'x': 0.805, 'y': 0.694}

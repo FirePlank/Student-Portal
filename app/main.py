@@ -21,13 +21,14 @@ class StudentPortal(MDApp):
 
     def build(self):
         if getattr(sys, 'frozen', False):
-            from app.screens import mainmenu, wikipedia
+            from app.screens import mainmenu, wikipedia, notebook
         else:
-            from screens import mainmenu, wikipedia
+            from screens import mainmenu, wikipedia, notebook
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
         self.mainmenu_module = mainmenu
         self.wikipedia_module = wikipedia
+        self.notebook_module = notebook
         resource_add_path(self.resource_path(os.path.join('data', 'logo')))
         resource_add_path(self.resource_path(os.path.join('data', 'fonts')))
         resource_add_path(self.resource_path(os.path.join('data', 'database')))
@@ -36,9 +37,11 @@ class StudentPortal(MDApp):
         self.root = ScreenManager()
         self.mainmenu = self.mainmenu_module.MainMenu()
         self.wikipedia = self.wikipedia_module.Wikipedia()
+        self.notebook = self.notebook_module.Notebook()
         self.screens = {
             'mainmenu': self.mainmenu,
             'wikipedia': self.wikipedia,
+            'notebook': self.notebook
         }
         self.root.switch_to(self.mainmenu)
         return self.root
