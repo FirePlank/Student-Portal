@@ -33,7 +33,7 @@ class StudentPortal(MDApp):
         resource_add_path(self.resource_path(os.path.join('data', 'database')))
         resource_add_path(self.resource_path(os.path.join('screens', 'wikipedia')))
         resource_add_path(self.resource_path(os.path.join('screens', 'mainmenu')))
-        self.root = ScreenManager(transition=WipeTransition())
+        self.root = ScreenManager()
         self.mainmenu = self.mainmenu_module.MainMenu()
         self.wikipedia = self.wikipedia_module.Wikipedia()
         self.screens = {

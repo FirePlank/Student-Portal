@@ -1,5 +1,19 @@
 from ..modules import sql_operator
 from datetime import datetime
+from ..widgets.hover_icon_button import HoverIconButton
+from kivymd.uix.screen import MDScreen
+
+
+class Notebook(MDScreen):
+    pass
+
+
+class Note():
+    pass
+
+
+class NoteButton():
+    pass
 
 
 class NotebookBackend():
