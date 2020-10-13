@@ -1,5 +1,19 @@
 from ..modules import sql_operator
 from datetime import datetime
+from kivy.uix.screenmanager import Screen
+from ..widgets.hover_icon_button import HoverIconButton
+
+
+class Notebook(Screen):
+    pass
+
+
+class Note():
+    pass
+
+
+class NoteButton():
+    pass
 
 
 class NotebookBackend():
