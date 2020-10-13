@@ -47,6 +47,9 @@
                     icon: app.resource_path(os.path.join('data', 'logo', 'routine.png'))
                 CustomIconButton:
                     icon: app.resource_path(os.path.join('data', 'logo', 'notebook.png'))
+                    on_release:
+                        app.switch_screen('notebook')
+                        self.canvas_opacity = 0
                 CustomIconButton:
                     icon: app.resource_path(os.path.join('data', 'logo', 'books.png'))
                 CustomIconButton:
@@ -57,11 +60,3 @@
 <CustomIconButton>:
     height: self.parent.parent.height/3
     width: self.height*(748/552)
-    ripple_scale: 0
-    canvas.before:
-        Color:
-            id: line_color
-            rgba: .5, .7, .5, root.canvas_opacity
-        Line:
-            width: 2
-            rectangle: self.x-dp(5), self.y-dp(5), self.width+dp(10), self.height+dp(10)
