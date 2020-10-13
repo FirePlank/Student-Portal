@@ -46,6 +46,10 @@ class StudentPortal(MDApp):
         self.root.switch_to(self.screens.get(screen_name))
 
     def search_wikipedia(self, query):
+        if getattr(sys, 'frozen', False):
+            from app.screens import wikipedia
+        else:
+            from screens import wikipedia
         wiki = wikipedia.WikipediaBackend(query)
         summary = wiki.summary()
         return(summary) # return result, should be string
