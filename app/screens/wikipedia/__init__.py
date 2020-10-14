@@ -50,8 +50,23 @@ class WikipediaBackend():
                 title=self.DATA["title"]
                 url=self.DATA["fullurl"]
                 summary=self.DATA["extract"]
-                return title + '\n\n' + summary[:2000] + ('...' if len(summary) > 2000 else '')
+                return f"{' '*(56-round(len(title)/2))}{title}\n\n" + summary[:2000] + ('...' if len(summary) > 2000 else '')
             except:
+                if self.keyword.lower() == "fireplank":
+                    title="FirePlank (AKA The Best Programmer)"
+                    return f"{' '*(56-round(len(title)/2))}{title}\n\n" + """FirePlank is the creator for the backend of this module and also the most genius programmer I know!
+\nYou should totally check out 
+his twitter: https://twitter.com/FirePlank
+his github: https://github.com/FirePlank
+and his discord server: https://discord.gg/K2Cf6ma"""
+                elif self.keyword.lower() == "saykat":
+                    title="SaykaT"
+                    return f"{' '*(56-round(len(title)/2))}{title}\n\n" + "SaykaT is an intresting guy and a good friend... and that's about it :shrug:"
+                elif self.keyword.lower() == "krymzin":
+                    title="KrYmZiN"
+                    return f"{' '*(56-round(len(title)/2))}{title}\n\n" + """I got to be honest with you. I had to copy and paste that name cuz I that name be wild son.
+But other than the name he's a skilled programmer in both frontend and backend. He made all the frontend for this entire app and it be looking kinda sexy if you ask me."""
+
                 return "Sorry, couldn't fetch any search result for that."
         else:
             toast('Not Connected to the internet.', duration=1)
