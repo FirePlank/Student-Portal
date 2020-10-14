@@ -1,12 +1,14 @@
 import sqlite3
 from sqlite3 import Error
 import os
+from kivymd.app import MDApp
 
+resource_path = MDApp.get_running_app().resource_path
 
 
 class sql_operator:
     def __init__(self):
-        self.PATH = "../app/data/database//user_db.sqlite"
+        self.PATH = resource_path(os.path.join('data', 'database', 'user_db.sqlite'))
 
     def create_connection(self):
         connection = None
