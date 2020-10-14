@@ -33,11 +33,10 @@ class NotebookBackend():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             body TEXT NOT NULL,
-            create_date TEXT NOT NULL,
-            edit_date TEXT NULL
+            create_date TEXT NOT NULL
         );
         """
-        
+
         check_existence = f"SELECT title FROM notebook;"
 
         add_note_in_table = f"""
@@ -49,8 +48,11 @@ class NotebookBackend():
 
         self.OPERATOR.execute_query(create_note_table)
 
-        title_column = self.OPERATOR.execute_read_query(check_existence)
-        title_column = [i[0] for i in title_column] # converting a list of tuple to a list of strings
+        try:
+            title_column = self.OPERATOR.execute_read_query(check_existence)
+            title_column = [i[0] for i in title_column] # converting a list of tuple to a list of strings
+        except:
+            title_column = []
 
         if title in title_column:
             print("Note with similar name already exists!")
@@ -65,20 +67,29 @@ class NotebookBackend():
     def show_notes(self):
         select_query = "SELECT * FROM notebook"
         notes = self.OPERATOR.execute_read_query(select_query)
+        output_list = []
+
         for i in notes:
-            print(i, type(i))
+            tmp_dict = {
+                "title": i[1],
+                "body": i[2],
+                "create_date": i[3]
+            }
+
+            output_list.append(tmp_dict)
+
+        return output_list[::-1]
+
 
     def edit_notes(self, data):
         title = data["title"]
         body = data["body"]
-        edited_time = datetime.now().strftime("%c")
 
         edit_query = f"""
         UPDATE
             notebook
         SET
             body = '{body}',
-            edit_date = '{edited_time}'
         WHERE
             title = '{title}'
         """
