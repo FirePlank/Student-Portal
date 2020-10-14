@@ -5,7 +5,6 @@ from kivymd.uix.screen import MDScreen
 from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import BooleanProperty
 from kivymd.toast import toast
-from uuid import uuid4
 
 
 class Notebook(MDScreen):
@@ -48,17 +47,20 @@ class Notebook(MDScreen):
     def delete_note(self, note_widget):
         self.database.delete_note({'unique_id': note_widget.unique_id})
         self.ids.scroll_box.remove_widget(note_widget)
+        toast('Note deleted.', duration=1)
 
     def add_note(self):
         added = self.database.add_new_note({'title': '', 'body': ''})
         if added:
             self.initialize_notes()
+            toast('Note Created.', duration=1)
         else:
-            toast('An unexpected error occured.', duration=1)
+            toast('Cannot create more notes.', duration=1)
 
     def update_date(self, note_widget):
         self.database.update_date({'unique_id': note_widget.unique_id})
         self.initialize_notes()
+        toast('Date updated.', duration=1)
 
     def initialize_notes(self):
         self.ids.scroll_box.clear_widgets()
@@ -74,7 +76,7 @@ class Notebook(MDScreen):
 
 
 class Note(FloatLayout):
-    unique_id = ""
+    pass
 
 
 class NoteButton():
@@ -86,8 +88,7 @@ class NotebookBackend():
         self.OPERATOR = sql_operator()
         create_note_table = """
         CREATE TABLE IF NOT EXISTS notebook (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            unique_id TEXT NOT NULL,
+            unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             body TEXT NOT NULL,
             create_date TEXT NOT NULL
@@ -98,29 +99,21 @@ class NotebookBackend():
     def add_new_note(self, data):
         title = data.get('title')
         body = data.get('body')
-        unique_id = uuid4()
         creation_time = datetime.now().strftime("%x")
         
         check_existence = f"SELECT unique_id FROM notebook;"
 
         add_note_in_table = f"""
         INSERT INTO
-            notebook (unique_id, title, body, create_date)
+            notebook (title, body, create_date)
         VALUES
-            ('{unique_id}', '{title}', '{body}', '{creation_time}');
+            ('{title}', '{body}', '{creation_time}');
         """
-
-        id_column = self.OPERATOR.execute_read_query(check_existence)
-        id_column = [i[0] for i in id_column] # converting a list of tuple to a list of strings
-
-        if unique_id in id_column:
+        try:
+            self.OPERATOR.execute_query(add_note_in_table)
+            return True
+        except:
             return False
-        else:
-            try:
-                self.OPERATOR.execute_query(add_note_in_table)
-                return True
-            except:
-                return False
 
     def delete_note(self, data):
         unique_id = data["unique_id"]
@@ -134,10 +127,10 @@ class NotebookBackend():
 
         for i in notes:
             tmp_dict = {
-                "unique_id": i[1],
-                "title": i[2],
-                "body": i[3],
-                "create_date": i[4]
+                "unique_id": i[0],
+                "title": i[1],
+                "body": i[2],
+                "create_date": i[3]
             }
 
             output_list.append(tmp_dict)
