@@ -1,4 +1,5 @@
 import sqlite3
+from sqlite3 import Error
 import os
 
 
@@ -11,8 +12,9 @@ class sql_operator:
         connection = None
         try:
             connection = sqlite3.connect(self.PATH, timeout=10)
-        except:
-            pass
+            print("Connected successfully")
+        except Error as e:
+            print(e)
         return connection
 
     def execute_query(self, query):
@@ -21,8 +23,9 @@ class sql_operator:
         try:
             cursor.execute(query)
             connection.commit()
-        except:
-            pass
+            print("Executed the query successfully")
+        except Error as e:
+            print(e)
 
     def execute_read_query(self, query):
         connection = self.create_connection()
@@ -34,6 +37,7 @@ class sql_operator:
             cursor.execute(query)
             result = cursor.fetchall()
             connection.commit()
+            print("Executed the read query successfully")
             return result
-        except:
-            pass
+        except Error as e:
+            print(e)
