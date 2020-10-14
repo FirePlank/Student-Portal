@@ -33,7 +33,7 @@ class Notebook(MDScreen):
             note_widget.ids.body.cursor_blink = True
             note_widget.ids.edit_button.text = "SAVE"
         else:
-            print("[  ERROR  ] Huh? How is this even possible?")
+            print("[  ERROR  ] An unexpected error has occured.")
 
     def delete_note(self, note_widget):
         self.database.delete_note({'title': note_widget.ids.title.text})
