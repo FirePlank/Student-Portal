@@ -113,7 +113,7 @@
         font_size: str((Window.height/720)*15) + 'sp'
         pos_hint: {'x': 0.02, 'y': 0.05}
         foreground_color: 0, 0, 0, 1
-        background_color: 133/255, 144/255, 149/255, 0
+        background_color: 133/255, 144/255, 149/255, 1
         readonly: True
         cursor_color: [0, 1, 0, 1]
         cursor_blink: False
@@ -125,37 +125,3 @@
     md_bg_color: 1, 1, 1, 0
     font_size: str((Window.height/720)*20) + 'sp'
     size_hint: (None, 0.12)
-
-<NewNotePopup>:
-    size_hint: (0.5, 0.5)
-    title: 'Create Note'
-    auto_dismiss: False
-    FloatLayout:
-        canvas.before:
-            Color:
-                rgba: utils.get_color_from_hex('#475D66')
-            Rectangle:
-                pos: (self.x, self.y)
-                size: (self.width, self.height)
-        MDLabel:
-            text: 'Enter Note title:'
-            theme_text_color: 'Primary'
-            font_name: app.resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
-            font_size: str((Window.height/720)*20) + 'sp'
-            size_hint_x: 0.4
-            pos_hint: {'x': 0.31, 'y': 0.4}
-        TextInput:
-            id: title_input
-            hint_text: "Leave blank to cancel"
-            font_name: app.resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
-            font_size: str((Window.height/720)*20) + 'sp'
-            size_hint: (0.8, 0.12)
-            pos_hint: {'x': 0.1, 'y': 0.5}
-            padding: [6, self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 6, 0]
-            multiline: False
-        NoteButton:
-            text: "OK"
-            pos_hint: {'x': 0.4, 'y': 0.2}
-            disabled: False
-            text_color: 1, 1, 1, 1
-            on_release: root.dismiss()
