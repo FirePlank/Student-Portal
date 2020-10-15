@@ -3,7 +3,13 @@ from sqlite3 import Error
 import os
 from kivymd.app import MDApp
 
-resource_path = MDApp.get_running_app().resource_path
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
 class sql_operator:

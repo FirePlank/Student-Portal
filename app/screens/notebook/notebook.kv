@@ -4,32 +4,34 @@
 <Notebook>:
     name: 'notebook'
     id: notebookscreen
-    md_bg_color: utils.get_color_from_hex('#475D66')
+    md_bg_color: app.bg_color
     FloatLayout:
         id: box_root
         size_hint: (1, 1)
         HoverIconButton:
             icon: 'arrow-left-bold'
-            theme_text_color: "Custom"
-            text_color: 1, 1, 1, 1
-            user_font_size: str((box_root.height/720)*80) + 'sp'
+            theme_text_color: 'Custom'
+            text_color: app.title_text_color
+            user_font_size: str((Window.height/720)*80) + 'sp'
             pos_hint: {'x': 0.09, 'y': 0.83}
             on_release:
                 app.switch_screen('mainmenu', 'left')
+                root.cleanup()
                 scroller.scroll_y = 1
         MDLabel:
             text: 'Notebook'
-            font_name: app.resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
-            theme_text_color: 'Primary'
+            font_name: app.app_font
+            theme_text_color: 'Custom'
+            text_color: app.title_text_color
             halign: 'center'
             valign: 'middle'
-            font_size: str((box_root.height/720)*60) + 'sp'
+            font_size: str((Window.height/720)*60) + 'sp'
             pos_hint: {'y': 0.4}
         HoverIconButton:
             icon: 'plus-box-multiple'
             theme_text_color: "Custom"
-            text_color: 1, 1, 1, 1
-            user_font_size: str((box_root.height/720)*80) + 'sp'
+            text_color: app.title_text_color
+            user_font_size: str((Window.height/720)*80) + 'sp'
             pos_hint: {'x': 0.8, 'y': 0.83}
             on_release:
                 root.add_note()
@@ -37,14 +39,14 @@
             id: scroller
             canvas.before:
                 Color:
-                    rgba: utils.get_color_from_hex('#475D66')
+                    rgba: app.bg_color
                 Rectangle:
-                    pos: (self.x-5, self.y-5)
-                    size: (self.width+10, self.height+10)
+                    pos: (self.x, self.y)
+                    size: (self.width, self.height)
             do_scroll_x: False
             do_scroll_y: True
-            scroll_distance: dp((box_root.height/720)*20)
-            scroll_wheel_distance: dp((box_root.height/720)*30)
+            scroll_distance: dp((Window.height/720)*20)
+            scroll_wheel_distance: dp((Window.height/720)*30)
             size_hint: (0.8, 0.75)
             pos_hint: {'x': 0.1, 'y': 0.05}
             StackLayout:
@@ -57,7 +59,7 @@
 <Note>:
     canvas.before:
         Color:
-            rgba: 133/255, 144/255, 149/255, 1
+            rgba: app.tile_color
         Rectangle:
             pos: (self.x, self.y)
             size: (self.width, self.height)
@@ -65,24 +67,24 @@
     height: Window.height/3
     TextInput:
         id: title
-        font_name: app.resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
+        font_name: app.app_font
         multiline: False
         size_hint: (0.35, 0.12)
         font_size: str((Window.height/720)*20) + 'sp'
         pos_hint: {'x': 0.02, 'y': 0.76}
-        foreground_color: 0, 0, 0, 1
-        background_color: 133/255, 144/255, 149/255, 1
+        foreground_color: app.text_color
+        background_color: app.tile_color
         padding: [6, self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 6, 0]
         readonly: True
-        cursor_color: 0, 1, 0, 1
+        cursor_color: app.accent_color
         cursor_blink: False
         background_normal: 'atlas://data/images/defaulttheme/textinput_active'
     MDLabel:
         id: date
-        font_name: app.resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
+        font_name: app.app_font
         size_hint: (0.2, 0.12)
         theme_text_color: 'Custom'
-        text_color: 0, 0, 0, 1
+        text_color: app.text_color
         valign: 'middle'
         font_size: str((Window.height/720)*20) + 'sp'
         pos_hint: {'x': 0.4, 'y': 0.76}
@@ -108,20 +110,19 @@
             root.parent.parent.parent.parent.update_date(root)
     TextInput:
         id: body
-        font_name: app.resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
+        font_name: app.app_font
         size_hint: (0.96, 0.65)
         font_size: str((Window.height/720)*15) + 'sp'
         pos_hint: {'x': 0.02, 'y': 0.05}
-        foreground_color: 0, 0, 0, 1
-        background_color: 133/255, 144/255, 149/255, 1
+        foreground_color: app.text_color
+        background_color: app.tile_color
         readonly: True
-        cursor_color: [0, 1, 0, 1]
+        cursor_color: app.accent_color
         cursor_blink: False
         background_normal: 'atlas://data/images/defaulttheme/textinput_active'
 
 <NoteButton@MDRectangleFlatButton>:
-    font_name: app.resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
-    text_color: 0, 0, 0, 1
-    md_bg_color: 1, 1, 1, 0
+    font_name: app.app_font
+    text_color: app.text_color
     font_size: str((Window.height/720)*20) + 'sp'
     size_hint: (None, 0.12)

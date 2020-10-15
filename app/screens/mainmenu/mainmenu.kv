@@ -1,15 +1,15 @@
 #:import utils kivy.utils
 #:import os os
+#:import Window kivy.core.window.Window
 
 <MainMenu>:
     name: 'mainmenu'
     id: mainmenuscreen
-    md_bg_color: utils.get_color_from_hex('#475D66')
+    md_bg_color: app.bg_color
     MDBoxLayout:
         id: box
         size_hint: (1, 1)
         orientation: 'vertical'
-        md_bg_color: utils.get_color_from_hex('#475D66')
         padding: 80
         AnchorLayout:
             id: anchor_label
@@ -18,8 +18,9 @@
             anchor_y: 'center'
             MDLabel:
                 text: 'Student Portal'
-                font_name: app.resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf'))
-                theme_text_color: 'Primary'
+                font_name: app.app_font
+                theme_text_color: 'Custom'
+                text_color: app.title_text_color
                 halign: 'center'
                 valign: 'center'
                 font_size: str((box.height/720)*50) + 'sp'
@@ -35,28 +36,62 @@
                 adaptive_size: True
                 spacing: (10*(box.width/box.height)**3, 40)
                 CustomIconButton:
-                    icon: os.path.join('..', '..', 'data', 'logo', 'wikipedia.png')
+                    display_icon: 'wikipedia.png'
+                    icon_text: 'Wikipedia'
                     on_release:
                         app.switch_screen('wikipedia', 'left')
                         self.canvas_opacity = 0
                 CustomIconButton:
-                    icon: app.resource_path(os.path.join('data', 'logo', 'youtube.png'))
+                    display_icon: 'youtube.png'
+                    icon_text: 'Youtube'
                 CustomIconButton:
-                    icon: app.resource_path(os.path.join('data', 'logo', 'translation.png'))
+                    display_icon: 'translation.png'
+                    icon_text: 'Translation'
                 CustomIconButton:
-                    icon: app.resource_path(os.path.join('data', 'logo', 'routine.png'))
+                    display_icon: 'todo.png'
+                    icon_text: 'To-do'
                 CustomIconButton:
-                    icon: app.resource_path(os.path.join('data', 'logo', 'notebook.png'))
+                    display_icon: 'notebook.png'
+                    icon_text: 'Notebook'
                     on_release:
                         app.switch_screen('notebook', 'right')
                         self.canvas_opacity = 0
                 CustomIconButton:
-                    icon: app.resource_path(os.path.join('data', 'logo', 'books.png'))
+                    display_icon: 'books.png'
+                    icon_text: 'Books'
                 CustomIconButton:
-                    icon: app.resource_path(os.path.join('data', 'logo', 'about.png'))
+                    display_icon: 'about.png'
+                    icon_text: 'About'
                 CustomIconButton:
-                    icon: app.resource_path(os.path.join('data', 'logo', 'settings.png'))
+                    display_icon: 'settings.png'
+                    icon_text: 'Settings'
 
 <CustomIconButton>:
+    id: menubutton
+    canvas:
+        Color:
+            rgba: app.tile_color
+        Rectangle:
+            pos: (self.x, self.y)
+            size: (self.width, self.height)
     height: self.parent.parent.height/3
-    width: self.height*(748/552)
+    width: self.height*1.4
+    display_icon: ''
+    icon_text: ''
+    BoxLayout:
+        size_hint: (1, 1)
+        orientation: 'vertical'
+        Image:
+            source: os.path.join(app.mainmenu_icons, root.display_icon)
+            size_hint_y: 0.7
+            width: self.height
+            pos_hint: {'x': 0, 'y': 0.16}
+        MDLabel:
+            text: root.icon_text
+            theme_text_color: "Custom"
+            text_color: app.text_color
+            font_size: str((Window.height/720)*18) + 'sp'
+            halign: 'center'
+            font_name: app.app_font
+            bold: True
+            size_hint_y: 0.2

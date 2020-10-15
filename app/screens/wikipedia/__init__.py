@@ -1,6 +1,5 @@
 from kivymd.uix.screen import MDScreen
 from kivymd.toast import toast
-from kivymd.app import MDApp
 from ..widgets.hover_icon_button import HoverIconButton
 import requests
 
@@ -10,7 +9,9 @@ class Wikipedia(MDScreen):
         if query.strip() == "":
             toast('Please input a search query.', duration=1)
         else:
-            self.ids.results.text = MDApp.get_running_app().search_wikipedia(query.strip())
+            wikipedia = WikipediaBackend(query)
+            summary = wikipedia.summary()
+            self.ids.results.text = summary
 
 
 class WikipediaBackend():
