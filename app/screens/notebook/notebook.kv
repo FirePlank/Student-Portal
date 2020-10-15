@@ -8,16 +8,6 @@
     FloatLayout:
         id: box_root
         size_hint: (1, 1)
-        HoverIconButton:
-            icon: 'arrow-left-bold'
-            theme_text_color: 'Custom'
-            text_color: app.title_text_color
-            user_font_size: str((Window.height/720)*80) + 'sp'
-            pos_hint: {'x': 0.09, 'y': 0.83}
-            on_release:
-                app.switch_screen('mainmenu', 'left')
-                root.cleanup()
-                scroller.scroll_y = 1
         MDLabel:
             text: 'Notebook'
             font_name: app.app_font
@@ -27,14 +17,6 @@
             valign: 'middle'
             font_size: str((Window.height/720)*60) + 'sp'
             pos_hint: {'y': 0.4}
-        HoverIconButton:
-            icon: 'plus-box-multiple'
-            theme_text_color: "Custom"
-            text_color: app.title_text_color
-            user_font_size: str((Window.height/720)*80) + 'sp'
-            pos_hint: {'x': 0.8, 'y': 0.83}
-            on_release:
-                root.add_note()
         ScrollView:
             id: scroller
             canvas.before:
@@ -43,8 +25,11 @@
                 Rectangle:
                     pos: (self.x, self.y)
                     size: (self.width, self.height)
-            do_scroll_x: False
-            do_scroll_y: True
+            smooth_scroll_end: 10
+            bar_width: 10
+            scroll_type: ['bars', 'content']
+            bar_inactive_color: self.bar_color
+            effect_cls : 'ScrollEffect'
             scroll_distance: dp((Window.height/720)*20)
             scroll_wheel_distance: dp((Window.height/720)*30)
             size_hint: (0.8, 0.75)
@@ -55,6 +40,24 @@
                 height: self.minimum_height
                 padding: dp(20)
                 spacing: dp(20)
+        HoverIconButton:
+            icon: 'arrow-left-bold'
+            theme_text_color: 'Custom'
+            text_color: app.title_text_color
+            user_font_size: str((Window.height/720)*80) + 'sp'
+            pos_hint: {'x': 0.09, 'y': 0.83}
+            on_release:
+                app.switch_screen('mainmenu', 'left')
+                root.cleanup()
+                scroller.scroll_y = 1
+        HoverIconButton:
+            icon: 'plus-box-multiple'
+            theme_text_color: "Custom"
+            text_color: app.title_text_color
+            user_font_size: str((Window.height/720)*80) + 'sp'
+            pos_hint: {'x': 0.8, 'y': 0.83}
+            on_release:
+                root.add_note()
 
 <Note>:
     canvas.before:
@@ -108,18 +111,25 @@
         disabled: False
         on_release:
             root.parent.parent.parent.parent.update_date(root)
-    TextInput:
-        id: body
-        font_name: app.app_font
-        size_hint: (0.96, 0.65)
-        font_size: str((Window.height/720)*15) + 'sp'
+    ScrollView:
+        bar_width: 10
+        scroll_type: ['bars', 'content']
+        bar_inactive_color: self.bar_color
+        size_hint: (0.96, 0.65) 
         pos_hint: {'x': 0.02, 'y': 0.05}
-        foreground_color: app.text_color
-        background_color: app.tile_color
-        readonly: True
-        cursor_color: app.accent_color
-        cursor_blink: False
-        background_normal: 'atlas://data/images/defaulttheme/textinput_active'
+        effect_cls : 'ScrollEffect'
+        TextInput:
+            id: body
+            font_name: app.app_font
+            font_size: str((Window.height/720)*15) + 'sp'
+            foreground_color: app.text_color
+            background_color: app.tile_color
+            readonly: True
+            cursor_color: app.accent_color
+            cursor_blink: False
+            background_normal: 'atlas://data/images/defaulttheme/textinput_active'
+            size_hint: 1, None
+            height: max(self.minimum_height, self.parent.height)
 
 <NoteButton@MDRectangleFlatButton>:
     font_name: app.app_font
