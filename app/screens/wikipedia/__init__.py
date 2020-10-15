@@ -2,6 +2,7 @@ from kivymd.uix.screen import MDScreen
 from kivymd.toast import toast
 from ..widgets.hover_icon_button import HoverIconButton
 import requests
+from kivymd.app import MDApp
 
 
 class Wikipedia(MDScreen):
@@ -67,6 +68,18 @@ and his discord server: https://discord.gg/K2Cf6ma"""
                     title="KrYmZiN"
                     return f"{' '*(56-round(len(title)/2))}{title}\n\n" + """I got to be honest with you. I had to copy and paste that name cuz I that name be wild son.
 But other than the name he's a skilled programmer in both frontend and backend. He made all the frontend for this entire app and it be looking kinda sexy if you ask me."""
+                elif self.keyword.lower() == "unlock_dark_mode":
+                    if MDApp.get_running_app().color_theme != 'dark':
+                        MDApp.get_running_app().unlock_dark_mode()
+                        return "Enjoy dark mode. (Except for the homepage icons of course)"
+                    else:
+                        return "You're already in dark mode. try 'normal_theme'."
+                elif self.keyword.lower() == "normal_theme":
+                    if MDApp.get_running_app().color_theme != 'normal':
+                        MDApp.get_running_app().color_theme_normal()
+                        return "Normal color theme :)"
+                    else:
+                        return "The current color theme is already the normal theme. try 'unlock_dark_mode'."
 
                 return "Sorry, couldn't fetch any search result for that."
         else:

@@ -32,10 +32,11 @@
             size_hint: (0.6, 0.06)
             font_size: str((box_root.height/720)*30) + 'sp'
             pos_hint: {'x': 0.2, 'y': 0.7}
-            foreground_color: 0, 0, 0, 1
+            foreground_color: app.text_color
             background_color: app.tile_color
             padding: [6, self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 6, 0]
-            cursor_color: 0, 1, 0, 1
+            cursor_color: app.accent_color
+            cursor_width: app.cursor_width
         HoverIconButton:
             icon: 'magnify'
             user_font_size: str((box_root.height/720)*30) + 'sp'
@@ -50,9 +51,10 @@
             size_hint: (0.8, 0.6)
             font_size: str((box_root.height/720)*15) + 'sp'
             pos_hint: {'x': 0.1, 'y': 0.05}
-            foreground_color: 0, 0, 0, 1
+            foreground_color: app.text_color
             background_color: app.tile_color
             background_normal: ''
             readonly: True
-            cursor_color: 0, 1, 0, 1
+            cursor_color: app.accent_color
             cursor_blink: False
+            cursor_width: app.cursor_width

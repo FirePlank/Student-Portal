@@ -81,6 +81,7 @@
         readonly: True
         cursor_color: app.accent_color
         cursor_blink: False
+        cursor_width: app.cursor_width
         background_normal: 'atlas://data/images/defaulttheme/textinput_active'
     MDLabel:
         id: date
@@ -89,25 +90,28 @@
         theme_text_color: 'Custom'
         text_color: app.text_color
         valign: 'middle'
-        font_size: str((Window.height/720)*20) + 'sp'
+        font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'
         pos_hint: {'x': 0.4, 'y': 0.76}
     NoteButton:
         id: edit_button
         text: "EDIT"
         pos_hint: {'x': 0.555, 'y': 0.76}
+        size_hint: (0.11, 0.12)
         on_release:
             root.parent.parent.parent.parent.edit_note(root)
     NoteButton:
         id: delete_button
         text: "DELETE"
-        pos_hint: {'x': 0.685, 'y': 0.76}
+        pos_hint: {'x': 0.682, 'y': 0.76}
+        size_hint: (0.11, 0.12)
         disabled: False
         on_release:
             root.parent.parent.parent.parent.delete_note(root)
     NoteButton:
         id: updatedate_button
         text: "UPDATE DATE"
-        pos_hint: {'x': 0.82, 'y': 0.76}
+        pos_hint: {'x': 0.808, 'y': 0.76}
+        size_hint: (0.17, 0.12)
         disabled: False
         on_release:
             root.parent.parent.parent.parent.update_date(root)
@@ -130,9 +134,19 @@
             background_normal: 'atlas://data/images/defaulttheme/textinput_active'
             size_hint: 1, None
             height: max(self.minimum_height, self.parent.height)
+            cursor_width: app.cursor_width
 
-<NoteButton@MDRectangleFlatButton>:
+<NoteButton>:
+    canvas.before:
+        Color:
+            id: line_color
+            rgba: app.accent_color[:-1]+[root.canvas_opacity]
+        Line:
+            width: 2
+            rectangle: self.x-dp((Window.height/720)*2), self.y-dp((Window.height/720)*2), self.width+dp((Window.height/720)*4), self.height+dp((Window.height/720)*4)
     font_name: app.app_font
-    text_color: app.text_color
-    font_size: str((Window.height/720)*20) + 'sp'
-    size_hint: (None, 0.12)
+    color: app.text_color
+    background_normal: ''
+    background_down: ''
+    background_color: app.raised_button_color
+    font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'

@@ -13,7 +13,7 @@ import os
 import sys
 import json
 from kivy.resources import resource_add_path
-from kivy.properties import ListProperty, StringProperty
+from kivy.properties import ListProperty, StringProperty, NumericProperty
 if getattr(sys, 'frozen', False):
     from app.screens.modules import resource_path
 else:
@@ -28,13 +28,16 @@ resource_add_path(resource_path(os.path.join('screens', 'mainmenu')))
 class StudentPortal(MDApp):
 
     title = "Student Portal"
+    color_theme = 'normal'
     bg_color = ListProperty([71/255, 93/255, 102/255, 1])
     tile_color = ListProperty([133/255, 144/255, 149/255, 1])
+    raised_button_color = ListProperty([144/255, 159/255, 165/255, 1])
     text_color = ListProperty([0, 0, 0, 1])
     title_text_color = ListProperty([1, 1, 1, 1])
-    accent_color = ListProperty([0, 1, 0, 1])
+    accent_color = ListProperty([0.5, 0.7, 0.5, 1])
     app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf')))
     mainmenu_icons = resource_path(os.path.join('data', 'icons_dark'))
+    cursor_width = NumericProperty(3)
 
     def build(self):
         if getattr(sys, 'frozen', False):
@@ -61,6 +64,20 @@ class StudentPortal(MDApp):
     def switch_screen(self, screen_name, direction='left'):
         self.root.transition.direction = direction
         self.root.switch_to(self.screens.get(screen_name))
+
+    def unlock_dark_mode(self):
+        self.color_theme = 'dark'
+        self.bg_color = [29/255, 29/255, 29/255, 1]
+        self.tile_color = [40/255, 40/255, 40/255, 1]
+        self.raised_button_color = [52/255, 52/255, 52/255, 1]
+        self.text_color = [1, 1, 1, 1]
+
+    def color_theme_normal(self):
+        self.color_theme = 'normal'
+        self.bg_color = [71/255, 93/255, 102/255, 1]
+        self.tile_color = [133/255, 144/255, 149/255, 1]
+        self.raised_button_color = [144/255, 159/255, 165/255, 1]
+        self.text_color = [0, 0, 0, 1]
 
 
 if __name__ == '__main__':

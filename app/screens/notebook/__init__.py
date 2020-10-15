@@ -5,6 +5,10 @@ from kivymd.uix.screen import MDScreen
 from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import BooleanProperty
 from kivymd.toast import toast
+from kivymd.uix.behaviors import HoverBehavior
+from kivymd.theming import ThemableBehavior
+from kivy.uix.button import Button
+from kivy.properties import NumericProperty
 
 
 class Notebook(MDScreen):
@@ -96,8 +100,14 @@ class Note(FloatLayout):
     pass
 
 
-class NoteButton():
-    pass
+class NoteButton(Button, ThemableBehavior, HoverBehavior):
+    canvas_opacity = NumericProperty(0)
+
+    def on_enter(self, *args):
+        self.canvas_opacity = 1
+
+    def on_leave(self, *args):
+        self.canvas_opacity = 0
 
 
 class NotebookBackend():

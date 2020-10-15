@@ -32,39 +32,38 @@
             MDGridLayout:
                 id: grid
                 cols: 4
-                md_bg_color: utils.get_color_from_hex('#475D66')
                 adaptive_size: True
                 spacing: (10*(box.width/box.height)**3, 40)
                 CustomIconButton:
                     display_icon: 'wikipedia.png'
-                    icon_text: 'Wikipedia'
+                    icon_text: '[b]Wikipedia[/b]'
                     on_release:
                         app.switch_screen('wikipedia', 'left')
                         self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'youtube.png'
-                    icon_text: 'Youtube'
+                    icon_text: '[b]Youtube[/b]'
                 CustomIconButton:
                     display_icon: 'translation.png'
-                    icon_text: 'Translation'
+                    icon_text: '[b]Translation[/b]'
                 CustomIconButton:
                     display_icon: 'todo.png'
-                    icon_text: 'To-do'
+                    icon_text: '[b]To-do[/b]'
                 CustomIconButton:
                     display_icon: 'notebook.png'
-                    icon_text: 'Notebook'
+                    icon_text: '[b]Notebook[/b]'
                     on_release:
                         app.switch_screen('notebook', 'right')
                         self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'books.png'
-                    icon_text: 'Books'
+                    icon_text: '[b]Books[/b]'
                 CustomIconButton:
                     display_icon: 'about.png'
-                    icon_text: 'About'
+                    icon_text: '[b]About[/b]'
                 CustomIconButton:
                     display_icon: 'settings.png'
-                    icon_text: 'Settings'
+                    icon_text: '[b]Settings[/b]'
 
 <CustomIconButton>:
     id: menubutton
@@ -76,7 +75,7 @@
             size: (self.width, self.height)
     height: self.parent.parent.height/3
     width: self.height*1.4
-    display_icon: ''
+    display_icon: 'settings.png'
     icon_text: ''
     BoxLayout:
         size_hint: (1, 1)
@@ -88,10 +87,11 @@
             pos_hint: {'x': 0, 'y': 0.16}
         MDLabel:
             text: root.icon_text
-            theme_text_color: "Custom"
+            theme_text_color: 'Custom'
             text_color: app.text_color
-            font_size: str((Window.height/720)*18) + 'sp'
+            font_size: str((Window.height/720)*16) + 'sp'
             halign: 'center'
             font_name: app.app_font
             bold: True
             size_hint_y: 0.2
+            markup: True
