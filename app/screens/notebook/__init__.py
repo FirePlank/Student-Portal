@@ -28,6 +28,7 @@ class Notebook(MDScreen):
             note_widget.ids.title.background_active = 'atlas://data/images/defaulttheme/textinput_active'
             note_widget.ids.body.background_active = 'atlas://data/images/defaulttheme/textinput_active'
             self.database.edit_notes({'unique_id': note_widget.unique_id, 'title': note_widget.ids.title.text, 'body': note_widget.ids.body.text})
+            toast('Note data saved.', duration=0.3)
             note_widget.ids.edit_button.text = "EDIT"
         elif note_widget.ids.edit_button.text == "EDIT":
             note_widget.ids.title.readonly = False
@@ -47,20 +48,20 @@ class Notebook(MDScreen):
     def delete_note(self, note_widget):
         self.database.delete_note({'unique_id': note_widget.unique_id})
         self.ids.scroll_box.remove_widget(note_widget)
-        toast('Note deleted.', duration=1)
+        toast('Note deleted.', duration=0.3)
 
     def add_note(self):
         added = self.database.add_new_note({'title': '', 'body': ''})
         if added:
             self.initialize_notes()
-            toast('Note Created.', duration=1)
+            toast('Note Created.', duration=0.3)
         else:
             toast('Cannot create more notes.', duration=1)
 
     def update_date(self, note_widget):
         self.database.update_date({'unique_id': note_widget.unique_id})
         self.initialize_notes()
-        toast('Date updated.', duration=1)
+        toast('Date updated.', duration=0.3)
 
     def initialize_notes(self):
         self.ids.scroll_box.clear_widgets()
@@ -73,6 +74,22 @@ class Notebook(MDScreen):
             note_widget.unique_id = note.get('unique_id')
             self.ids.scroll_box.add_widget(note_widget)
             self.ids.scroller.scroll_y = 1
+
+    def cleanup(self):
+        for note_widget in self.ids.scroll_box.children:
+            if note_widget.ids.edit_button.text == "SAVE":
+                note_widget.ids.title.readonly = True
+                note_widget.ids.body.readonly = True
+                note_widget.ids.delete_button.disabled = False
+                note_widget.ids.updatedate_button.disabled = False
+                note_widget.ids.title.cursor_blink = False
+                note_widget.ids.body.cursor_blink = False
+                note_widget.ids.title.background_normal = 'atlas://data/images/defaulttheme/textinput_active'
+                note_widget.ids.body.background_normal = 'atlas://data/images/defaulttheme/textinput_active'
+                note_widget.ids.title.background_active = 'atlas://data/images/defaulttheme/textinput_active'
+                note_widget.ids.body.background_active = 'atlas://data/images/defaulttheme/textinput_active'
+                note_widget.ids.edit_button.text = "EDIT"
+        self.initialize_notes()
 
 
 class Note(FloatLayout):
