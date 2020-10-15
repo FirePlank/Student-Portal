@@ -25,7 +25,7 @@ kv = """
     canvas.before:
         Color:
             id: line_color
-            rgba: .5, .7, .5, root.canvas_opacity
+            rgba: app.accent_color[:-1]+[root.canvas_opacity]
         Line:
             width: 2
             rectangle: self.x-dp((Window.height/720)*2), self.y-dp((Window.height/720)*2), self.width+dp((Window.height/720)*4), self.height+dp((Window.height/720)*4)
