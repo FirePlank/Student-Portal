@@ -47,7 +47,7 @@ class Notebook(MDScreen):
 
     def delete_note(self, note_widget):
         self.database.delete_note({'unique_id': note_widget.unique_id})
-        self.ids.scroll_box.remove_widget(note_widget)
+        self.initialize_notes()
         toast('Note deleted.', duration=0.3)
 
     def add_note(self):
