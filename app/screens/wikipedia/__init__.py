@@ -71,7 +71,7 @@ But other than the name he's a skilled programmer in both frontend and backend. 
                 elif self.keyword.lower() == "unlock_dark_mode":
                     if MDApp.get_running_app().color_theme != 'dark':
                         MDApp.get_running_app().unlock_dark_mode()
-                        return "Enjoy dark mode. (Except for the homepage icons of course)"
+                        return "Enjoy dark mode."
                     else:
                         return "You're already in dark mode. try 'normal_theme'."
                 elif self.keyword.lower() == "normal_theme":
