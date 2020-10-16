@@ -79,7 +79,7 @@ class StudentPortal(MDApp):
         self.tile_color = [133/255, 144/255, 149/255, 1]
         self.raised_button_color = [144/255, 159/255, 165/255, 1]
         self.text_color = [0, 0, 0, 1]
-        self.mainmenu_icons = resource_path(os.path.join('data', 'icons_light'))
+        self.mainmenu_icons = resource_path(os.path.join('data', 'icons_dark'))
 
 
 if __name__ == '__main__':

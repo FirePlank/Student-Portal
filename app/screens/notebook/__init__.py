@@ -9,6 +9,7 @@ from kivymd.uix.behaviors import HoverBehavior
 from kivymd.theming import ThemableBehavior
 from kivy.uix.button import Button
 from kivy.properties import NumericProperty
+from kivy.uix.textinput import TextInput
 
 
 class Notebook(MDScreen):
@@ -98,6 +99,14 @@ class Notebook(MDScreen):
 
 class Note(FloatLayout):
     pass
+
+
+class TitleInput(TextInput):
+    max_characters = 26
+    def insert_text(self, substring, from_undo=False):
+        if len(self.text) > self.max_characters and self.max_characters > 0:
+            substring = ""
+        TextInput.insert_text(self, substring, from_undo)
 
 
 class NoteButton(Button, ThemableBehavior, HoverBehavior):

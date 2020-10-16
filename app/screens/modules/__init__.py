@@ -1,6 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 import os
+import sys
 from kivymd.app import MDApp
 
 def resource_path(relative_path):
@@ -14,7 +15,15 @@ def resource_path(relative_path):
 
 class sql_operator:
     def __init__(self):
-        self.PATH = resource_path(os.path.join('data', 'database', 'user_db.sqlite'))
+        if getattr(sys, 'frozen', False):
+            user_data_dir = getattr(MDApp.get_running_app(), 'user_data_dir')
+            self.PATH = resource_path(os.path.join(os.path.dirname(user_data_dir), 'Student Portal', 'database'))
+            if not os.path.isdir(self.PATH):
+                os.makedirs(self.PATH)
+            self.PATH = os.path.join(self.PATH, 'user_db.sqlite')
+            print(self.PATH)
+        else:
+            self.PATH = os.path.join('data', 'database', 'user_db.sqlite')
 
     def create_connection(self):
         connection = None
