@@ -36,7 +36,7 @@ class StudentPortal(MDApp):
     title_text_color = ListProperty([1, 1, 1, 1])
     accent_color = ListProperty([0.5, 0.7, 0.5, 1])
     app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf')))
-    mainmenu_icons = resource_path(os.path.join('data', 'icons_dark'))
+    mainmenu_icons = StringProperty(resource_path(os.path.join('data', 'icons_dark')))
     cursor_width = NumericProperty(3)
 
     def build(self):
@@ -71,6 +71,7 @@ class StudentPortal(MDApp):
         self.tile_color = [40/255, 40/255, 40/255, 1]
         self.raised_button_color = [52/255, 52/255, 52/255, 1]
         self.text_color = [1, 1, 1, 1]
+        self.mainmenu_icons = resource_path(os.path.join('data', 'icons_light'))
 
     def color_theme_normal(self):
         self.color_theme = 'normal'
@@ -78,6 +79,7 @@ class StudentPortal(MDApp):
         self.tile_color = [133/255, 144/255, 149/255, 1]
         self.raised_button_color = [144/255, 159/255, 165/255, 1]
         self.text_color = [0, 0, 0, 1]
+        self.mainmenu_icons = resource_path(os.path.join('data', 'icons_light'))
 
 
 if __name__ == '__main__':
