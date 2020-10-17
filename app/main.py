@@ -23,6 +23,7 @@ resource_add_path(resource_path(os.path.join('data', 'fonts')))
 resource_add_path(resource_path(os.path.join('data', 'database')))
 resource_add_path(resource_path(os.path.join('screens', 'wikipedia')))
 resource_add_path(resource_path(os.path.join('screens', 'mainmenu')))
+resource_add_path(resource_path(os.path.join('screens', 'translator')))
 
 
 class StudentPortal(MDApp):
@@ -35,28 +36,31 @@ class StudentPortal(MDApp):
     text_color = ListProperty([0, 0, 0, 1])
     title_text_color = ListProperty([1, 1, 1, 1])
     accent_color = ListProperty([0.5, 0.7, 0.5, 1])
-    app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'JetBrainsMono-Regular.ttf')))
+    app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'JetBrainsMono', 'JetBrainsMono-Regular.ttf')))
     mainmenu_icons = StringProperty(resource_path(os.path.join('data', 'icons_dark')))
     cursor_width = NumericProperty(3)
 
     def build(self):
         if getattr(sys, 'frozen', False):
-            from app.screens import mainmenu, wikipedia, notebook
+            from app.screens import mainmenu, wikipedia, notebook, translation
         else:
-            from screens import mainmenu, wikipedia, notebook
+            from screens import mainmenu, wikipedia, notebook, translation
 
         self.mainmenu_module = mainmenu
         self.wikipedia_module = wikipedia
         self.notebook_module = notebook
+        self.translation_module = translation
 
         self.root = ScreenManager()
         self.mainmenu = self.mainmenu_module.MainMenu()
         self.wikipedia = self.wikipedia_module.Wikipedia()
         self.notebook = self.notebook_module.Notebook()
+        self.translation = self.translation_module.Translation()
         self.screens = {
             'mainmenu': self.mainmenu,
             'wikipedia': self.wikipedia,
-            'notebook': self.notebook
+            'notebook': self.notebook,
+            'translation': self.translation
         }
         self.root.switch_to(self.mainmenu)
         return self.root

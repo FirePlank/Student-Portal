@@ -1,0 +1,105 @@
+#:import Window kivy.core.window.Window
+
+<Translation>:
+    name: 'translation'
+    id: mainmenuscreen
+    md_bg_color: app.bg_color
+    FloatLayout:
+        id: box_root
+        MDLabel:
+            text: 'Translation'
+            font_name: app.app_font
+            theme_text_color: 'Custom'
+            text_color: app.title_text_color
+            halign: 'center'
+            valign: 'middle'
+            font_size: str((Window.height/720)*60) + 'sp'
+            pos_hint: {'y': 0.4}
+        HoverIconButton:
+            icon: 'arrow-left-bold'
+            theme_text_color: 'Custom'
+            text_color: app.title_text_color
+            user_font_size: str((Window.height/720)*80) + 'sp'
+            pos_hint: {'x': 0.09, 'y': 0.83}
+            on_release:
+                app.switch_screen('mainmenu', 'right')
+        GridLayout:
+            cols: 2
+            size_hint: (0.8, 0.7)
+            pos_hint: {'x': 0.1, 'y': 0.1}
+            spacing: dp(10)
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: dp(10)
+                BoxLayout:
+                    size_hint: (1, 0.1)
+                    orientation: 'horizontal'
+                    MDLabel:
+                        size_hint_x: 0.4
+                        text: 'Input'
+                        font_name: app.app_font
+                        theme_text_color: 'Custom'
+                        text_color: app.title_text_color
+                        font_size: str(min((Window.height/720)*30, (Window.width/1080)*30)) + 'sp'
+                    AnchorLayout:
+                        id: from_lang
+                        anchor_x: 'center'
+                        anchor_y: 'center'
+                TextInput:
+                    id: input_box
+                    size_hint: (1, 0.7)
+                    font_name: app.app_font
+                    font_size: str((Window.height/720)*15) + 'sp'
+                    foreground_color: app.text_color
+                    background_color: app.tile_color
+                    readonly: False
+                    cursor_color: app.accent_color
+                    cursor_blink: True
+                    cursor_width: app.cursor_width
+                    on_text:
+                        self.text = self.text.lstrip()
+                        root.initiate_translator()
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: dp(10)
+                BoxLayout:
+                    size_hint: (1, 0.1)
+                    orientation: 'horizontal'
+                    MDLabel:
+                        size_hint_x: 0.4
+                        text: 'Output'
+                        font_name: app.app_font
+                        theme_text_color: 'Custom'
+                        text_color: app.title_text_color
+                        font_size: str(min((Window.height/720)*30, (Window.width/1080)*30)) + 'sp'
+                    AnchorLayout:
+                        id: to_lang
+                        anchor_x: 'center'
+                        anchor_y: 'center'
+                TextInput:
+                    id: output_box
+                    size_hint: (1, 0.7)
+                    font_size: str((Window.height/720)*15) + 'sp'
+                    foreground_color: app.text_color
+                    background_color: app.tile_color
+                    readonly: True
+                    cursor_color: app.accent_color
+                    cursor_blink: False
+                    cursor_width: app.cursor_width
+                    background_normal: 'atlas://data/images/defaulttheme/textinput_active'
+
+<DropDownButton>:
+    canvas.after:
+        Color:
+            id: line_color
+            rgba: app.accent_color[:-1]+[root.canvas_opacity]
+        Line:
+            width: 2
+            rectangle: self.x+1, self.y+1, self.width-2, self.height-2
+    height: Window.height/12
+    font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'
+    font_name: app.app_font
+    background_normal: ''
+    background_down: ''
+    background_color: app.raised_button_color
+    color: app.text_color
