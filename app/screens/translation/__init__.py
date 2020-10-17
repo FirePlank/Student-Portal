@@ -80,7 +80,7 @@ class Translation(MDScreen):
         'malayalam': '',
         'maltese': '',
         'maori': '',
-        'marathi': '',
+        'marathi': os.path.join('NotoSans', 'NotoSans-Regular.ttf'),
         'mongolian': '',
         'myanmar (burmese)': '',
         'nepali': '',
@@ -154,10 +154,10 @@ class Translation(MDScreen):
 
     def lang_changed(self, button, text):
         setattr(button, 'text', text+' ↓')
-        try: 
+        if self.langs.get(text) != '': 
             self.ids.output_box.font_name = self.resource_path(os.path.join('data', 'fonts', self.langs.get(text)))
-        except Exception as e:
-            print(e)
+        else:
+            self.ids.output_box.font_name = MDApp.get_running_app().app_font
         Clock.schedule_once(lambda dt: self.initiate_translator(), 0)
 
     def initiate_translator(self, *args):
