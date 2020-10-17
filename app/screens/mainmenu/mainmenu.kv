@@ -46,6 +46,9 @@
                 CustomIconButton:
                     display_icon: 'translation.png'
                     icon_text: '[b]Translation[/b]'
+                    on_release:
+                        app.switch_screen('translation', 'left')
+                        self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'todo.png'
                     icon_text: '[b]To-do[/b]'
