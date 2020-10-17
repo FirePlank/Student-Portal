@@ -137,7 +137,7 @@ class Translation(MDScreen):
             from_lang.add_widget(btn)
         self.mainbutton_from_lang = DropDownButton(text='detect language ↓', size_hint=(0.9, 0.8))
         self.mainbutton_from_lang.bind(on_release=from_lang.open)
-        from_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_from_lang, x))
+        from_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_from_lang, x, 'input'))
         self.ids.from_lang.add_widget(self.mainbutton_from_lang)
         self.mainbutton_from_lang.pos_x = self.mainbutton_from_lang.parent.width-self.mainbutton_from_lang.width - 5
 
@@ -149,15 +149,16 @@ class Translation(MDScreen):
             to_lang.add_widget(btn)
         self.mainbutton_to_lang = DropDownButton(text='english ↓', size_hint=(0.9, 0.8))
         self.mainbutton_to_lang.bind(on_release=to_lang.open)
-        to_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_to_lang, x))
+        to_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_to_lang, x, 'output'))
         self.ids.to_lang.add_widget(self.mainbutton_to_lang)
 
-    def lang_changed(self, button, text):
+    def lang_changed(self, button, text, context):
         setattr(button, 'text', text+' ↓')
-        if self.langs.get(text) != '': 
-            self.ids.output_box.font_name = self.resource_path(os.path.join('data', 'fonts', self.langs.get(text)))
-        else:
-            self.ids.output_box.font_name = MDApp.get_running_app().app_font
+        if context == 'output':
+            if self.langs.get(text) != '': 
+                self.ids.output_box.font_name = self.resource_path(os.path.join('data', 'fonts', self.langs.get(text)))
+            else:
+                self.ids.output_box.font_name = MDApp.get_running_app().app_font
         Clock.schedule_once(lambda dt: self.initiate_translator(), 0)
 
     def initiate_translator(self, *args):
