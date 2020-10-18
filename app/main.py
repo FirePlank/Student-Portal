@@ -25,6 +25,7 @@ resource_add_path(resource_path(os.path.join('data', 'database')))
 resource_add_path(resource_path(os.path.join('screens', 'wikipedia')))
 resource_add_path(resource_path(os.path.join('screens', 'mainmenu')))
 resource_add_path(resource_path(os.path.join('screens', 'translator')))
+resource_add_path(resource_path(os.path.join('screens', 'youtube')))
 
 
 class StudentPortal(MDApp):
@@ -43,25 +44,22 @@ class StudentPortal(MDApp):
 
     def build(self):
         if getattr(sys, 'frozen', False):
-            from app.screens import mainmenu, wikipedia, notebook, translation
+            from app.screens import mainmenu, wikipedia, notebook, translation, youtube
         else:
-            from screens import mainmenu, wikipedia, notebook, translation
-
-        self.mainmenu_module = mainmenu
-        self.wikipedia_module = wikipedia
-        self.notebook_module = notebook
-        self.translation_module = translation
+            from screens import mainmenu, wikipedia, notebook, translation, youtube
 
         self.root = ScreenManager()
-        self.mainmenu = self.mainmenu_module.MainMenu()
-        self.wikipedia = self.wikipedia_module.Wikipedia()
-        self.notebook = self.notebook_module.Notebook()
-        self.translation = self.translation_module.Translation()
+        self.mainmenu = mainmenu.MainMenu()
+        self.wikipedia = wikipedia.Wikipedia()
+        self.notebook = notebook.Notebook()
+        self.translation = translation.Translation()
+        self.youtube = youtube.Youtube()
         self.screens = {
             'mainmenu': self.mainmenu,
             'wikipedia': self.wikipedia,
             'notebook': self.notebook,
-            'translation': self.translation
+            'translation': self.translation,
+            'youtube': self.youtube,
         }
         self.root.switch_to(self.mainmenu)
         return self.root

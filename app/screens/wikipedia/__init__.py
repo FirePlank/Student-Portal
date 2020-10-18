@@ -16,7 +16,6 @@ class Wikipedia(MDScreen):
 
 
 class WikipediaBackend():
-
     def __init__(self, keyword):
         self.keyword = keyword
         self.S = requests.Session()
