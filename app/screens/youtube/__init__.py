@@ -1,50 +1,41 @@
 from youtubesearchpython import SearchVideos
 import json
+from kivymd.uix.screen import MDScreen
+from kivymd.uix.card import MDCard
+from kivy.properties import NumericProperty
+from kivymd.toast import toast
+from kivymd.uix.behaviors import HoverBehavior
+from kivymd.theming import ThemableBehavior
+from kivy.uix.button import Button
+import webbrowser
 
 
-class YoutubeSearch:
-    def __init__(self, keyword):
-        self.keyword = keyword
-        self.result = json.loads(SearchVideos(self.keyword, offset=1, mode="json", max_results=10).result())["search_result"]
+class Youtube(MDScreen):
+    def search(self, query):
+        self.ids.scroll_box.clear_widgets()
+        self.results = json.loads(SearchVideos(query, offset=1, mode="json", max_results=10).result())["search_result"]
+        for result in self.results:
+            result_widget = ResultCard()
+            result_widget.ids.thumbnail.source = str(result.get('thumbnails')[0])
+            result_widget.ids.video_name.text = str(result.get('title'))
+            result_widget.ids.channel_name.text = str(result.get('channel'))
+            result_widget.ids.video_duration.text = str(result.get('duration'))
+            result_widget.ids.video_views.text = str(result.get('views')) + ' views'
+            result_widget.link = str(result.get('link'))
+            self.ids.scroll_box.add_widget(result_widget)
+    def open_in_browser(self, result_widget):
+        webbrowser.open(result_widget.link)
 
-    def links(self):
-        links = []
-        for i in self.result:
-            links.append(i["link"])
-        return links
 
-    def titles(self):
-        titles = []
-        for i in self.result:
-            titles.append(i["title"])
-        return titles
+class ResultCard(MDCard):
+    pass
 
-    def channels(self):
-        channels = []
-        for i in self.result:
-            channels.append(i["channel"])
-        return channels
 
-    def durations(self):
-        durations = []
-        for i in self.result:
-            durations.append(i["duration"])
-        return durations
+class OpenButton(Button, ThemableBehavior, HoverBehavior):
+    canvas_opacity = NumericProperty(0)
 
-    def views(self):
-        views = []
-        for i in self.result:
-            views.append(i["views"])
-        return views
+    def on_enter(self, *args):
+        self.canvas_opacity = 1
 
-    def thumbnails(self):
-        thumbnails = []
-        for i in self.result:
-            thumbnails.append(i["thumbnails"][0])
-        return thumbnails
-
-    def all(self):
-        everything=[]
-        for i in self.result:
-            everything.append([i["channel"], i["title"], i["link"], i["duration"], i["views"], i["thumbnails"][0]])
-        return everything
+    def on_leave(self, *args):
+        self.canvas_opacity = 0

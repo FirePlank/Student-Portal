@@ -1,0 +1,153 @@
+#:import Window kivy.core.window.Window
+
+<Youtube>:
+    name: 'youtube'
+    id: youtubescreen
+    md_bg_color: app.bg_color
+    FloatLayout:
+        id: box_root
+        ScrollView:
+            id: scroller
+            smooth_scroll_end: 10
+            bar_width: 10
+            scroll_type: ['bars', 'content']
+            bar_inactive_color: self.bar_color
+            effect_cls : 'ScrollEffect'
+            scroll_distance: dp((Window.height/720)*20)
+            scroll_wheel_distance: dp((Window.height/720)*30)
+            size_hint: (0.8, 0.6)
+            pos_hint: {'x': 0.1, 'y': 0.05}
+            StackLayout:
+                id: scroll_box
+                size_hint: (1, None)
+                height: self.minimum_height
+                padding: dp(20)
+                spacing: dp(20)
+        HoverIconButton:
+            icon: 'arrow-left-bold'
+            theme_text_color: 'Custom'
+            text_color: app.title_text_color
+            user_font_size: str((Window.height/720)*80) + 'sp'
+            width: self.height
+            pos_hint: {'x': 0.09, 'y': 0.83}
+            on_release:
+                app.switch_screen('mainmenu', 'left')
+        MDLabel:
+            text: 'Youtube'
+            font_name: app.app_font
+            theme_text_color: 'Custom'
+            text_color: app.title_text_color
+            halign: 'center'
+            valign: 'middle'
+            font_size: str((Window.height/720)*60) + 'sp'
+            pos_hint: {'y': 0.4}
+        TextInput:
+            id: searchbar
+            font_name: app.app_font
+            multiline: False
+            size_hint: (0.6, 0.06)
+            font_size: str((Window.height/720)*30) + 'sp'
+            pos_hint: {'x': 0.2, 'y': 0.7}
+            foreground_color: app.text_color
+            background_color: app.tile_color
+            background_normal: 'atlas://data/images/defaulttheme/textinput_active'
+            padding: [6, self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 6, 0]
+            cursor_color: app.accent_color
+            cursor_width: app.cursor_width
+        HoverIconButton:
+            icon: 'magnify'
+            user_font_size: str((Window.height/720)*30) + 'sp'
+            theme_text_color: 'Custom'
+            text_color: app.title_text_color
+            pos_hint: {'x': 0.805, 'y': 0.694}
+            on_release:
+                root.search(searchbar.text)
+
+<ResultCard>:
+    orientation: 'vertical'
+    size_hint: (1, None)
+    height: Window.height/4
+    MDBoxLayout:
+        id: box_top
+        md_bg_color: app.tile_color
+        spacing: dp(20*Window.width/1080)
+        size_hint: (1, 0.7)
+        padding: dp(10)
+        AsyncImage:
+            id: thumbnail
+            source: os.path.join(app.mainmenu_icons, 'youtube.png')
+            size_hint: 0.2, 1
+        MDSeparator:
+            orientation: 'vertical'
+            color: app.text_color
+        MDBoxLayout:
+            id: title
+            orientation: 'vertical'
+            spacing: dp(10*Window.height/720)
+            size_hint: 0.7, 1
+            MDLabel:
+                id: video_name
+                text: "My video name"
+                theme_text_color: 'Custom'
+                text_color: app.text_color
+                font_name: app.app_font
+                font_size: str((Window.height/720)*25) + 'sp'
+                bold: True
+            MDLabel:
+                id: channel_name
+                text: "My channel"
+                theme_text_color: 'Custom'
+                text_color: app.text_color
+                font_name: app.app_font
+                font_size: str((Window.height/720)*20) + 'sp'
+    MDSeparator:
+        color: app.text_color
+    MDBoxLayout:
+        id: box_bottom
+        size_hint: (1, 0.3)
+        md_bg_color: app.tile_color
+        spacing: dp(20*Window.width/1080)
+        padding: dp(10)
+        MDLabel:
+            id: video_duration
+            text: "05:00"
+            theme_text_color: 'Custom'
+            text_color: app.text_color
+            font_name: app.app_font
+            font_size: str((Window.height/720)*20) + 'sp'
+            size_hint: 0.2, 1
+            halign: 'center'
+        MDSeparator:
+            orientation: 'vertical'
+            spacing: dp(10*Window.height/720)
+            color: app.text_color
+        MDBoxLayout:
+            size_hint: 0.7, 1
+            spacing: dp(10*Window.height/720)
+            MDLabel:
+                id: video_views
+                text: "sqrt(-1) views"
+                theme_text_color: 'Custom'
+                text_color: app.text_color
+                font_name: app.app_font
+                font_size: str((Window.height/720)*20) + 'sp'
+            OpenButton:
+                text: "Open in Browser"
+                size_hint: (0.6, 1)
+                on_release:
+                    root.parent.parent.parent.parent.open_in_browser(root)
+
+<OpenButton>:
+    canvas.before:
+        Color:
+            id: line_color
+            rgba: app.accent_color[:-1]+[root.canvas_opacity]
+        Line:
+            width: 2
+            rectangle: self.x-dp((Window.height/720)*2), self.y-dp((Window.height/720)*2), self.width+dp((Window.height/720)*4), self.height+dp((Window.height/720)*4)
+    font_name: app.app_font
+    color: app.text_color
+    background_normal: ''
+    background_down: ''
+    background_color: app.raised_button_color
+    font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'

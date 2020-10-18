@@ -43,6 +43,9 @@
                 CustomIconButton:
                     display_icon: 'youtube.png'
                     icon_text: '[b]Youtube[/b]'
+                    on_release:
+                        app.switch_screen('youtube', 'right')
+                        self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'translation.png'
                     icon_text: '[b]Translation[/b]'
