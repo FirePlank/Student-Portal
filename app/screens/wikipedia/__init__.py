@@ -7,7 +7,6 @@ from ..modules import sql_operator
 from datetime import datetime
 
 
-
 class Wikipedia(MDScreen):
     def search(self, query):
         if query.strip() == "":
