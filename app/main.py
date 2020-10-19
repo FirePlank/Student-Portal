@@ -1,24 +1,26 @@
-# --- APP ---
-from kivy.config import Config
-Config.set('graphics','width',1280)
-Config.set('graphics','height',720)
-Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
-from kivy.core.window import Window
-Window.clearcolor = (71/255, 93/255, 102/255, 1)
-from kivymd.app import MDApp
-from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, WipeTransition
-
-# --- TOOLS ---
 import os
 import sys
-import json
-from kivy.resources import resource_add_path
-from kivy.properties import ListProperty, StringProperty, NumericProperty
+
+from kivy.config import Config
+Config.set('graphics', 'width', 1280)
+Config.set('graphics', 'height', 720)
+Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
+Config.write()
+
 if getattr(sys, 'frozen', False):
     from app.screens.modules import resource_path
+    os.environ["KIVY_NO_CONSOLELOG"] = "1"
 else:
     from screens.modules import resource_path
+
+import kivy
+kivy.require('2.0.0')
+
+from kivymd.app import MDApp
+from kivy.uix.screenmanager import ScreenManager
+from kivy.resources import resource_add_path
+from kivy.properties import ListProperty, StringProperty, NumericProperty
+
 resource_add_path(resource_path(os.path.join('data', 'logo')))
 resource_add_path(resource_path(os.path.join('data', 'fonts')))
 resource_add_path(resource_path(os.path.join('data', 'database')))
@@ -38,7 +40,7 @@ class StudentPortal(MDApp):
     text_color = ListProperty([0, 0, 0, 1])
     title_text_color = ListProperty([1, 1, 1, 1])
     accent_color = ListProperty([0.5, 0.7, 0.5, 1])
-    app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'JetBrainsMono', 'JetBrainsMono-Regular.ttf')))
+    app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'ArialUnicode', 'arial-unicode-ms.ttf')))
     mainmenu_icons = StringProperty(resource_path(os.path.join('data', 'icons_dark')))
     cursor_width = NumericProperty(3)
 
@@ -62,6 +64,7 @@ class StudentPortal(MDApp):
             'youtube': self.youtube,
         }
         self.root.switch_to(self.mainmenu)
+        self.unlock_dark_mode()
         return self.root
 
     def switch_screen(self, screen_name, direction='left'):

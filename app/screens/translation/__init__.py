@@ -53,7 +53,7 @@ class Translation(MDScreen):
         'hawaiian': '',
         'hebrew': '',
         'hebrew': '',
-        'hindi': os.path.join('NotoSans', 'NotoSans-Regular.ttf'),
+        'hindi': '',
         'hmong': '',
         'hungarian': '',
         'icelandic': '',
@@ -80,7 +80,7 @@ class Translation(MDScreen):
         'malayalam': '',
         'maltese': '',
         'maori': '',
-        'marathi': os.path.join('NotoSans', 'NotoSans-Regular.ttf'),
+        'marathi': '',
         'mongolian': '',
         'myanmar (burmese)': '',
         'nepali': '',
@@ -171,17 +171,12 @@ class Translation(MDScreen):
 
     def translate(self, text, from_lang, to_lang, dt):
         if text != '':
-            print('TEXT: '+ str(text))
-            print('FROM LANG: '+ from_lang)
-            print('TO LANG: '+ to_lang)
             if from_lang == 'detect language' or from_lang == None:
-                print("detect")
                 try:
                     self.ids.output_box.text = self.translator.translate(text, dest=to_lang).text
                 except Exception as e:
                     toast('An Error occured. Check your internet connection.\n' + f'Error: {str(e)}'.center(max(len(f'Error: {str(e)}'), len('An Error occured. Check your internet connection.'))), duration=5)
             else:
-                print("don't detect")
                 try:
                     self.ids.output_box.text = self.translator.translate(text, src=from_lang, dest=to_lang).text
                 except Exception as e:

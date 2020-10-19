@@ -27,7 +27,6 @@ class Youtube(MDScreen):
             result_widget.link = str(result.get('link'))
             self.ids.scroll_box.add_widget(result_widget)
 
-        
         create_table_query = """
         CREATE TABLE IF NOT EXISTS youtube_history(
             unique_id INTEGER PRIMARY KEY AUTOINCREMENT,

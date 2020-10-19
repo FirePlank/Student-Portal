@@ -21,7 +21,6 @@ class sql_operator:
             if not os.path.isdir(self.PATH):
                 os.makedirs(self.PATH)
             self.PATH = os.path.join(self.PATH, 'user_db.sqlite')
-            print(self.PATH)
         else:
             self.PATH = os.path.join('data', 'database', 'user_db.sqlite')
 
@@ -29,7 +28,6 @@ class sql_operator:
         connection = None
         try:
             connection = sqlite3.connect(self.PATH, timeout=10)
-            print("Connected successfully")
         except Error as e:
             print(e)
         return connection
@@ -40,7 +38,6 @@ class sql_operator:
         try:
             cursor.execute(query)
             connection.commit()
-            print("Executed the query successfully")
         except Error as e:
             print(e)
 
@@ -54,7 +51,6 @@ class sql_operator:
             cursor.execute(query)
             result = cursor.fetchall()
             connection.commit()
-            print("Executed the read query successfully")
             return result
         except Error as e:
             print(e)
