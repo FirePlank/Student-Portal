@@ -3,6 +3,9 @@ from kivymd.toast import toast
 from ..widgets.hover_icon_button import HoverIconButton
 import requests
 from kivymd.app import MDApp
+from ..modules import sql_operator
+from datetime import datetime
+
 
 
 class Wikipedia(MDScreen):
@@ -18,6 +21,8 @@ class Wikipedia(MDScreen):
 class WikipediaBackend():
     def __init__(self, keyword):
         self.keyword = keyword
+        self.OPERATOR = sql_operator()
+        self.DATE = datetime.now().strftime('%c')
         self.S = requests.Session()
 
         self.URL = "https://en.wikipedia.org/w/api.php"
@@ -32,10 +37,30 @@ class WikipediaBackend():
             "exintro": 1,
             "explaintext": True
         }
+
+        create_table_query = """
+        CREATE TABLE IF NOT EXISTS wikipedia_history(
+            unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            search_word TEXT NOT NULL,
+            search_date TEXT NOT NULL
+        );
+        """
+        self.OPERATOR.execute_query(create_table_query)
+
         try:
             self.R = self.S.get(url=self.URL, params=self.PARAMS)
             self.DATA = self.R.json()["query"]["pages"]
             self.DATA = self.DATA[[i for i in self.DATA][0]]
+
+            add_keyword_query = f"""
+            INSERT INTO
+                wikipedia_history(search_word, search_date)
+            VALUES
+                ('{self.keyword}', '{self.DATE}')
+            """
+
+            self.OPERATOR.execute_query(add_keyword_query)
+
         except:
             self.DATA=None
 
@@ -51,6 +76,7 @@ class WikipediaBackend():
                 title=self.DATA["title"]
                 url=self.DATA["fullurl"]
                 summary=self.DATA["extract"]
+
                 return f"{' '*(56-round(len(title)/2))}{title}\n\n" + summary[:2000] + ('...' if len(summary) > 2000 else '')
             except:
                 if self.keyword.lower() == "fireplank":
