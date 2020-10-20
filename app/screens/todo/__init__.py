@@ -3,7 +3,7 @@ from kivymd.uix.screen import MDScreen
 from kivy.properties import NumericProperty
 from ..widgets.hover_icon_button import HoverIconButton
 from ..widgets.hover_flat_button import HoverFlatButton
-from kivy.uix.gridlayout import GridLayout
+from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.toast import toast
 
 
@@ -72,7 +72,7 @@ class ToDo(MDScreen):
         self.initialize_tasks()
 
 
-class Task(GridLayout):
+class Task(MDGridLayout):
     status = NumericProperty()
 
 
