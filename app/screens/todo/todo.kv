@@ -1,13 +1,13 @@
 #:import Window kivy.core.window.Window
 
-<Notebook>:
-    name: 'notebook'
-    id: notebookscreen
+<ToDo>:
+    name: 'todo'
+    id: todoscreen
     md_bg_color: app.bg_color
     FloatLayout:
         id: box_root
         MDLabel:
-            text: 'Notebook'
+            text: 'To-do'
             font_name: app.app_font
             theme_text_color: 'Custom'
             text_color: app.title_text_color
@@ -49,84 +49,80 @@
             user_font_size: str((Window.height/720)*80) + 'sp'
             pos_hint: {'x': 0.8, 'y': 0.83}
             on_release:
-                root.add_note()
+                root.add_task()
 
-<Note>:
+<Task>:
     canvas.before:
         Color:
             rgba: app.tile_color
         Rectangle:
             pos: (self.x, self.y)
             size: (self.width, self.height)
+    cols: 1
     size_hint: (1, None)
-    height: Window.height/3
-    TitleInput:
+    height: self.minimum_height
+    padding: dp(10*Window.height/720)
+    spacing: dp(10*Window.height/720)
+    TextInput:
         id: title
         font_name: app.app_font
-        multiline: False
-        size_hint: (0.35, 0.12)
+        size_hint: (1, None)
+        height: self.minimum_height
         font_size: str((Window.height/720)*20) + 'sp'
-        pos_hint: {'x': 0.02, 'y': 0.76}
         foreground_color: app.text_color
         background_color: app.tile_color
-        padding: [6, self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 6, 0]
-        readonly: True
+        readonly: False
         cursor_color: app.accent_color
         cursor_blink: False
         cursor_width: app.cursor_width
         background_normal: 'atlas://data/images/defaulttheme/textinput_active'
-    MDLabel:
-        id: date
-        font_name: app.app_font
-        size_hint: (0.2, 0.12)
-        theme_text_color: 'Custom'
-        text_color: app.text_color
-        valign: 'middle'
-        font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'
-        pos_hint: {'x': 0.4, 'y': 0.76}
-    HoverFlatButton:
-        id: edit_button
-        text: "EDIT"
-        pos_hint: {'x': 0.555, 'y': 0.76}
-        size_hint: (0.11, 0.12)
-        on_release:
-            root.parent.parent.parent.parent.edit_note(root)
-    HoverFlatButton:
-        id: delete_button
-        text: "DELETE"
-        pos_hint: {'x': 0.682, 'y': 0.76}
-        size_hint: (0.11, 0.12)
-        disabled: False
-        on_release:
-            root.parent.parent.parent.parent.delete_note(root)
-    HoverFlatButton:
-        id: updatedate_button
-        text: "UPDATE DATE"
-        pos_hint: {'x': 0.808, 'y': 0.76}
-        size_hint: (0.17, 0.12)
-        disabled: False
-        on_release:
-            root.parent.parent.parent.parent.update_date(root)
-    ScrollView:
-        bar_width: 10
-        scroll_type: ['bars', 'content']
-        bar_inactive_color: self.bar_color
-        size_hint: (0.96, 0.65) 
-        pos_hint: {'x': 0.02, 'y': 0.05}
-        effect_cls : 'ScrollEffect'
-        TextInput:
-            id: body
-            font_name: app.app_font
-            font_size: str((Window.height/720)*15) + 'sp'
-            foreground_color: app.text_color
-            background_color: app.tile_color
-            readonly: True
-            cursor_color: app.accent_color
-            cursor_blink: False
-            background_normal: 'atlas://data/images/defaulttheme/textinput_active'
-            size_hint: 1, None
-            height: max(self.minimum_height, self.parent.height)
-            cursor_width: app.cursor_width
+        readonly: True
+    GridLayout:
+        cols: 3
+        size_hint: (1, None)
+        height: self.minimum_height
+        spacing: dp(20*Window.width/1080)
+        AnchorLayout:
+            size_hint_y: None
+            height: dp((Window.height/720)*25)
+            HoverFlatButton:
+                id: edit_button
+                text: 'EDIT TASK'
+                size_hint: (1, 1)
+                on_release:
+                    root.parent.parent.parent.parent.edit_task(root)
+        BoxLayout:
+            size_hint_y: None
+            height: dp((Window.height/720)*25)
+            spacing: dp(20*Window.width/1080)
+            MDLabel:
+                id: task_status
+                text: 'Task done!' if root.status else 'Task remaining'
+                font_name: app.app_font
+                size_hint: (0.7, 1)
+                theme_text_color: 'Custom'
+                text_color: app.text_color
+                valign: 'middle'
+                halign: 'center'
+                font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'
+            HoverIconButton:
+                id: task_status_button
+                size_hint: (0.2, 1)
+                icon: 'close-circle-outline' if root.status else 'check-circle-outline'
+                theme_text_color: "Custom"
+                text_color: app.text_color
+                user_font_size: str((Window.height/720)*25) + 'sp'
+                on_release:
+                    root.parent.parent.parent.parent.update_status(root)
+        AnchorLayout:
+            size_hint_y: None
+            height: dp((Window.height/720)*25)
+            HoverFlatButton:
+                id: delete_button
+                text: 'DELETE TASK'
+                size_hint: (1, 1)
+                on_release:
+                    root.parent.parent.parent.parent.delete_task(root)
 
 <HoverFlatButton>:
     font_name: app.app_font
@@ -134,4 +130,4 @@
     background_normal: ''
     background_down: ''
     background_color: app.raised_button_color
-    font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'
+    font_size: str(min((Window.height/720)*18, (Window.width/1080)*18)) + 'sp'

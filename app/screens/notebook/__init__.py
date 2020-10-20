@@ -1,6 +1,7 @@
 from ..modules import sql_operator
 from datetime import datetime
 from ..widgets.hover_icon_button import HoverIconButton
+from ..widgets.hover_flat_button import HoverFlatButton
 from kivymd.uix.screen import MDScreen
 from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import BooleanProperty
@@ -109,16 +110,6 @@ class TitleInput(TextInput):
         TextInput.insert_text(self, substring, from_undo)
 
 
-class NoteButton(Button, ThemableBehavior, HoverBehavior):
-    canvas_opacity = NumericProperty(0)
-
-    def on_enter(self, *args):
-        self.canvas_opacity = 1
-
-    def on_leave(self, *args):
-        self.canvas_opacity = 0
-
-
 class NotebookBackend():
     def __init__(self):
         self.OPERATOR = sql_operator()
@@ -136,8 +127,6 @@ class NotebookBackend():
         title = data.get('title')
         body = data.get('body')
         creation_time = datetime.now().strftime("%x")
-        
-        check_existence = f"SELECT unique_id FROM notebook;"
 
         add_note_in_table = f"""
         INSERT INTO

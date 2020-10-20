@@ -55,6 +55,9 @@
                 CustomIconButton:
                     display_icon: 'todo.png'
                     icon_text: '[b]To-do[/b]'
+                    on_release:
+                        app.switch_screen('todo', 'right')
+                        self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'notebook.png'
                     icon_text: '[b]Notebook[/b]'
