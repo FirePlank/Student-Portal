@@ -3,11 +3,10 @@ import json
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.card import MDCard
 from kivy.properties import NumericProperty
-from kivymd.uix.behaviors import HoverBehavior
-from kivymd.theming import ThemableBehavior
-from kivy.uix.button import Button
 import webbrowser
 from ..modules import sql_operator
+from ..widgets.hover_icon_button import HoverIconButton
+from ..widgets.hover_flat_button import HoverFlatButton
 from datetime import datetime
 
 
@@ -52,13 +51,3 @@ class Youtube(MDScreen):
 
 class ResultCard(MDCard):
     pass
-
-
-class OpenButton(Button, ThemableBehavior, HoverBehavior):
-    canvas_opacity = NumericProperty(0)
-
-    def on_enter(self, *args):
-        self.canvas_opacity = 1
-
-    def on_leave(self, *args):
-        self.canvas_opacity = 0
