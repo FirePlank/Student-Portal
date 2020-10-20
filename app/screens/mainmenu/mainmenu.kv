@@ -35,43 +35,43 @@
                 adaptive_size: True
                 spacing: (10*(box.width/box.height)**3, 40)
                 CustomIconButton:
-                    display_icon: 'wikipedia.png'
+                    display_icon: 'wikipedia'
                     icon_text: '[b]Wikipedia[/b]'
                     on_release:
                         app.switch_screen('wikipedia', 'left')
                         self.canvas_opacity = 0
                 CustomIconButton:
-                    display_icon: 'youtube.png'
+                    display_icon: 'youtube'
                     icon_text: '[b]Youtube[/b]'
                     on_release:
                         app.switch_screen('youtube', 'right')
                         self.canvas_opacity = 0
                 CustomIconButton:
-                    display_icon: 'translation.png'
+                    display_icon: 'google-translate'
                     icon_text: '[b]Translation[/b]'
                     on_release:
                         app.switch_screen('translation', 'left')
                         self.canvas_opacity = 0
                 CustomIconButton:
-                    display_icon: 'todo.png'
+                    display_icon: 'calendar-check-outline'
                     icon_text: '[b]To-do[/b]'
                     on_release:
                         app.switch_screen('todo', 'right')
                         self.canvas_opacity = 0
                 CustomIconButton:
-                    display_icon: 'notebook.png'
+                    display_icon: 'notebook'
                     icon_text: '[b]Notebook[/b]'
                     on_release:
                         app.switch_screen('notebook', 'right')
                         self.canvas_opacity = 0
                 CustomIconButton:
-                    display_icon: 'books.png'
+                    display_icon: 'bookshelf'
                     icon_text: '[b]Books[/b]'
                 CustomIconButton:
-                    display_icon: 'about.png'
+                    display_icon: 'information'
                     icon_text: '[b]About[/b]'
                 CustomIconButton:
-                    display_icon: 'settings.png'
+                    display_icon: 'application-settings'
                     icon_text: '[b]Settings[/b]'
 
 <CustomIconButton>:
@@ -84,16 +84,18 @@
             size: (self.width, self.height)
     height: self.parent.parent.height/3
     width: self.height*1.4
-    display_icon: 'settings.png'
+    display_icon: 'settings'
     icon_text: ''
     BoxLayout:
         size_hint: (1, 1)
         orientation: 'vertical'
-        Image:
-            source: os.path.join(app.mainmenu_icons, root.display_icon)
-            size_hint_y: 0.7
-            width: self.height
-            pos_hint: {'x': 0, 'y': 0.16}
+        MDIcon:
+            icon: root.display_icon
+            theme_text_color: 'Custom'
+            text_color: app.title_text_color
+            font_size: str((Window.height/720)*90) + 'sp'
+            halign: 'center'
+            valign: 'middle'
         MDLabel:
             text: root.icon_text
             theme_text_color: 'Custom'
