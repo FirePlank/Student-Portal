@@ -42,7 +42,6 @@ class StudentPortal(MDApp):
     title_text_color = ListProperty([1, 1, 1, 1])
     accent_color = ListProperty([0.5, 0.7, 0.5, 1])
     app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'ArialUnicode', 'arial-unicode-ms.ttf')))
-    mainmenu_icons = StringProperty(resource_path(os.path.join('data', 'icons_dark')))
     cursor_width = NumericProperty(3)
 
     def build(self):
