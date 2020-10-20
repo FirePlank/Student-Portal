@@ -3,7 +3,7 @@ from datetime import datetime
 from ..widgets.hover_icon_button import HoverIconButton
 from ..widgets.hover_flat_button import HoverFlatButton
 from kivymd.uix.screen import MDScreen
-from kivy.uix.floatlayout import FloatLayout
+from kivymd.uix.gridlayout import MDGridLayout
 from kivy.properties import BooleanProperty
 from kivymd.toast import toast
 from kivymd.uix.behaviors import HoverBehavior
@@ -98,7 +98,7 @@ class Notebook(MDScreen):
         self.initialize_notes()
 
 
-class Note(FloatLayout):
+class Note(MDGridLayout):
     pass
 
 
