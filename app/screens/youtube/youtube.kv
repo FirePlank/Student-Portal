@@ -132,20 +132,13 @@
                 text_color: app.text_color
                 font_name: app.app_font
                 font_size: str((Window.height/720)*20) + 'sp'
-            OpenButton:
+            HoverFlatButton:
                 text: "Open in Browser"
                 size_hint: (0.6, 1)
                 on_release:
                     root.parent.parent.parent.parent.open_in_browser(root)
 
-<OpenButton>:
-    canvas.before:
-        Color:
-            id: line_color
-            rgba: app.accent_color[:-1]+[root.canvas_opacity]
-        Line:
-            width: 2
-            rectangle: self.x-dp((Window.height/720)*2), self.y-dp((Window.height/720)*2), self.width+dp((Window.height/720)*4), self.height+dp((Window.height/720)*4)
+<HoverFlatButton>:
     font_name: app.app_font
     color: app.text_color
     background_normal: ''
