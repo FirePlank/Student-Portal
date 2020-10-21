@@ -2,7 +2,6 @@ from youtubesearchpython import SearchVideos
 import json
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.card import MDCard
-from kivy.properties import NumericProperty
 import webbrowser
 from ..modules import sql_operator
 from ..widgets.hover_icon_button import HoverIconButton
@@ -15,7 +14,7 @@ class Youtube(MDScreen):
         self.OPERATOR = sql_operator()
         self.DATE = datetime.now().strftime("%c")
         self.ids.scroll_box.clear_widgets()
-        self.results = json.loads(SearchVideos(query, offset=1, mode="json", max_results=10).result())["search_result"]
+        self.results = json.loads(SearchVideos(query.strip(), offset=1, mode="json", max_results=10).result())["search_result"]
         for result in self.results:
             result_widget = ResultCard()
             result_widget.ids.thumbnail.source = str(result.get('thumbnails')[0])

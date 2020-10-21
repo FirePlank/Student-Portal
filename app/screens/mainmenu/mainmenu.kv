@@ -67,6 +67,9 @@
                 CustomIconButton:
                     display_icon: 'bookshelf'
                     icon_text: '[b]Books[/b]'
+                    on_release:
+                        app.switch_screen('books', 'left')
+                        self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'information'
                     icon_text: '[b]About[/b]'
