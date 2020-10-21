@@ -71,7 +71,7 @@
                     display_icon: 'information'
                     icon_text: '[b]About[/b]'
                 CustomIconButton:
-                    display_icon: 'application-settings'
+                    display_icon: 'cog'
                     icon_text: '[b]Settings[/b]'
 
 <CustomIconButton>:
@@ -84,7 +84,7 @@
             size: (self.width, self.height)
     height: self.parent.parent.height/3
     width: self.height*1.4
-    display_icon: 'settings'
+    display_icon: ''
     icon_text: ''
     BoxLayout:
         size_hint: (1, 1)
@@ -92,7 +92,7 @@
         MDIcon:
             icon: root.display_icon
             theme_text_color: 'Custom'
-            text_color: app.title_text_color
+            text_color: app.text_color
             font_size: str((Window.height/720)*90) + 'sp'
             halign: 'center'
             valign: 'middle'
@@ -100,7 +100,7 @@
             text: root.icon_text
             theme_text_color: 'Custom'
             text_color: app.text_color
-            font_size: str((Window.height/720)*16) + 'sp'
+            font_size: str((Window.height/720)*20) + 'sp'
             halign: 'center'
             font_name: app.app_font
             bold: True
