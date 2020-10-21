@@ -33,6 +33,7 @@ resource_add_path(resource_path(os.path.join('screens', 'mainmenu')))
 resource_add_path(resource_path(os.path.join('screens', 'translator')))
 resource_add_path(resource_path(os.path.join('screens', 'youtube')))
 resource_add_path(resource_path(os.path.join('screens', 'todo')))
+resource_add_path(resource_path(os.path.join('screens', 'books')))
 
 
 class StudentPortal(MDApp):
@@ -50,9 +51,9 @@ class StudentPortal(MDApp):
 
     def build(self):
         if getattr(sys, 'frozen', False):
-            from app.screens import mainmenu, wikipedia, notebook, translation, youtube, todo
+            from app.screens import mainmenu, wikipedia, notebook, translation, youtube, todo, books
         else:
-            from screens import mainmenu, wikipedia, notebook, translation, youtube, todo
+            from screens import mainmenu, wikipedia, notebook, translation, youtube, todo, books
 
         self.root = ScreenManager()
         self.mainmenu = mainmenu.MainMenu()
@@ -61,13 +62,15 @@ class StudentPortal(MDApp):
         self.translation = translation.Translation()
         self.youtube = youtube.Youtube()
         self.todo = todo.ToDo()
+        self.books = books.Books()
         self.screens = {
             'mainmenu': self.mainmenu,
             'wikipedia': self.wikipedia,
             'notebook': self.notebook,
             'translation': self.translation,
             'youtube': self.youtube,
-            'todo': self.todo
+            'todo': self.todo,
+            'books': self.books
         }
         self.root.switch_to(self.mainmenu)
         self.unlock_dark_mode()

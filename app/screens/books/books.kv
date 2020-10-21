@@ -1,8 +1,8 @@
 #:import Window kivy.core.window.Window
 
-<Youtube>:
-    name: 'youtube'
-    id: youtubescreen
+<Books>:
+    name: 'books'
+    id: booksscreen
     md_bg_color: app.bg_color
     GridLayout:
         cols: 1
@@ -18,10 +18,10 @@
                     text_color: app.title_text_color
                     user_font_size: str((Window.height/720)*80) + 'sp'
                     on_release:
-                        app.switch_screen('mainmenu', 'left')
+                        app.switch_screen('mainmenu', 'right')
                         scroller.scroll_y = 1
             MDLabel:
-                text: 'Youtube'
+                text: 'Books'
                 font_name: app.app_font
                 theme_text_color: 'Custom'
                 text_color: app.title_text_color
@@ -75,7 +75,7 @@
                     padding: dp(20)
                     spacing: dp(20)
 
-<ResultCard>:
+<BookCard>:
     orientation: 'vertical'
     size_hint: 1, None
     height: Window.height/3.5
@@ -86,7 +86,7 @@
         size_hint: 1, 0.7
         padding: dp(10*Window.height/720)
         AsyncImage:
-            id: thumbnail
+            id: cover
             source: ''
             size_hint: 0.25, 1
             allow_stretch: True
@@ -100,16 +100,16 @@
             spacing: dp(10*Window.height/720)
             size_hint: 0.75, 1
             MDLabel:
-                id: video_name
-                text: "My video name"
+                id: book_name
+                text: "My Book name"
                 theme_text_color: 'Custom'
                 text_color: app.text_color
                 font_name: app.app_font
-                font_size: str((Window.height/720)*22) + 'sp'
+                font_size: str((Window.height/720)*20) + 'sp'
                 bold: True
             MDLabel:
-                id: channel_name
-                text: "My channel"
+                id: author_name
+                text: "My name"
                 theme_text_color: 'Custom'
                 text_color: app.text_color
                 font_name: app.app_font
@@ -122,32 +122,10 @@
         md_bg_color: app.tile_color
         spacing: dp(20*Window.width/1080)
         padding: dp(10*Window.height/720)
-        MDLabel:
-            id: video_duration
-            text: "05:00"
-            theme_text_color: 'Custom'
-            text_color: app.text_color
-            font_name: app.app_font
-            font_size: str((Window.height/720)*20) + 'sp'
-            size_hint: 0.25, 1
-            halign: 'right'
-        MDSeparator:
-            orientation: 'vertical'
-            spacing: dp(10*Window.height/720)
-            color: app.text_color
-        MDBoxLayout:
-            size_hint: 0.75, 1
-            spacing: dp(10*Window.height/720)
-            MDLabel:
-                id: video_views
-                text: "sqrt(-1) views"
-                theme_text_color: 'Custom'
-                text_color: app.text_color
-                font_name: app.app_font
-                font_size: str((Window.height/720)*20) + 'sp'
+        AnchorLayout:
             HoverFlatButton:
                 text: "Open in Browser"
-                size_hint: (0.6, 1)
+                size_hint: (0.2, 1)
                 on_release:
                     root.parent.parent.parent.parent.parent.open_in_browser(root)
 
