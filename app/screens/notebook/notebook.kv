@@ -7,7 +7,7 @@
     GridLayout:
         cols: 1
         id: box_root
-        padding: dp(min(Window.height/720*20, Window.width/1080*20))
+        padding: dp(min(Window.height/720*20, Window.width/1280*20))
         spacing: dp(20*Window.height/720)
         BoxLayout:
             size_hint: (1, 0.2)
@@ -61,20 +61,20 @@
     cols: 1
     size_hint: (1, None)
     height: self.minimum_height
-    padding: dp(min(Window.height/720*20, Window.width/1080*20))
+    padding: dp(min(Window.height/720*20, Window.width/1280*20))
     spacing: dp(15*Window.height/720)
     GridLayout:
         rows: 1
         size_hint: (1, None)
         height: self.minimum_height
-        spacing: dp(10*Window.width/1080)
+        spacing: dp(10*Window.width/1280)
         TitleInput:
             id: title
             font_name: app.app_font
             multiline: False
             size_hint: (0.5, None)
             height: self.minimum_height
-            font_size: str(min(Window.height/720*20, Window.width/1080*20)) + 'sp'
+            font_size: str(min(Window.height/720*20, Window.width/1280*20)) + 'sp'
             foreground_color: app.text_color
             background_color: app.tile_color
             readonly: True
@@ -89,7 +89,7 @@
             theme_text_color: 'Custom'
             text_color: app.text_color
             halign: 'center'
-            font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'
+            font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'
         HoverFlatButton:
             id: edit_button
             text: "EDIT"
@@ -115,7 +115,7 @@
         size_hint: (1, None)
         height: self.minimum_height 
         font_name: app.app_font
-        font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'
+        font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'
         foreground_color: app.text_color
         background_color: app.tile_color
         readonly: True
@@ -131,4 +131,4 @@
     background_normal: ''
     background_down: ''
     background_color: app.raised_button_color
-    font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'
+    font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'

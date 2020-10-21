@@ -42,7 +42,7 @@ class Books(MDScreen):
 
         add_keyword_query = f"""
         INSERT INTO
-            youtube_history(search_word, search_date)
+            books_history(search_word, search_date)
         VALUES
             ('{query}', '{self.DATE}')
         """

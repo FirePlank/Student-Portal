@@ -7,7 +7,7 @@
     GridLayout:
         cols: 1
         id: box_root
-        padding: dp(min(Window.height/720*20, Window.width/1080*20))
+        padding: dp(min(Window.height/720*20, Window.width/1280*20))
         spacing: dp(20*Window.height/720)
         BoxLayout:
             size_hint: (1, 0.2)
@@ -82,7 +82,7 @@
     MDBoxLayout:
         id: box_top
         md_bg_color: app.tile_color
-        spacing: dp(20*Window.width/1080)
+        spacing: dp(20*Window.width/1280)
         size_hint: 1, 0.7
         padding: dp(10*Window.height/720)
         AsyncImage:
@@ -120,7 +120,7 @@
         id: box_bottom
         size_hint: (1, 0.3)
         md_bg_color: app.tile_color
-        spacing: dp(20*Window.width/1080)
+        spacing: dp(20*Window.width/1280)
         padding: dp(10*Window.height/720)
         AnchorLayout:
             HoverFlatButton:
@@ -135,4 +135,4 @@
     background_normal: ''
     background_down: ''
     background_color: app.raised_button_color
-    font_size: str(min((Window.height/720)*20, (Window.width/1080)*20)) + 'sp'
+    font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'
