@@ -132,10 +132,10 @@ class Translation(MDScreen):
         from_lang = DropDown(bar_width=10, scroll_type=['bars', 'content'], effect_cls='ScrollEffect', smooth_scroll_end=10)
         from_lang.bar_inactive_color = from_lang.bar_color
         for lang in list(self.langs.keys()):
-            btn = DropDownButton(text=lang, size_hint_y=None)
+            btn = DropDownButton(text=lang.title(), size_hint_y=None)
             btn.bind(on_release=lambda btn: from_lang.select(btn.text))
             from_lang.add_widget(btn)
-        self.mainbutton_from_lang = DropDownButton(text='detect language ↓', size_hint=(0.9, 0.8))
+        self.mainbutton_from_lang = DropDownButton(text='Detect Language ↓', size_hint=(0.9, 0.8))
         self.mainbutton_from_lang.bind(on_release=from_lang.open)
         from_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_from_lang, x, 'input'))
         self.ids.from_lang.add_widget(self.mainbutton_from_lang)
@@ -144,21 +144,16 @@ class Translation(MDScreen):
         to_lang = DropDown(bar_width=10, scroll_type=['bars', 'content'], effect_cls='ScrollEffect', smooth_scroll_end=10)
         to_lang.bar_inactive_color = to_lang.bar_color
         for lang in list(self.langs.keys())[1:]:
-            btn = DropDownButton(text=lang, size_hint_y=None)
+            btn = DropDownButton(text=lang.title(), size_hint_y=None)
             btn.bind(on_release=lambda btn: to_lang.select(btn.text))
             to_lang.add_widget(btn)
-        self.mainbutton_to_lang = DropDownButton(text='english ↓', size_hint=(0.9, 0.8))
+        self.mainbutton_to_lang = DropDownButton(text='English ↓', size_hint=(0.9, 0.8))
         self.mainbutton_to_lang.bind(on_release=to_lang.open)
         to_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_to_lang, x, 'output'))
         self.ids.to_lang.add_widget(self.mainbutton_to_lang)
 
     def lang_changed(self, button, text, context):
-        setattr(button, 'text', text+' ↓')
-        if context == 'output':
-            if self.langs.get(text) != '': 
-                self.ids.output_box.font_name = self.resource_path(os.path.join('data', 'fonts', self.langs.get(text)))
-            else:
-                self.ids.output_box.font_name = MDApp.get_running_app().app_font
+        setattr(button, 'text', text.title()+' ↓')
         Clock.schedule_once(lambda dt: self.initiate_translator(), 0)
 
     def initiate_translator(self, *args):
@@ -167,7 +162,7 @@ class Translation(MDScreen):
             self.realtime_translator.cancel()
         except Exception as e:
             print(e)
-        self.realtime_translator = Clock.schedule_once(partial(self.translate, self.ids.input_box.text.strip(), self.mainbutton_from_lang.text[:-2], self.mainbutton_to_lang.text[:-2]), 1)
+        self.realtime_translator = Clock.schedule_once(partial(self.translate, self.ids.input_box.text.strip(), self.mainbutton_from_lang.text[:-2].lower(), self.mainbutton_to_lang.text[:-2].lower()), 1)
 
     def translate(self, text, from_lang, to_lang, dt):
         if text != '':
