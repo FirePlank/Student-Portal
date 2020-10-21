@@ -20,6 +20,8 @@ from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager
 from kivy.resources import resource_add_path
 from kivy.properties import ListProperty, StringProperty, NumericProperty
+from kivy.core.window import Window
+Window.minimum_width, Window.minimum_height = Window.size
 
 resource_add_path(resource_path(os.path.join('data', 'logo')))
 resource_add_path(resource_path(os.path.join('data', 'fonts')))
