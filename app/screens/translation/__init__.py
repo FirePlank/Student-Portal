@@ -129,27 +129,26 @@ class Translation(MDScreen):
         from .. import resource_path
         self.resource_path = resource_path
 
-        from_lang = DropDown(bar_width=10, scroll_type=['bars', 'content'], effect_cls='ScrollEffect', smooth_scroll_end=10)
-        from_lang.bar_inactive_color = from_lang.bar_color
+        self.from_lang = DropDown(bar_width=10, scroll_type=['bars', 'content'], effect_cls='ScrollEffect', smooth_scroll_end=10)
+        self.from_lang.bar_inactive_color = self.from_lang.bar_color
         for lang in list(self.langs.keys()):
             btn = DropDownButton(text=lang.title(), size_hint_y=None)
-            btn.bind(on_release=lambda btn: from_lang.select(btn.text))
-            from_lang.add_widget(btn)
+            btn.bind(on_release=lambda btn: self.from_lang.select(btn.text))
+            self.from_lang.add_widget(btn)
         self.mainbutton_from_lang = DropDownButton(text='Detect Language ↓', size_hint=(0.9, 0.8))
-        self.mainbutton_from_lang.bind(on_release=from_lang.open)
-        from_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_from_lang, x, 'input'))
+        self.mainbutton_from_lang.bind(on_release=self.from_lang.open)
+        self.from_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_from_lang, x, 'input'))
         self.ids.from_lang.add_widget(self.mainbutton_from_lang)
-        self.mainbutton_from_lang.pos_x = self.mainbutton_from_lang.parent.width-self.mainbutton_from_lang.width - 5
 
-        to_lang = DropDown(bar_width=10, scroll_type=['bars', 'content'], effect_cls='ScrollEffect', smooth_scroll_end=10)
-        to_lang.bar_inactive_color = to_lang.bar_color
+        self.to_lang = DropDown(bar_width=10, scroll_type=['bars', 'content'], effect_cls='ScrollEffect', smooth_scroll_end=10)
+        self.to_lang.bar_inactive_color = self.to_lang.bar_color
         for lang in list(self.langs.keys())[1:]:
             btn = DropDownButton(text=lang.title(), size_hint_y=None)
-            btn.bind(on_release=lambda btn: to_lang.select(btn.text))
-            to_lang.add_widget(btn)
+            btn.bind(on_release=lambda btn: self.to_lang.select(btn.text))
+            self.to_lang.add_widget(btn)
         self.mainbutton_to_lang = DropDownButton(text='English ↓', size_hint=(0.9, 0.8))
-        self.mainbutton_to_lang.bind(on_release=to_lang.open)
-        to_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_to_lang, x, 'output'))
+        self.mainbutton_to_lang.bind(on_release=self.to_lang.open)
+        self.to_lang.bind(on_select=lambda instance, x: self.lang_changed(self.mainbutton_to_lang, x, 'output'))
         self.ids.to_lang.add_widget(self.mainbutton_to_lang)
 
     def lang_changed(self, button, text, context):
