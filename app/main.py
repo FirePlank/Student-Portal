@@ -5,7 +5,7 @@ from kivy.config import Config
 Config.set('graphics', 'width', 1280)
 Config.set('graphics', 'height', 720)
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
-Config.write()
+Config.set('graphics', 'multisamples', '0')
 
 if getattr(sys, 'frozen', False):
     from app.screens.modules import resource_path
@@ -46,7 +46,7 @@ class StudentPortal(MDApp):
     text_color = ListProperty([0, 0, 0, 1])
     title_text_color = ListProperty([1, 1, 1, 1])
     accent_color = ListProperty([0.5, 0.7, 0.5, 1])
-    app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'ArialUnicode', 'arial-unicode-ms.ttf')))
+    app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'Code2000', 'CODE2000.ttf')))
     cursor_width = NumericProperty(3)
 
     def build(self):
