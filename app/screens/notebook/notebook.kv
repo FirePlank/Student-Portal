@@ -19,6 +19,7 @@
                     user_font_size: str((Window.height/720)*80) + 'sp'
                     on_release:
                         app.switch_screen('mainmenu', 'left')
+                        self.canvas_opacity = 0
                         root.cleanup()
                         scroller.scroll_y = 1
             MDLabel:

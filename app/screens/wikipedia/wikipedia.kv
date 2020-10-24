@@ -19,6 +19,7 @@
                     user_font_size: str((Window.height/720)*80) + 'sp'
                     on_release:
                         app.switch_screen('mainmenu', 'right')
+                        self.canvas_opacity = 0
             MDLabel:
                 text: 'Wikipedia'
                 font_name: app.app_font
