@@ -1,5 +1,3 @@
-#:import utils kivy.utils
-#:import os os
 #:import Window kivy.core.window.Window
 
 <MainMenu>:
@@ -23,7 +21,7 @@
                 text_color: app.title_text_color
                 halign: 'center'
                 valign: 'center'
-                font_size: str((box.height/720)*50) + 'sp'
+                font_size: str((Window.height/720)*50) + 'sp'
         AnchorLayout:
             id: anchor_buttons
             size_hint: (1, 1)
@@ -33,7 +31,7 @@
                 id: grid
                 cols: 4
                 adaptive_size: True
-                spacing: (10*(box.width/box.height)**3, 40)
+                spacing: (10*(Window.width/Window.height)**3, 40)
                 CustomIconButton:
                     display_icon: 'wikipedia'
                     icon_text: '[b]Wikipedia[/b]'
@@ -53,11 +51,8 @@
                         app.switch_screen('translation', 'left')
                         self.canvas_opacity = 0
                 CustomIconButton:
-                    display_icon: 'calendar-check-outline'
-                    icon_text: '[b]To-do[/b]'
-                    on_release:
-                        app.switch_screen('todo', 'right')
-                        self.canvas_opacity = 0
+                    display_icon: 'information'
+                    icon_text: '[b]About[/b]'
                 CustomIconButton:
                     display_icon: 'notebook'
                     icon_text: '[b]Notebook[/b]'
@@ -71,8 +66,11 @@
                         app.switch_screen('books', 'left')
                         self.canvas_opacity = 0
                 CustomIconButton:
-                    display_icon: 'information'
-                    icon_text: '[b]About[/b]'
+                    display_icon: 'calendar-check-outline'
+                    icon_text: '[b]To-do[/b]'
+                    on_release:
+                        app.switch_screen('todo', 'right')
+                        self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'cog'
                     icon_text: '[b]Settings[/b]'
@@ -85,7 +83,7 @@
         Rectangle:
             pos: (self.x, self.y)
             size: (self.width, self.height)
-    height: self.parent.parent.height/3
+    height: Window.height/4.5
     width: self.height*1.4
     display_icon: ''
     icon_text: ''
@@ -98,12 +96,11 @@
             text_color: app.text_color
             font_size: str((Window.height/720)*90) + 'sp'
             halign: 'center'
-            valign: 'middle'
         MDLabel:
             text: root.icon_text
             theme_text_color: 'Custom'
             text_color: app.text_color
-            font_size: str((Window.height/720)*20) + 'sp'
+            font_size: str((Window.height/720)*25) + 'sp'
             halign: 'center'
             font_name: app.app_font
             bold: True

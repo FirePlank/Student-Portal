@@ -112,7 +112,7 @@
                 root.parent.parent.parent.parent.parent.update_date(root)
     TextInput:
         id: body
-        size_hint: (1, None)
+        size_hint: 1, None
         height: self.minimum_height 
         font_name: app.app_font
         font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'
@@ -122,7 +122,6 @@
         cursor_color: app.accent_color
         cursor_blink: False
         background_normal: 'atlas://data/images/defaulttheme/textinput_active'
-        size_hint: 1, None
         cursor_width: app.cursor_width
 
 <HoverFlatButton>:

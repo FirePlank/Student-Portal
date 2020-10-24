@@ -10,7 +10,7 @@ class HoverFlatButton(Button, ThemableBehavior, HoverBehavior):
     canvas_opacity = NumericProperty(0)
 
     def on_enter(self, *args):
-        self.canvas_opacity = 1
+        self.canvas_opacity = 1 if not self.disabled else 0
 
     def on_leave(self, *args):
         self.canvas_opacity = 0

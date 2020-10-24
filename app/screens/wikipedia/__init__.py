@@ -5,6 +5,7 @@ import requests
 from kivymd.app import MDApp
 from ..modules import sql_operator
 from datetime import datetime
+from kivy.lang import Builder
 
 
 class Wikipedia(MDScreen):
@@ -115,3 +116,6 @@ But other than the name he's a skilled programmer in both frontend and backend. 
         else:
             toast('Not Connected to the internet.', duration=1)
             return 'Please check your internet connection.'
+
+
+Builder.load_file('wikipedia.kv')
