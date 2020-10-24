@@ -88,11 +88,18 @@
             HoverFlatButton:
                 id: edit_button
                 text: 'EDIT TASK'
-                size_hint: (1, 1)
                 on_release:
                     root.parent.parent.parent.parent.parent.edit_task(root)
         AnchorLayout:
-            anchor_x: 'right'
+            anchor_x: 'left'
+            size_hint_y: None
+            height: dp((Window.height/720)*25)
+            HoverFlatButton:
+                id: task_status_button
+                text: 'COMPLETE TASK' if not root.status else 'UNDO TASK'
+                on_release:
+                    root.parent.parent.parent.parent.parent.update_status(root)
+        AnchorLayout:
             size_hint_y: None
             height: dp((Window.height/720)*25)
             MDLabel:
@@ -106,25 +113,11 @@
                 halign: 'center'
                 font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'
         AnchorLayout:
-            anchor_x: 'left'
-            size_hint_y: None
-            height: dp((Window.height/720)*25)
-            HoverIconButton:
-                id: task_status_button
-                size_hint: (None, None)
-                icon: 'close-circle-outline' if root.status else 'check-circle-outline'
-                theme_text_color: "Custom"
-                text_color: app.text_color
-                user_font_size: str((Window.height/720)*25) + 'sp'
-                on_release:
-                    root.parent.parent.parent.parent.parent.update_status(root)
-        AnchorLayout:
             size_hint_y: None
             height: dp((Window.height/720)*25)
             HoverFlatButton:
                 id: delete_button
                 text: 'DELETE TASK'
-                size_hint: (1, 1)
                 on_release:
                     root.parent.parent.parent.parent.parent.delete_task(root)
 

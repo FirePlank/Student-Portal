@@ -7,6 +7,7 @@ from ..modules import sql_operator
 from ..widgets.hover_icon_button import HoverIconButton
 from ..widgets.hover_flat_button import HoverFlatButton
 from datetime import datetime
+from kivy.lang import Builder
 
 
 class Youtube(MDScreen):
@@ -50,3 +51,6 @@ class Youtube(MDScreen):
 
 class ResultCard(MDCard):
     pass
+
+
+Builder.load_file('youtube.kv')

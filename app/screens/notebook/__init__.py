@@ -11,6 +11,7 @@ from kivymd.theming import ThemableBehavior
 from kivy.uix.button import Button
 from kivy.properties import NumericProperty
 from kivy.uix.textinput import TextInput
+from kivy.lang import Builder
 
 
 class Notebook(MDScreen):
@@ -193,3 +194,6 @@ class NotebookBackend():
         """
 
         self.OPERATOR.execute_query(edit_query)
+
+
+Builder.load_file('notebook.kv')

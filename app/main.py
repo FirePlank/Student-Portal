@@ -5,13 +5,6 @@ from kivy.config import Config
 Config.set('graphics', 'width', 1280)
 Config.set('graphics', 'height', 720)
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
-Config.set('graphics', 'multisamples', '0')
-
-if getattr(sys, 'frozen', False):
-    from app.screens.modules import resource_path
-    os.environ["KIVY_NO_CONSOLELOG"] = "1"
-else:
-    from screens.modules import resource_path
 
 import kivy
 kivy.require('2.0.0')
@@ -23,14 +16,23 @@ from kivy.properties import ListProperty, StringProperty, NumericProperty
 from kivy.core.window import Window
 from kivy import utils
 from kivy.clock import Clock
-Window.minimum_width, Window.minimum_height = Window.size
+Window.minimum_width, Window.minimum_height = (720, 480)
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(os.path.dirname(sys.argv[0]))
+
+    return os.path.join(base_path, relative_path)
 
 resource_add_path(resource_path(os.path.join('data', 'logo')))
 resource_add_path(resource_path(os.path.join('data', 'fonts')))
 resource_add_path(resource_path(os.path.join('data', 'database')))
 resource_add_path(resource_path(os.path.join('screens', 'wikipedia')))
 resource_add_path(resource_path(os.path.join('screens', 'mainmenu')))
-resource_add_path(resource_path(os.path.join('screens', 'translator')))
+resource_add_path(resource_path(os.path.join('screens', 'notebook')))
+resource_add_path(resource_path(os.path.join('screens', 'translation')))
 resource_add_path(resource_path(os.path.join('screens', 'youtube')))
 resource_add_path(resource_path(os.path.join('screens', 'todo')))
 resource_add_path(resource_path(os.path.join('screens', 'books')))

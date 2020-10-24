@@ -9,6 +9,7 @@ from ..widgets.hover_icon_button import HoverIconButton
 from ..widgets.hover_flat_button import HoverFlatButton
 from datetime import datetime
 from kivymd.toast import toast
+from kivy.lang import Builder
 
 
 class Books(MDScreen):
@@ -79,3 +80,6 @@ class BooksBackend():
         except Exception as e:
             print(e)
             toast('An Error occured. Check your internet connection.\n' + f'Error: {str(e)}'.center(min(len(f'Error: {str(e)}'), len('An Error occured. Check your internet connection.'))), duration=3)
+
+
+Builder.load_file('books.kv')

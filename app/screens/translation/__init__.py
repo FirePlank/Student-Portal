@@ -10,6 +10,7 @@ from kivy.clock import Clock
 from kivymd.toast import toast
 from functools import partial
 import os
+from kivy.lang import Builder
 
 
 class Translation(MDScreen):
@@ -126,8 +127,6 @@ class Translation(MDScreen):
     translator = Translator()
     def __init__(self, **kwargs):
         super().__init__()
-        from .. import resource_path
-        self.resource_path = resource_path
 
         self.from_lang = DropDown(bar_width=10, scroll_type=['bars', 'content'], effect_cls='ScrollEffect', smooth_scroll_end=10)
         self.from_lang.bar_inactive_color = self.from_lang.bar_color
@@ -187,3 +186,6 @@ class DropDownButton(Button, ThemableBehavior, HoverBehavior):
 
     def on_leave(self, *args):
         self.canvas_opacity = 0
+
+
+Builder.load_file('translation.kv')

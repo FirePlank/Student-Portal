@@ -5,6 +5,7 @@ from ..widgets.hover_icon_button import HoverIconButton
 from ..widgets.hover_flat_button import HoverFlatButton
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.toast import toast
+from kivy.lang import Builder
 
 
 class ToDo(MDScreen):
@@ -154,3 +155,6 @@ class ToDoBackend():
         """
 
         self.OPERATOR.execute_query(edit_query)
+
+
+Builder.load_file('todo.kv')
