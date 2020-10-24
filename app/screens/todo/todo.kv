@@ -20,6 +20,7 @@
                     on_release:
                         app.switch_screen('mainmenu', 'left')
                         root.cleanup()
+                        self.canvas_opacity = 0
                         scroller.scroll_y = 1
             MDLabel:
                 text: 'To-do'
