@@ -21,7 +21,7 @@
                 text_color: app.title_text_color
                 halign: 'center'
                 valign: 'center'
-                font_size: str((Window.height/720)*50) + 'sp'
+                font_size: str((Window.height/720)*60) + 'sp'
         AnchorLayout:
             id: anchor_buttons
             size_hint: (1, 1)
@@ -74,6 +74,9 @@
                 CustomIconButton:
                     display_icon: 'cog'
                     icon_text: '[b]Settings[/b]'
+                    on_release:
+                        app.switch_screen('settings', 'left')
+                        self.canvas_opacity = 0
 
 <CustomIconButton>:
     id: menubutton

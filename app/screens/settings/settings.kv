@@ -1,0 +1,31 @@
+#:import Window kivy.core.window.Window
+
+<Settings>:
+    name: 'settings'
+    id: settingsscreen
+    md_bg_color: app.bg_color
+    GridLayout:
+        cols: 1
+        id: box_root
+        padding: dp(min(Window.height/720*20, Window.width/1280*20))
+        spacing: dp(20*Window.height/720)
+        BoxLayout:
+            size_hint: (1, 0.2)
+            AnchorLayout:
+                HoverIconButton:
+                    icon: 'arrow-left-bold'
+                    theme_text_color: 'Custom'
+                    text_color: app.title_text_color
+                    user_font_size: str((Window.height/720)*80) + 'sp'
+                    on_release:
+                        app.switch_screen('mainmenu', 'right')
+                        self.canvas_opacity = 0
+            MDLabel:
+                text: 'Settings'
+                font_name: app.app_font
+                theme_text_color: 'Custom'
+                text_color: app.title_text_color
+                halign: 'center'
+                valign: 'middle'
+                font_size: str((Window.height/720)*60) + 'sp'
+            AnchorLayout:
