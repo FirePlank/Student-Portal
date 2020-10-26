@@ -13,6 +13,7 @@ from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager
 from kivy.resources import resource_add_path
 from kivy.properties import ListProperty, StringProperty, NumericProperty
+from kivy.animation import Animation
 from kivy.core.window import Window
 from kivy import utils
 from kivy.clock import Clock
@@ -37,6 +38,7 @@ resource_add_path(resource_path(os.path.join('screens', 'youtube')))
 resource_add_path(resource_path(os.path.join('screens', 'todo')))
 resource_add_path(resource_path(os.path.join('screens', 'books')))
 resource_add_path(resource_path(os.path.join('screens', 'settings')))
+resource_add_path(resource_path(os.path.join('screens', 'about')))
 
 
 class StudentPortal(MDApp):
@@ -54,9 +56,9 @@ class StudentPortal(MDApp):
 
     def build(self):
         if getattr(sys, 'frozen', False):
-            from app.screens import mainmenu, wikipedia, notebook, translation, youtube, todo, books, settings
+            from app.screens import mainmenu, wikipedia, notebook, translation, youtube, todo, books, settings, about
         else:
-            from screens import mainmenu, wikipedia, notebook, translation, youtube, todo, books, settings
+            from screens import mainmenu, wikipedia, notebook, translation, youtube, todo, books, settings, about
 
         self.root = ScreenManager()
         self.mainmenu = mainmenu.MainMenu()
@@ -67,6 +69,7 @@ class StudentPortal(MDApp):
         self.todo = todo.ToDo()
         self.books = books.Books()
         self.settings = settings.Settings()
+        self.about = about.About()
         self.screens = {
             'mainmenu': self.mainmenu,
             'wikipedia': self.wikipedia,
@@ -75,7 +78,8 @@ class StudentPortal(MDApp):
             'youtube': self.youtube,
             'todo': self.todo,
             'books': self.books,
-            'settings': self.settings
+            'settings': self.settings,
+            'about': self.about
         }
         self.root.switch_to(self.mainmenu)
         self.unlock_dark_mode()
@@ -112,18 +116,42 @@ class StudentPortal(MDApp):
 
     def color_theme_party(self):
         self.color_theme = 'party'
-        try:
-            self.party_update.cancel()
-        except:
-            pass
-        def update_colors(self):
-            self.bg_color = list(utils.get_random_color(alpha=0.6))
-            self.tile_color = list(utils.get_random_color(alpha=0.6))
-            self.raised_button_color = list(utils.get_random_color(alpha=0.6))
-            self.text_color = list(utils.get_random_color(alpha=0.6))
-            self.title_text_color = list(utils.get_random_color(alpha=0.6))
-            self.accent_color = list(utils.get_random_color(alpha=0.6))
-        self.party_update = Clock.schedule_interval(lambda dt, a=self: update_colors(a), 0.2)
+        self.bg_color = list(utils.get_random_color())
+        self.tile_color = list(utils.get_random_color())
+        self.raised_button_color = list(utils.get_random_color())
+        self.text_color = list(utils.get_random_color())
+        self.title_text_color = list(utils.get_random_color())
+        self.accent_color = list(utils.get_random_color())
+        def update_bg_anim(self):
+            self.bg_color_animation = Animation(bg_color=utils.get_random_color(), duration=4.)
+            self.bg_color_animation.bind(on_complete=lambda idk, a=self: update_bg_anim(a))
+            self.bg_color_animation.start(self)
+        update_bg_anim(self)
+        def update_tile_anim(self):
+            self.tile_color_animation = Animation(tile_color=utils.get_random_color(), duration=4.)
+            self.tile_color_animation.bind(on_complete=lambda idk, a=self: update_tile_anim(a))
+            self.tile_color_animation.start(self)
+        update_tile_anim(self)
+        def update_raised_button_anim(self):
+            self.raised_button_color_animation = Animation(raised_button_color=utils.get_random_color(), duration=4.)
+            self.raised_button_color_animation.bind(on_complete=lambda idk, a=self: update_raised_button_anim(a))
+            self.raised_button_color_animation.start(self)
+        update_raised_button_anim(self)
+        def update_text_anim(self):
+            self.text_color_animation = Animation(text_color=utils.get_random_color(), duration=4.)
+            self.text_color_animation.bind(on_complete=lambda idk, a=self: update_text_anim(a))
+            self.text_color_animation.start(self)
+        update_text_anim(self)
+        def update_title_text_anim(self):
+            self.title_text_color_animation = Animation(title_text_color=utils.get_random_color(), duration=4.)
+            self.title_text_color_animation.bind(on_complete=lambda idk, a=self: update_title_text_anim(a))
+            self.title_text_color_animation.start(self)
+        update_title_text_anim(self)
+        def update_accent_anim(self):
+            self.accent_color_animation = Animation(accent_color=utils.get_random_color(), duration=4.)
+            self.accent_color_animation.bind(on_complete=lambda idk, a=self: update_accent_anim(a))
+            self.accent_color_animation.start(self)
+        update_accent_anim(self)
 
 
 if __name__ == '__main__':

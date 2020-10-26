@@ -10,6 +10,7 @@ from ..widgets.hover_flat_button import HoverFlatButton
 from datetime import datetime
 from kivymd.toast import toast
 from kivy.lang import Builder
+from ..widgets.custom_scroll import CustomScroll
 
 
 class Books(MDScreen):

@@ -1,0 +1,194 @@
+#:import Window kivy.core.window.Window
+
+<About>:
+    name: 'about'
+    id: aboutscreen
+    md_bg_color: app.bg_color
+    GridLayout:
+        cols: 1
+        id: box_root
+        padding: dp(min(Window.height/720*20, Window.width/1280*20))
+        spacing: dp(20*Window.height/720)
+        BoxLayout:
+            size_hint: (1, 0.2)
+            AnchorLayout:
+                HoverIconButton:
+                    icon: 'arrow-left-bold'
+                    theme_text_color: 'Custom'
+                    text_color: app.title_text_color
+                    user_font_size: str((Window.height/720)*80) + 'sp'
+                    on_release:
+                        app.switch_screen('mainmenu', 'left')
+                        self.canvas_opacity = 0
+            MDLabel:
+                text: 'About'
+                font_name: app.app_font
+                theme_text_color: 'Custom'
+                text_color: app.title_text_color
+                halign: 'center'
+                valign: 'middle'
+                font_size: str((Window.height/720)*60) + 'sp'
+            AnchorLayout:
+        AnchorLayout:
+            CustomScroll:
+                size_hint: (0.9, 1)
+                id: scroller
+                smooth_scroll_end: 10
+                bar_width: 10
+                scroll_type: ['bars', 'content']
+                bar_inactive_color: self.bar_color
+                effect_cls : 'ScrollEffect'
+                scroll_distance: dp((Window.height/720)*20)
+                scroll_wheel_distance: dp((Window.height/720)*30)
+                StackLayout:
+                    id: scroll_box
+                    size_hint: (1, None)
+                    height: self.minimum_height
+                    padding: dp(15), 0
+                    spacing: dp((Window.height/720)*20)
+                    AboutCard:
+                        title_text: 'General Information'
+                        md_bg_color: app.tile_color
+                        TextInput:
+                            id: body
+                            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat nibh nisl, non consequat ex finibus ut. Nam luctus sed lorem quis consectetur. Sed erat dui, mollis vel libero nec, sodales condimentum lorem. Fusce non eros volutpat, posuere justo non, dictum lacus. In eget fermentum nisl, sit amet aliquet urna. Praesent aliquet tellus lacus, eu vehicula nulla vulputate eget. Fusce vel mauris sit amet turpis eleifend mattis.'
+                            size_hint: 1, None
+                            readonly: True
+                            height: self.minimum_height
+                            font_name: app.app_font
+                            font_size: str((Window.height/720)*20) + 'sp'
+                            foreground_color: app.text_color
+                            background_color: app.tile_color
+                            cursor_color: [0, 0, 0, 0]
+                            background_normal: ''
+                            background_active: ''
+                    AboutCard:
+                        title_text: 'Front-end Information'
+                        md_bg_color: app.tile_color
+                        TextInput:
+                            id: body
+                            text: 'Sed et lorem non turpis rhoncus faucibus non sit amet libero. Fusce dapibus tincidunt turpis ut ultrices. Duis non auctor quam. Maecenas commodo aliquam nunc, at euismod elit euismod eu. Donec sed porta ligula, sit amet egestas ante. Donec sit amet justo sit amet lorem sodales mollis ut non lectus. Suspendisse luctus vitae risus nec varius. Curabitur congue neque id tincidunt tempus. Aliquam erat volutpat. Proin tincidunt tortor at lacus facilisis, ac vulputate neque lacinia. Duis nibh magna, malesuada vestibulum sapien in, consequat laoreet magna. Vestibulum at lobortis ex. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
+                            size_hint: 1, None
+                            readonly: True
+                            height: self.minimum_height
+                            font_name: app.app_font
+                            font_size: str((Window.height/720)*20) + 'sp'
+                            foreground_color: app.text_color
+                            background_color: app.tile_color
+                            cursor_color: [0, 0, 0, 0]
+                            background_normal: ''
+                            background_active: ''
+                    AboutCard:
+                        title_text: 'Back-end Information'
+                        md_bg_color: app.tile_color
+                        TextInput:
+                            id: body
+                            text: 'Quisque rhoncus justo neque, in egestas neque fringilla ut. Vivamus pretium massa et nisl vestibulum, non porta diam gravida. Vestibulum ex erat, volutpat vel felis sed, aliquet venenatis dui. Vestibulum nunc sapien, aliquet nec nisl eget, cursus varius diam. Donec ac finibus risus. Vestibulum sit amet egestas turpis. Curabitur tellus est, mattis non augue et, sagittis finibus felis. Phasellus erat lorem, tempus id elit at, tristique porttitor mauris. Nunc luctus risus a arcu dapibus lacinia. Nunc aliquet mollis sodales. Nam mattis lacinia ligula. Ut massa massa, gravida non scelerisque non, euismod et nulla. Morbi ut mollis ligula, nec feugiat ipsum. Quisque a tincidunt est, ac vehicula ipsum. Aliquam nec interdum risus, non hendrerit nulla.'
+                            size_hint: 1, None
+                            readonly: True
+                            height: self.minimum_height
+                            font_name: app.app_font
+                            font_size: str((Window.height/720)*20) + 'sp'
+                            foreground_color: app.text_color
+                            background_color: app.tile_color
+                            cursor_color: [0, 0, 0, 0]
+                            background_normal: ''
+                            background_active: ''
+                    AboutCard:
+                        title_text: 'Developers'
+                        md_bg_color: app.bg_color
+                        title_align: 'center'
+                        GridLayout:
+                            rows: 1
+                            size_hint: (1, None)
+                            height: self.minimum_height
+                            spacing: dp(10*Window.width/800)
+                            padding: dp(min(Window.height/720*30, Window.width/720*30))
+                            GridLayout:
+                                cols: 1
+                                size_hint: (1, None)
+                                height: self.minimum_height
+                                AsyncImage:
+                                    source: 'https://cdn.discordapp.com/avatars/655020762796654592/a_2d78f75a76c93ac1225246b9070aeb1e.png'
+                                    size_hint: 1, None
+                                    height: Window.height/10
+                                    allow_stretch: True
+                                    nocache: True
+                                TextInput:
+                                    text: 'FirePlank#4189'
+                                    size_hint: 1, None
+                                    readonly: True
+                                    height: self.minimum_height
+                                    font_name: app.app_font
+                                    font_size: str((Window.height/720)*20) + 'sp'
+                                    foreground_color: app.text_color
+                                    background_color: [0, 0, 0, 0]
+                                    cursor_color: [0, 0, 0, 0]
+                                    background_normal: ''
+                                    background_active: ''
+                                    halign: 'center'
+                            GridLayout:
+                                cols: 1
+                                size_hint: (1, None)
+                                height: self.minimum_height
+                                AsyncImage:
+                                    source: 'https://cdn.discordapp.com/avatars/498434604701843456/0283de2a943ee444fa61dc438fbb49fd.png?size=128'
+                                    size_hint: 1, None
+                                    height: Window.height/10
+                                    allow_stretch: True
+                                    nocache: True
+                                TextInput:
+                                    text: 'Saykat#8288'
+                                    size_hint: 1, None
+                                    readonly: True
+                                    height: self.minimum_height
+                                    font_name: app.app_font
+                                    font_size: str((Window.height/720)*20) + 'sp'
+                                    foreground_color: app.text_color
+                                    background_color: app.bg_color
+                                    background_color: [0, 0, 0, 0]
+                                    background_normal: ''
+                                    background_active: ''
+                                    halign: 'center'
+                            GridLayout:
+                                cols: 1
+                                size_hint: (1, None)
+                                height: self.minimum_height
+                                AsyncImage:
+                                    source: 'https://cdn.discordapp.com/avatars/398061543373406208/128bd64a584d9e3fefd6545863ac4836.png'
+                                    size_hint: 1, None
+                                    height: Window.height/10
+                                    allow_stretch: True
+                                    nocache: True
+                                TextInput:
+                                    text: 'KrYmZiN#0311'
+                                    size_hint: 1, None
+                                    readonly: True
+                                    height: self.minimum_height
+                                    font_name: app.app_font
+                                    font_size: str((Window.height/720)*20) + 'sp'
+                                    foreground_color: app.text_color
+                                    background_color: [0, 0, 0, 0]
+                                    cursor_color: [0, 0, 0, 0]
+                                    background_normal: ''
+                                    background_active: ''
+                                    halign: 'center'
+<AboutCard>:
+    cols: 1
+    title_text: 'category'
+    size_hint: (1, None)
+    height: self.minimum_height
+    title_align: 'left'
+    TextInput:
+        text: root.title_text
+        size_hint: 1, None
+        readonly: True
+        height: self.minimum_height
+        font_name: app.app_font
+        font_size: str((Window.height/720)*40) + 'sp'
+        foreground_color: app.text_color
+        background_color: [0, 0, 0, 0]
+        cursor_color: [0, 0, 0, 0]
+        background_normal: ''
+        background_active: ''
+        halign: root.title_align
