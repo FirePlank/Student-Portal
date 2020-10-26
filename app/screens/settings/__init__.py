@@ -62,8 +62,4 @@ class SettingsBackend:
 
 
 
-b = SettingsBackend()
-b.edit_settings("bg_color", "test")
-b.show_settings()
-
 Builder.load_file('settings.kv')
