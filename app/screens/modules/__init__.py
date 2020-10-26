@@ -3,6 +3,12 @@ from sqlite3 import Error
 import os
 from kivymd.app import MDApp
 
+
+def string_to_list(data_in):
+    data_out = data_in.replace('[', '').replace(']', '')
+    data_out = data_out.split(', ')
+    return data_out
+
 class sql_operator:
     def __init__(self):
         user_data_dir = getattr(MDApp.get_running_app(), 'user_data_dir')
