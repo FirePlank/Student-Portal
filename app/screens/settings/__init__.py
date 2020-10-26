@@ -3,7 +3,6 @@ from kivy.lang import Builder
 from ..modules import sql_operator, string_to_list
 
 
-
 class Settings(MDScreen):
 	pass
 
@@ -59,7 +58,6 @@ class SettingsBackend:
 		"""
 
 		self.OPERATOR.execute_query(update_query)
-
 
 
 Builder.load_file('settings.kv')

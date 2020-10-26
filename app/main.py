@@ -92,7 +92,7 @@ class StudentPortal(MDApp):
     def unlock_dark_mode(self):
         self.color_theme = 'dark'
         try:
-            self.party_update.cancel()
+            Animation.cancel_all(self)
         except:
             pass
         self.bg_color = [29/255, 29/255, 29/255, 1]
@@ -105,7 +105,7 @@ class StudentPortal(MDApp):
     def color_theme_normal(self):
         self.color_theme = 'normal'
         try:
-            self.party_update.cancel()
+            Animation.cancel_all(self)
         except:
             pass
         self.bg_color = [71/255, 93/255, 102/255, 1]
