@@ -8,6 +8,8 @@ from ..widgets.hover_icon_button import HoverIconButton
 from ..widgets.hover_flat_button import HoverFlatButton
 from datetime import datetime
 from kivy.lang import Builder
+from ..widgets.custom_scroll import CustomScroll
+from kivymd.uix.gridlayout import MDGridLayout
 
 
 class Youtube(MDScreen):
@@ -49,7 +51,7 @@ class Youtube(MDScreen):
         webbrowser.open(result_widget.link)
 
 
-class ResultCard(MDCard):
+class ResultCard(MDGridLayout):
     pass
 
 

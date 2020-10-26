@@ -53,6 +53,9 @@
                 CustomIconButton:
                     display_icon: 'information'
                     icon_text: '[b]About[/b]'
+                    on_release:
+                        app.switch_screen('about', 'right')
+                        self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'notebook'
                     icon_text: '[b]Notebook[/b]'

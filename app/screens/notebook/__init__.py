@@ -12,6 +12,7 @@ from kivy.uix.button import Button
 from kivy.properties import NumericProperty
 from kivy.uix.textinput import TextInput
 from kivy.lang import Builder
+from ..widgets.custom_scroll import CustomScroll
 
 
 class Notebook(MDScreen):

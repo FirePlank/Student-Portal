@@ -59,7 +59,7 @@
                         root.search(searchbar.text)
         AnchorLayout:
             size_hint: (1, 0.75)
-            ScrollView:
+            CustomScroll:
                 size_hint: (0.9, 1)
                 id: scroller
                 smooth_scroll_end: 10
@@ -73,11 +73,11 @@
                     id: scroll_box
                     size_hint: (1, None)
                     height: self.minimum_height
-                    padding: dp(20)
-                    spacing: dp(20)
+                    padding: dp(15), 0
+                    spacing: dp((Window.height/720)*20)
 
 <ResultCard>:
-    orientation: 'vertical'
+    cols: 1
     size_hint: 1, None
     height: Window.height/3.5
     MDBoxLayout:
@@ -131,7 +131,7 @@
             font_name: app.app_font
             font_size: str((Window.height/720)*20) + 'sp'
             size_hint: 0.25, 1
-            halign: 'right'
+            halign: 'center'
         MDSeparator:
             orientation: 'vertical'
             spacing: dp(10*Window.height/720)
