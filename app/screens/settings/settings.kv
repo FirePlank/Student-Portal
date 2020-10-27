@@ -20,6 +20,7 @@
                     on_release:
                         app.switch_screen('mainmenu', 'right')
                         self.canvas_opacity = 0
+                        scroller.scroll_y = 1
             MDLabel:
                 text: 'Settings'
                 font_name: app.app_font
@@ -30,13 +31,197 @@
                 font_size: str((Window.height/720)*60) + 'sp'
             AnchorLayout:
         AnchorLayout:
-            size_hint: (1, 1)
-            MDLabel:
-                size_hint_y: 0.8
-                text: 'Work in progress'
-                font_name: app.app_font
-                theme_text_color: 'Custom'
-                text_color: app.title_text_color
-                halign: 'center'
-                valign: 'middle'
-                font_size: str((Window.height/720)*60) + 'sp'
+            size_hint: (1, 0.75)
+            CustomScroll:
+                size_hint: (0.9, 1)
+                id: scroller
+                smooth_scroll_end: 10
+                bar_width: 10
+                scroll_type: ['bars', 'content']
+                bar_inactive_color: self.bar_color
+                effect_cls : 'ScrollEffect'
+                scroll_distance: dp((Window.height/720)*20)
+                scroll_wheel_distance: dp((Window.height/720)*30)
+                StackLayout:
+                    id: scroll_box
+                    size_hint: (1, None)
+                    height: self.minimum_height
+                    padding: dp(15), 0
+                    spacing: dp((Window.height/720)*20)
+                    MDGridLayout:
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+                        md_bg_color: app.tile_color
+                        padding: dp(10)
+                        spacing: dp((Window.height/720)*20)
+                        TextInput:
+                            id: appearance_label
+                            text: 'Appearance'
+                            size_hint: 1, None
+                            height: self.minimum_height
+                            font_name: app.app_font
+                            font_size: str((Window.height/720)*40) + 'sp'
+                            background_color: (0, 0, 0, 0)
+                            background_disabled_normal: ''
+                            disabled_foreground_color: app.text_color
+                            disabled: True
+                        GridLayout:
+                            id: appearance_settings
+                            cols: 1
+                            size_hint_y: None
+                            height: self.minimum_height
+                            spacing: dp((Window.height/720)*20)
+                            GridLayout:
+                                cols: 3
+                                size_hint_y: None
+                                height: self.minimum_height
+                                TextInput:
+                                    text: 'App theme'
+                                    size_hint: 1, None
+                                    height: self.minimum_height
+                                    font_name: app.app_font
+                                    font_size: str((Window.height/720)*20) + 'sp'
+                                    background_color: (0, 0, 0, 0)
+                                    background_disabled_normal: ''
+                                    disabled_foreground_color: app.text_color
+                                    disabled: True
+                                AnchorLayout:
+                                    id: theme
+                                AnchorLayout:
+                            GridLayout:
+                                cols: 3
+                                size_hint_y: None
+                                height: self.minimum_height
+                                TextInput:
+                                    text: 'Screen transition'
+                                    size_hint: 1, None
+                                    height: self.minimum_height
+                                    font_name: app.app_font
+                                    font_size: str((Window.height/720)*20) + 'sp'
+                                    background_color: (0, 0, 0, 0)
+                                    background_disabled_normal: ''
+                                    disabled_foreground_color: app.text_color
+                                    disabled: True
+                                AnchorLayout:
+                                    id: transition
+                                AnchorLayout:
+
+<DropDownButton>:
+    canvas.after:
+        Color:
+            id: line_color
+            rgba: app.accent_color[:-1]+[root.canvas_opacity]
+        Line:
+            width: 2
+            rectangle: self.x+1, self.y+1, self.width-2, self.height-2
+    font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'
+    font_name: app.app_font
+    background_normal: ''
+    background_down: ''
+    background_color: app.raised_button_color
+    color: app.text_color
+
+<ChooseColors>:
+    cols: 1
+    size_hint_y: None
+    height: self.minimum_height
+    padding: dp(15), 0
+    spacing: dp((Window.height/720)*20)
+    ColorField:
+        component: 'Background color:'
+        display_color: app.bg_color
+    ColorField:
+        component: 'Tile color:'
+        display_color: app.tile_color
+    ColorField:
+        component: 'Button background color:'
+        display_color: app.raised_button_color
+    ColorField:
+        component: 'Tile text color:'
+        display_color: app.text_color
+    ColorField:
+        component: 'Background text color:'
+        display_color: app.title_text_color
+    ColorField:
+        component: 'Accent color:'
+        display_color: app.accent_color
+
+<ColorField@GridLayout>:
+    cols: 3
+    size_hint_y: None
+    height: self.minimum_height
+    component: ''
+    display_color: (0, 0, 0, 0)
+    TextInput:
+        text: root.component
+        size_hint: 1, None
+        height: self.minimum_height
+        font_name: app.app_font
+        font_size: str((Window.height/720)*20) + 'sp'
+        background_color: (0, 0, 0, 0)
+        background_disabled_normal: ''
+        disabled_foreground_color: app.text_color
+        disabled: True
+    AnchorLayout:
+        size_hint_x: None
+        width: color_tile.width
+        Widget:
+            id: color_tile
+            size_hint_x: None
+            width: self.height
+            canvas:
+                Color:
+                    rgba: root.display_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            canvas.after:
+                Color:
+                    id: line_color
+                    rgba: app.accent_color
+                Line:
+                    width: 2
+                    rectangle: self.x-dp((Window.height/720)*2), self.y-dp((Window.height/720)*2), self.width+dp((Window.height/720)*4), self.height+dp((Window.height/720)*4)
+    AnchorLayout:
+        HoverFlatButton:
+            text: 'Edit'
+            size_hint_x: 0.6
+            on_release:
+                root.parent.parent.parent.parent.parent.parent.parent.parent.edit_color(root.component, root.display_color)
+
+<HoverFlatButton>:
+    font_name: app.app_font
+    color: app.text_color
+    background_normal: ''
+    background_down: ''
+    background_color: app.raised_button_color
+    font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'
+
+<PopupColorPicker>:
+    size: Window.size
+    BoxLayout:
+        padding: dp(15), 0
+        spacing: dp((Window.height/720)*20)
+        orientation: 'vertical'
+        ColorPicker:
+            id: picker
+            size_hint_y: 0.9
+            color: 0, 0, 0, 1
+        GridLayout:
+            cols: 2
+            size_hint_y: 0.1
+            AnchorLayout:
+                HoverFlatButton:
+                    size_hint_x: 0.8
+                    text: 'Close'
+                    on_release:
+                        print(picker.color)
+                        root.dismiss()
+            AnchorLayout:
+                HoverFlatButton:
+                    size_hint_x: 0.8
+                    text: 'Save'
+                    on_release:
+                        root.save_color()
+                        root.dismiss()
