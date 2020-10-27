@@ -53,47 +53,41 @@
                             id: body
                             text: 'Student Portal is an entry for the second "Timathon Code Jam" themed "For Students". This simple application contains several small modules which may or will help the student in day to day use. Each module has their specific use cases depending on what the student needs starting from a small todo list to searching something in the internet with the help of Wikipedia. test'
                             size_hint: 1, None
-                            readonly: True
                             height: self.minimum_height
                             font_name: app.app_font
                             font_size: str((Window.height/720)*20) + 'sp'
-                            foreground_color: app.text_color
-                            background_color: app.tile_color
-                            cursor_color: [0, 0, 0, 0]
-                            background_normal: ''
-                            background_active: ''
+                            background_color: (0, 0, 0, 0)
+                            background_disabled_normal: ''
+                            disabled_foreground_color: app.text_color
+                            disabled: True
                     AboutCard:
                         title_text: 'Front-end Information'
                         md_bg_color: app.tile_color
                         TextInput:
                             id: body
-                            text: 'All thanks to KrYmZiN for making this awesome GUI possible(I, Saykat will take the credits for designing the app tho :p).\nThis entire GUI is coded using kivy. To be honest, I never thought it is possible to make such good looking UI in python. :)'
+                            text: 'All thanks to KrYmZiN for making this awesome GUI possible (I, Saykat will take the credits for designing the app tho :p).\nThis entire GUI is coded using kivy. To be honest, I never thought it is possible to make such good looking UI in python. :)'
                             size_hint: 1, None
-                            readonly: True
                             height: self.minimum_height
                             font_name: app.app_font
                             font_size: str((Window.height/720)*20) + 'sp'
-                            foreground_color: app.text_color
-                            background_color: app.tile_color
-                            cursor_color: [0, 0, 0, 0]
-                            background_normal: ''
-                            background_active: ''
+                            background_color: (0, 0, 0, 0)
+                            background_disabled_normal: ''
+                            disabled_foreground_color: app.text_color
+                            disabled: True
                     AboutCard:
                         title_text: 'Back-end Information'
                         md_bg_color: app.tile_color
                         TextInput:
                             id: body
-                            text: 'Heart of the app. I contains several different modules coded my FirePlank and me(Saykat). Here are some brief information on how the modules were made and their use cases.\n\nWikipedia:\nAllows you to search something in the Wikipedia and get a small summary about that topic.\nIt was made using the MediaWiki API and python requests module.\n\nYouTube:\nSo, you went to YouTube to watch some lectures but got distracted by the suggestions in the homepage and started watching Minecraft? We have implemented the YouTube search feature here so that you can search for anything you would wish and then redirect you in your browser.\nIt was made using the youtubesearchpython module.\n\nTranslation:\nAs straight forward as it sounds. Wanna see the meaning of a foreign word you just encountered? Just type it out. Wanna see something cool? Try typing "unlock_da_party_mode" xD.\nIt was made using the googletrans module.\n\nBooks:\nBook is a treasure chest for any student. It contains immense amount of knowledge which can help anyone in life. But finding out a good book can a be challenge as well. That\'s why we implemented the ebook search feature. You can take help of this module to search of any book you wish.\nUsing API and python requests module.\n\nNotebook:\nKeeping notes is an important job for every student. To make the life of a student easier, we have added a simple notebook feature to keep note of important topics.\nMade using sqlite module and sqlite3 database to store the data.\n\nTodo:\nA student can often be forgetful about what to do next. A to do list can save the day.\nMade using sqlite module and sqlite3 database to store the data.\n\nSettings:\nAllows you to do cool customizations with the UI and displays the browsing history.\n'
+                            text: 'Heart of the app. It contains several different modules coded by FirePlank and me(Saykat). Here are some brief information on how the modules were made and their use cases.\n\nWikipedia:\nAllows you to search something in the Wikipedia and get a small summary about that topic.\nIt was made using the MediaWiki API and python requests module.\n\nYouTube:\nSo, you went to YouTube to watch some lectures but got distracted by the suggestions in the homepage and started watching Minecraft? We have implemented the YouTube search feature here so that you can search for anything you would wish and then redirect you in your browser.\nIt was made using the youtubesearchpython module.\n\nTranslation:\nAs straight forward as it sounds. Wanna see the meaning of a foreign word you just encountered? Just type it out. Wanna see something cool? Try typing "unlock_da_party_mode" xD.\nIt was made using the googletrans module.\n\nBooks:\nBook is a treasure chest for any student. It contains immense amount of knowledge which can help anyone in life. But finding out a good book can a be challenge as well. That\'s why we implemented the ebook search feature. You can take help of this module to search of any book you wish.\nUsing API and python requests module.\n\nNotebook:\nKeeping notes is an important job for every student. To make the life of a student easier, we have added a simple notebook feature to keep note of important topics.\nMade using sqlite module and sqlite3 database to store the data.\n\nTodo:\nA student can often be forgetful about what to do next. A to do list can save the day.\nMade using sqlite module and sqlite3 database to store the data.\n\nSettings:\nAllows you to do cool customizations with the UI and displays the browsing history.\n'
                             size_hint: 1, None
-                            readonly: True
                             height: self.minimum_height
                             font_name: app.app_font
                             font_size: str((Window.height/720)*20) + 'sp'
-                            foreground_color: app.text_color
-                            background_color: app.tile_color
-                            cursor_color: [0, 0, 0, 0]
-                            background_normal: ''
-                            background_active: ''
+                            background_color: (0, 0, 0, 0)
+                            background_disabled_normal: ''
+                            disabled_foreground_color: app.text_color
+                            disabled: True
                     AboutCard:
                         title_text: 'Developers'
                         md_bg_color: app.bg_color
@@ -182,13 +176,10 @@
     TextInput:
         text: root.title_text
         size_hint: 1, None
-        readonly: True
         height: self.minimum_height
         font_name: app.app_font
         font_size: str((Window.height/720)*40) + 'sp'
-        foreground_color: app.text_color
-        background_color: [0, 0, 0, 0]
-        cursor_color: [0, 0, 0, 0]
-        background_normal: ''
-        background_active: ''
-        halign: root.title_align
+        background_color: (0, 0, 0, 0)
+        background_disabled_normal: ''
+        disabled_foreground_color: app.text_color
+        disabled: True
