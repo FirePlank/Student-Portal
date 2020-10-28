@@ -13,6 +13,7 @@ from kivy.uix.dropdown import DropDown
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
 from kivy.core.window import Window
+from kivy.clock import Clock
 import json
 
 
@@ -26,12 +27,12 @@ class Settings(MDScreen):
         self.theme.bar_inactive_color = self.theme.bar_color
         self.theme.bind(on_select=lambda instance, x: self.theme_changed(x))
 
-        self.mainbutton_theme = DropDownButton(text=f"{self.backend.show_settings().get('theme').title()} ↓", size_hint=(0.6, 1))
+        self.mainbutton_theme = HoverFlatButton(text=f"{self.backend.show_settings().get('theme').title()} ↓", size_hint=(0.6, 1))
         self.mainbutton_theme.bind(on_release=self.theme.open)
         self.ids.theme.add_widget(self.mainbutton_theme)
 
         for theme in list(MDApp.get_running_app().themes):
-            btn = DropDownButton(text=theme.title(), size_hint_y=None, height=self.mainbutton_theme.height)
+            btn = HoverFlatButton(text=theme.title(), size_hint_y=None, height=self.mainbutton_theme.height)
             btn.bind(on_release=lambda btn: self.theme.select(btn.text))
             self.theme.add_widget(btn)
 
@@ -39,12 +40,12 @@ class Settings(MDScreen):
         self.transition.bar_inactive_color = self.transition.bar_color
         self.transition.bind(on_select=lambda instance, x: self.transition_changed(x))
 
-        self.mainbutton_transition = DropDownButton(text=f"{self.backend.show_settings().get('page_transition').title()} ↓", size_hint=(0.6, 1))
+        self.mainbutton_transition = HoverFlatButton(text=f"{self.backend.show_settings().get('page_transition').title()} ↓", size_hint=(0.6, 1))
         self.ids.transition.add_widget(self.mainbutton_transition)
         self.mainbutton_transition.bind(on_release=self.transition.open)
 
         for transition in list(MDApp.get_running_app().transitions):
-            btn = DropDownButton(text=transition.title(), size_hint_y=None, height=self.mainbutton_transition.height)
+            btn = HoverFlatButton(text=transition.title(), size_hint_y=None, height=self.mainbutton_transition.height)
             btn.bind(on_release=lambda btn: self.transition.select(btn.text))
             self.transition.add_widget(btn)
 
@@ -54,6 +55,16 @@ class Settings(MDScreen):
             self.ids.appearance_settings.add_widget(self.choose_color)
         else:
             pass
+
+        def get_status(self, setting):
+            if self.backend.show_settings().get(setting):
+                self.ids[setting].history_status = 1
+            else:
+                self.ids[setting].history_status = 0
+
+        get_status(self, 'wikipedia_history')
+        get_status(self, 'youtube_history')
+        get_status(self, 'books_history')
         
     def theme_changed(self, theme):
         try:
@@ -79,15 +90,32 @@ class Settings(MDScreen):
         self.popup = PopupColorPicker(component, size_hint=(None, None), auto_dismiss=False)
         self.popup.open()
 
+    def on_enter(self):
+        self.ids.wikipedia_history.history = self.backend.show_history('wikipedia_history')
+        self.ids.youtube_history.history = self.backend.show_history('youtube_history')
+        self.ids.books_history.history = self.backend.show_history('books_history')
+        def change(self):
+            self.ids.history_box.current = self.ids.history_box.next()
+        Clock.schedule_once(lambda dt: change(self), 0.1)
+        Clock.schedule_once(lambda dt: change(self), 0.2)
+        Clock.schedule_once(lambda dt: change(self), 0.2) # Had to do this weird hack cause the height was not being adjusted properly
 
-class DropDownButton(Button, ThemableBehavior, HoverBehavior):
-    canvas_opacity = NumericProperty(0)
+    def on_leave(self):
+        self.ids.history_box.current = self.ids.wikipedia_history_screen.name
 
-    def on_enter(self, *args):
-        self.canvas_opacity = 1
+    def delete_history(self, table):
+        self.backend.delete_history(f'{table.lower()}_history')
+        self.on_enter()
 
-    def on_leave(self, *args):
-        self.canvas_opacity = 0
+    def history_status(self, component):
+        setting = f'{component.history_component.lower()}_history'
+        print(setting)
+        if self.backend.show_settings().get(setting):
+            self.backend.edit_settings(setting, 0)
+            component.history_status = 0
+        else:
+            self.backend.edit_settings(setting, 1)
+            component.history_status = 1
 
 
 class ChooseColors(GridLayout):
@@ -120,6 +148,10 @@ class PopupColorPicker(Popup):
         MDApp.get_running_app().settings.theme_changed('custom')
 
 
+class HistoryView(GridLayout):
+    pass
+
+
 class SettingsBackend:
     create_settings_table = """
     CREATE TABLE IF NOT EXISTS settings_data(
@@ -130,37 +162,47 @@ class SettingsBackend:
         title_text_color TEXT NOT NULL,
         accent_color TEXT NOT NULL,
         theme TEXT NOT NULL,
-        page_transition TEXT NOT NULL
+        page_transition TEXT NOT NULL,
+        wikipedia_history INTEGER NOT NULL,
+        youtube_history INTEGER NOT NULL,
+        books_history INTEGER NOT NULL
     )
     """
     default_value = """
     INSERT INTO
-        settings_data(bg_color, tile_color, raised_button_color, text_color, title_text_color, accent_color, theme, page_transition)
+        settings_data(bg_color, tile_color, raised_button_color, text_color, title_text_color, accent_color, theme, page_transition, wikipedia_history, youtube_history, books_history)
     VALUES
-        ('[29/255, 29/255, 29/255, 1]', '[40/255, 40/255, 40/255, 1]', '[52/255, 52/255, 52/255, 1]', '[1, 1, 1, 1]', '[1, 1, 1, 1]', '[0.5, 0.7, 0.5, 1]', "dark", "slide") 
+        ('[29/255, 29/255, 29/255, 1]', '[40/255, 40/255, 40/255, 1]', '[52/255, 52/255, 52/255, 1]', '[1, 1, 1, 1]', '[1, 1, 1, 1]', '[0.5, 0.7, 0.5, 1]', "dark", "slide", '1', '1', '1') 
     """
+
+    delete_table = "DROP TABLE IF EXISTS settings_data"
 
     show_table_date = "SELECT * FROM settings_data"
 
-    OPERATOR = sql_operator()
-
-    def __init__(self):
-        self.OPERATOR.execute_query(self.create_settings_table)
-        self.OPERATOR.execute_query(self.default_value)
+    OPERATOR = sql_operator()     
 
     def show_settings(self):
+        self.OPERATOR.execute_query(self.create_settings_table)
+        self.OPERATOR.execute_query(self.default_value)
         data = self.OPERATOR.execute_read_query(self.show_table_date)[0]
 
-        output_data = {
-            "bg_color" : string_to_list(data[0]),
-            "tile_color" : string_to_list(data[1]),
-            "raised_button_color" : string_to_list(data[2]),
-            "text_color" : string_to_list(data[3]),
-            "title_text_color" : string_to_list(data[4]),
-            "accent_color" : string_to_list(data[5]),
-            "theme" : data[6],
-            "page_transition" : data[7]
-        }
+        try:
+            output_data = {
+                "bg_color" : string_to_list(data[0]),
+                "tile_color" : string_to_list(data[1]),
+                "raised_button_color" : string_to_list(data[2]),
+                "text_color" : string_to_list(data[3]),
+                "title_text_color" : string_to_list(data[4]),
+                "accent_color" : string_to_list(data[5]),
+                "theme" : data[6],
+                "page_transition" : data[7],
+                "wikipedia_history": data[8],
+                "youtube_history": data[9],
+                "books_history": data[10]
+            }
+        except:
+            self.OPERATOR.execute_query(self.delete_table)
+            return self.show_settings()
 
         if output_data.get('theme') in MDApp.get_running_app().themes:
             pass
@@ -186,23 +228,15 @@ class SettingsBackend:
 
         self.OPERATOR.execute_query(update_query)
 
-    def wikipedia_history(self):
-        query = "SELECT * FROM wikipedia_history"
+    def show_history(self, table):
+        query = f"SELECT * FROM {table}"
         history = self.OPERATOR.execute_read_query(query)
-        history = [i[1] for i in history]
-        return history
+        history = [f'{i[1]} -- {i[2]}' for i in reversed(history)] if history else 'Nothing in here...'
+        return '\n\n'.join(str(x) for x in history) if history != 'Nothing in here...' else history
 
-    def youtube_history(self):
-        query = "SELECT * FROM youtube_history"
-        history = self.OPERATOR.execute_read_query(query)
-        history = [i[1] for i in history]
-        return history
-
-    def book_history(self):
-        query = "SELECT * FROM books_history"
-        history = self.OPERATOR.execute_read_query(query)
-        history = [i[1] for i in history]
-        return history
+    def delete_history(self, table):
+        query = f"DROP TABLE IF EXISTS {table}"
+        self.OPERATOR.execute_read_query(query)
 
 
 Builder.load_file('settings.kv')

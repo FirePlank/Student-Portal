@@ -22,13 +22,13 @@ kv = """
 
 <HoverFlatButton>:
     ripple_scale: 0
-    canvas.before:
+    canvas.after:
         Color:
             id: line_color
             rgba: app.accent_color[:-1]+[root.canvas_opacity]
         Line:
             width: 2
-            rectangle: self.x-dp((Window.height/720)*2), self.y-dp((Window.height/720)*2), self.width+dp((Window.height/720)*4), self.height+dp((Window.height/720)*4)
+            rectangle: self.x+1, self.y+1, self.width-2, self.height-2
 
 """
 

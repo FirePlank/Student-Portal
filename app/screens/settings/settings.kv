@@ -1,5 +1,6 @@
 #:import Window kivy.core.window.Window
 #:import Clipboard kivy.core.clipboard.Clipboard
+#:import NoTransition kivy.uix.screenmanager.NoTransition
 
 <Settings>:
     name: 'settings'
@@ -43,6 +44,7 @@
                 effect_cls : 'ScrollEffect'
                 scroll_distance: dp((Window.height/720)*20)
                 scroll_wheel_distance: dp((Window.height/720)*30)
+                scroll_timeout: 0
                 StackLayout:
                     id: scroll_box
                     size_hint: (1, None)
@@ -57,7 +59,6 @@
                         padding: dp(10)
                         spacing: dp((Window.height/720)*20)
                         TextInput:
-                            id: appearance_label
                             text: 'Appearance'
                             size_hint: 1, None
                             height: self.minimum_height
@@ -107,21 +108,80 @@
                                 AnchorLayout:
                                     id: transition
                                 AnchorLayout:
+                    MDGridLayout:
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+                        md_bg_color: app.tile_color
+                        padding: dp(10)
+                        spacing: dp((Window.height/720)*20)
+                        TextInput:
+                            id: history_label
+                            text: 'History'
+                            size_hint: 1, None
+                            height: self.minimum_height
+                            font_name: app.app_font
+                            font_size: str(min(Window.height/720*40, Window.width/720*40)) + 'sp'
+                            background_color: (0, 0, 0, 0)
+                            background_disabled_normal: ''
+                            disabled_foreground_color: app.text_color
+                            disabled: True
+                        GridLayout:
+                            cols: 2
+                            size_hint_y: None
+                            height: history_label.height
+                            padding: dp(10)
+                            spacing: dp((Window.height/720)*20)
+                            AnchorLayout:
+                                HoverFlatButton:
+                                    text: '◄'
+                                    size_hint_x: 0.4
+                                    on_release:
+                                        history_box.current = history_box.previous()
+                            AnchorLayout:
+                                HoverFlatButton:
+                                    id: next_button
+                                    text: '►'
+                                    size_hint_x: 0.4
+                                    on_release:
+                                        history_box.current = history_box.next()
+                        ScreenManager:
+                            id: history_box
+                            size_hint: (1, None)
+                            height: self.get_screen(self.current).height
+                            transition: NoTransition()
+                            Screen:
+                                id: wikipedia_history_screen
+                                name: 'wikipedia_history'
+                                size_hint: (1, None)
+                                height: wikipedia_history.height
+                                HistoryView:
+                                    id: wikipedia_history
+                                    history_component: 'Wikipedia'
+                            Screen:
+                                id: youtube_history_screen
+                                name: 'youtube_history'
+                                size_hint: (1, None)
+                                height: youtube_history.height
+                                HistoryView:
+                                    id: youtube_history
+                                    history_component: 'Youtube'
+                            Screen:
+                                id: books_history_screen
+                                name: 'books_history'
+                                size_hint: (1, None)
+                                height: books_history.height
+                                HistoryView:
+                                    id: books_history
+                                    history_component: 'Books'
 
-<DropDownButton>:
-    canvas.after:
-        Color:
-            id: line_color
-            rgba: app.accent_color[:-1]+[root.canvas_opacity]
-        Line:
-            width: 2
-            rectangle: self.x+1, self.y+1, self.width-2, self.height-2
-    font_size: str(min(Window.height/720*20, Window.width/720*20)) + 'sp'
+<HoverFlatButton>:
     font_name: app.app_font
+    color: app.text_color
     background_normal: ''
     background_down: ''
     background_color: app.raised_button_color
-    color: app.text_color
+    font_size: str(min(Window.height/720*20, Window.width/1000*20)) + 'sp'
 
 <ChooseColors>:
     cols: 1
@@ -196,14 +256,6 @@
             on_release:
                 root.parent.parent.parent.parent.parent.parent.parent.parent.edit_color(root.component, root.display_color)
 
-<HoverFlatButton>:
-    font_name: app.app_font
-    color: app.text_color
-    background_normal: ''
-    background_down: ''
-    background_color: app.raised_button_color
-    font_size: str(min(Window.height/720*20, Window.width/1000*20)) + 'sp'
-
 <PopupColorPicker>:
     size: Window.size
     BoxLayout:
@@ -230,3 +282,54 @@
                     on_release:
                         root.save_color()
                         root.dismiss()
+
+<HistoryView>:
+    cols: 1
+    padding: dp(15), 0
+    spacing: dp((Window.height/720)*20)
+    size_hint_y: None
+    height: self.minimum_height
+    history_component: ''
+    history: ''
+    history_status: 1
+    GridLayout:
+        id: box_top
+        cols: 3
+        padding: dp(15), 0
+        spacing: dp((Window.height/720)*20)
+        size_hint_y: None
+        height: self.minimum_height
+        TextInput:
+            text: root.history_component
+            size_hint: 1, None
+            height: self.minimum_height
+            font_name: app.app_font
+            font_size: str(min(Window.height/720*25, Window.width/1000*25)) + 'sp'
+            background_color: (0, 0, 0, 0)
+            background_disabled_normal: ''
+            disabled_foreground_color: app.text_color
+            disabled: True
+            halign: 'center'
+        AnchorLayout:
+            HoverFlatButton:
+                text: 'History: ON' if root.history_status else 'History: OFF'
+                size_hint_x: 0.6
+                on_release:
+                    root.parent.parent.parent.parent.parent.parent.parent.parent.history_status(root)
+        AnchorLayout:
+            HoverFlatButton:
+                text: 'Clear history'
+                size_hint_x: 0.6
+                on_release:
+                    root.parent.parent.parent.parent.parent.parent.parent.parent.delete_history(root.history_component)
+    TextInput:
+        id: box_bottom
+        text: root.history
+        size_hint_y: None
+        height: self.minimum_height
+        font_name: app.app_font
+        font_size: str(min(Window.height/720*20, Window.width/1000*20)) + 'sp'
+        background_color: app.tile_color
+        background_disabled_normal: 'atlas://data/images/defaulttheme/textinput_active'
+        disabled_foreground_color: app.text_color
+        disabled: True
