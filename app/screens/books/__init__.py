@@ -80,7 +80,7 @@ class BooksBackend():
             return [[titles[i], authors[i], book_covers[i], links[i]] for i in range (0, len(titles))]
         except Exception as e:
             print(e)
-            toast('An Error occured. Check your internet connection.\n' + f'Error: {str(e)}'.center(min(len(f'Error: {str(e)}'), len('An Error occured. Check your internet connection.'))), duration=3)
+            toast('An Error occurred. Check your internet connection.\n' + f'Error: {str(e)}'.center(min(len(f'Error: {str(e)}'), len('An Error occurred. Check your internet connection.'))), duration=3)
 
 
 Builder.load_file('books.kv')
