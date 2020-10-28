@@ -186,7 +186,7 @@
     AnchorLayout:
         HoverFlatButton:
             text: 'Edit'
-            size_hint_x: 0.6
+            size_hint_x: 0.3
             on_release:
                 root.parent.parent.parent.parent.parent.parent.parent.parent.edit_color(root.component, root.display_color)
 
@@ -216,7 +216,6 @@
                     size_hint_x: 0.8
                     text: 'Close'
                     on_release:
-                        print(picker.color)
                         root.dismiss()
             AnchorLayout:
                 HoverFlatButton:

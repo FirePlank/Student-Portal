@@ -13,6 +13,7 @@ from kivy.uix.dropdown import DropDown
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
 from kivy.core.window import Window
+import json
 
 
 class Settings(MDScreen):
@@ -120,33 +121,35 @@ class PopupColorPicker(Popup):
 
 
 class SettingsBackend:
-    def __init__(self):
-        self.OPERATOR = sql_operator()
-        create_settings_table = """
-        CREATE TABLE IF NOT EXISTS settings_data(
-            bg_color TEXT NOT NULL,
-            tile_color TEXT NOT NULL,
-            raised_button_color TEXT NOT NULL,
-            text_color TEXT NOT NULL,
-            title_text_color TEXT NOT NULL,
-            accent_color TEXT NOT NULL,
-            theme TEXT NOT NULL,
-            page_transition TEXT NOT NULL
-        )
-        """
-        default_value = """
-        INSERT INTO
-            settings_data(bg_color, tile_color, raised_button_color, text_color, title_text_color, accent_color, theme, page_transition)
-        VALUES
-            ("[71/255, 93/255, 102/255, 1]", "[133/255, 144/255, 149/255, 1]", "[144/255, 159/255, 165/255, 1]", "[0, 0, 0, 1]", "[1, 1, 1, 1]", "[0.5, 0.7, 0.5, 1]", "dark", "slide") 
-        """
+    create_settings_table = """
+    CREATE TABLE IF NOT EXISTS settings_data(
+        bg_color TEXT NOT NULL,
+        tile_color TEXT NOT NULL,
+        raised_button_color TEXT NOT NULL,
+        text_color TEXT NOT NULL,
+        title_text_color TEXT NOT NULL,
+        accent_color TEXT NOT NULL,
+        theme TEXT NOT NULL,
+        page_transition TEXT NOT NULL
+    )
+    """
+    default_value = """
+    INSERT INTO
+        settings_data(bg_color, tile_color, raised_button_color, text_color, title_text_color, accent_color, theme, page_transition)
+    VALUES
+        ('[29/255, 29/255, 29/255, 1]', '[40/255, 40/255, 40/255, 1]', '[52/255, 52/255, 52/255, 1]', '[1, 1, 1, 1]', '[1, 1, 1, 1]', '[0.5, 0.7, 0.5, 1]', "dark", "slide") 
+    """
 
-        self.OPERATOR.execute_query(create_settings_table)
-        self.OPERATOR.execute_query(default_value)
+    show_table_date = "SELECT * FROM settings_data"
+
+    OPERATOR = sql_operator()
+
+    def __init__(self):
+        self.OPERATOR.execute_query(self.create_settings_table)
+        self.OPERATOR.execute_query(self.default_value)
 
     def show_settings(self):
-        show_table_date = "SELECT * FROM settings_data"
-        data = self.OPERATOR.execute_read_query(show_table_date)[0]
+        data = self.OPERATOR.execute_read_query(self.show_table_date)[0]
 
         output_data = {
             "bg_color" : string_to_list(data[0]),
@@ -158,6 +161,18 @@ class SettingsBackend:
             "theme" : data[6],
             "page_transition" : data[7]
         }
+
+        if output_data.get('theme') in MDApp.get_running_app().themes:
+            pass
+        else:
+            self.edit_settings('theme', 'dark')
+            self.show_settings()
+
+        if output_data.get('page_transition') in MDApp.get_running_app().transitions:
+            pass
+        else:
+            self.edit_settings('page_transition', 'slide')
+            self.show_settings()
 
         return output_data
 
