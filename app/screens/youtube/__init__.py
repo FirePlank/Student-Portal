@@ -45,7 +45,10 @@ class Youtube(MDScreen):
             ('{query}', '{self.DATE}')
         """
 
-        self.OPERATOR.execute_query(add_keyword_query)
+        check_status = "SELECT youtube_history from settings_data"
+        check_status = self.OPERATOR.execute_read_query(check_status)[0][0]
+        if check_status == 1:
+            self.OPERATOR.execute_query(add_keyword_query)
         
     def open_in_browser(self, result_widget):
         webbrowser.open(result_widget.link)

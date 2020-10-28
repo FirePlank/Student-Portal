@@ -75,16 +75,14 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
                     ('{self.keyword}', '{self.DATE}')
                 """
 
-                self.OPERATOR.execute_query(add_keyword_query)
+                check_status = "SELECT wikipedia_history from settings_data"
+                check_status = self.OPERATOR.execute_read_query(check_status)[0][0]
+                if check_status == 1:
+                    self.OPERATOR.execute_query(add_keyword_query)
 
-            except:
+            except Exception as e:
+                print(e)
                 self.DATA = None
-
-    def title(self):
-        return self.DATA["title"]
-
-    def first_paragraph(self):
-        return self.DATA["extract"]
 
     def summary(self):
         if self.DATA is not None:
@@ -112,7 +110,6 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
                 return f"{' '*(56-round(len(title)/2))}{title}\n\n" + summary[:2000] + ('...' if len(summary) > 2000 else '')
 
             except Exception as e:
-                print(e)
                 return "Sorry, couldn't fetch any search result for that."
 
         else:
