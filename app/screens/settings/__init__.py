@@ -171,5 +171,23 @@ class SettingsBackend:
 
         self.OPERATOR.execute_query(update_query)
 
+    def wikipedia_history(self):
+        query = "SELECT * FROM wikipedia_history"
+        history = self.OPERATOR.execute_read_query(query)
+        history = [i[1] for i in history]
+        return history
+
+    def youtube_history(self):
+        query = "SELECT * FROM youtube_history"
+        history = self.OPERATOR.execute_read_query(query)
+        history = [i[1] for i in history]
+        return history
+
+    def book_history(self):
+        query = "SELECT * FROM books_history"
+        history = self.OPERATOR.execute_read_query(query)
+        history = [i[1] for i in history]
+        return history
+
 
 Builder.load_file('settings.kv')
