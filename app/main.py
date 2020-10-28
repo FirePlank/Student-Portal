@@ -10,7 +10,7 @@ import kivy
 kivy.require('2.0.0')
 
 from kivymd.app import MDApp
-from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, RiseInTransition, NoTransition, CardTransition
+from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, NoTransition, CardTransition
 from kivy.resources import resource_add_path
 from kivy.properties import ListProperty, StringProperty, NumericProperty
 from kivy.animation import Animation
@@ -67,7 +67,6 @@ class StudentPortal(MDApp):
             'wipe': WipeTransition,
             'fade': FadeTransition,
             'fall out': FallOutTransition,
-            'rise in': RiseInTransition,
             'card': CardTransition,
             'none': NoTransition
         }
@@ -107,7 +106,6 @@ class StudentPortal(MDApp):
         except:
             self.root.transition = SlideTransition()
         self.themes.get(self.user_settings.get('theme'))()
-        Window.clearcolor = tuple(self.bg_color)
         return self.root
 
     def switch_screen(self, screen_name, direction='left'):
@@ -121,7 +119,6 @@ class StudentPortal(MDApp):
         except:
             pass
         self.bg_color = [29/255, 29/255, 29/255, 1]
-        Window.clearcolor = tuple(self.bg_color)
         self.tile_color = [40/255, 40/255, 40/255, 1]
         self.raised_button_color = [52/255, 52/255, 52/255, 1]
         self.text_color = [1, 1, 1, 1]
@@ -135,7 +132,6 @@ class StudentPortal(MDApp):
         except:
             pass
         self.bg_color = [71/255, 93/255, 102/255, 1]
-        Window.clearcolor = tuple(self.bg_color)
         self.tile_color = [133/255, 144/255, 149/255, 1]
         self.raised_button_color = [144/255, 159/255, 165/255, 1]
         self.text_color = [0, 0, 0, 1]
@@ -144,7 +140,6 @@ class StudentPortal(MDApp):
 
     def color_theme_rgb(self):
         self.color_theme = 'rgb'
-        Window.clearcolor = (71/255, 93/255, 102/255, 1)
         def update_bg_anim(self):
             self.bg_color_animation = Animation(bg_color=utils.get_random_color(), duration=4.)
             self.bg_color_animation.bind(on_complete=lambda idk, a=self: update_bg_anim(a))
@@ -182,23 +177,12 @@ class StudentPortal(MDApp):
             Animation.cancel_all(self)
         except:
             pass
-        self.bg_color = self.parse_string_list(user_settings.get('bg_color'))
-        Window.clearcolor = tuple(self.bg_color)
-        self.tile_color = self.parse_string_list(user_settings.get('tile_color'))
-        self.raised_button_color = self.parse_string_list(user_settings.get('raised_button_color'))
-        self.text_color = self.parse_string_list(user_settings.get('text_color'))
-        self.title_text_color = self.parse_string_list(user_settings.get('title_text_color'))
-        self.accent_color = self.parse_string_list(user_settings.get('accent_color'))
-
-    def parse_string_list(self, to_parse):
-        parsed = []
-        for i in to_parse:
-            try:
-                parsed.append(float(i))
-            except ValueError:
-                num, denom = i.split('/')
-                parsed.append(float(num)/float(denom))
-        return parsed
+        self.bg_color = user_settings.get('bg_color') if len(user_settings.get('bg_color')) == 4 else [29/255, 29/255, 29/255, 1]
+        self.tile_color = user_settings.get('tile_color') if len(user_settings.get('tile_color')) == 4 else [40/255, 40/255, 40/255, 1]
+        self.raised_button_color = user_settings.get('raised_button_color') if len(user_settings.get('raised_button_color')) == 4 else [52/255, 52/255, 52/255, 1]
+        self.text_color = user_settings.get('text_color') if len(user_settings.get('text_color')) == 4 else [1, 1, 1, 1]
+        self.title_text_color = user_settings.get('title_text_color') if len(user_settings.get('title_text_color')) == 4 else [1, 1, 1, 1]
+        self.accent_color = user_settings.get('accent_color') if len(user_settings.get('accent_color')) == 4 else [0.5, 0.7, 0.5, 1]
 
 
 if __name__ == '__main__':

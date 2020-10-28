@@ -7,7 +7,18 @@ from kivymd.app import MDApp
 def string_to_list(data_in):
     data_out = data_in.replace('[', '').replace(']', '')
     data_out = data_out.split(', ')
-    return data_out
+    to_parse = data_out
+    parsed = []
+    for i in to_parse:
+        try:
+            parsed.append(float(i))
+        except:
+            try:
+                num, denom = i.split('/')
+                parsed.append(float(num)/float(denom))
+            except Exception as e:
+                print(e)
+    return parsed
 
 class sql_operator:
     def __init__(self):
