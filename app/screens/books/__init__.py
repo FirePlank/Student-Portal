@@ -1,6 +1,4 @@
 import requests
-from bs4 import BeautifulSoup as bs
-import re
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.card import MDCard
 import webbrowser
@@ -39,7 +37,7 @@ class Books(MDScreen):
             search_date TEXT NOT NULL
         );
         """
-        
+
         self.OPERATOR.execute_query(create_table_query)
 
         add_keyword_query = f"""
@@ -49,11 +47,8 @@ class Books(MDScreen):
             ('{query}', '{self.DATE}')
         """
 
-        check_status = "SELECT books_history from settings_data"
-        check_status = self.OPERATOR.execute_read_query(check_status)[0][0]
-        if check_status == 1:
-            self.OPERATOR.execute_query(add_keyword_query)
-        
+        self.OPERATOR.execute_query(add_keyword_query)
+
     def open_in_browser(self, result_widget):
         webbrowser.open(result_widget.link)
 
@@ -63,27 +58,34 @@ class BookCard(MDCard):
 
 
 class BooksBackend():
-    def cleanhtml(self, raw_html):
-        cleanr = re.compile('<.*?>')
-        cleantext = re.sub(cleanr, '', raw_html)
-        return cleantext.replace("\n", "")
 
     def scrape_all(self, text):
         try:
-            page = requests.get(f"https://www.goodreads.com/search?utf8=%E2%9C%93&query={text}")
-            soup = bs(page.content, 'html.parser')
+            page = requests.get(f"https://www.googleapis.com/books/v1/volumes?q={text}").json()
+            if page["totalItems"]==0:
+                toast("No results found.", duration=1.25)
+                return
+            titles = []
+            authors = []
+            descriptions = []
+            book_covers = []
+            links = []
+            prices = []
+            for i in page["items"][:11]:
+                titles.append(i["volumeInfo"]["title"])
+                authors.append(i["volumeInfo"]["authors"][0])
+                links.append(i["volumeInfo"]["infoLink"])
+                try:descriptions.append(i["volumeInfo"]["description"])
+                except:descriptions.append("NONE")
+                try:book_covers.append(i["volumeInfo"]["imageLinks"]["thumbnail"])
+                except:book_covers.append("https://www.archgard.com/assets/upload_fallbacks/image_not_found-54bf2d65c203b1e48fea1951497d4f689907afe3037d02a02dcde5775746765c.png")
+                try:prices.append(f'{i["saleInfo"]["listPrice"]["amount"]} {i["saleInfo"]["listPrice"]["currencyCode"]}')
+                except:prices.append("NOT FOR SALE")
 
-            soup_call_title = soup.find_all('a', class_='bookTitle')[:10]
-            links = [f"https://www.goodreads.com{i['href']}"for i in soup_call_title][:10]
-            titles = [BooksBackend.cleanhtml(self, str(i))for i in soup_call_title][:10]
-            authors = [BooksBackend.cleanhtml(self, str(i))for i in soup.find_all('a', class_='authorName')][:10]
-            book_covers = [i["src"]for i in soup.find_all(class_='bookCover')][:10]
-            if len(titles) == 0:
-                toast('No results', duration=1.5)
-            return [[titles[i], authors[i], book_covers[i], links[i]] for i in range (0, len(titles))]
+            return [[titles[i], authors[i], book_covers[i], links[i], descriptions[i], prices[i]] for i in range (0,10)]
         except Exception as e:
             print(e)
-            toast('An Error occurred. Check your internet connection.\n' + f'Error: {str(e)}'.center(min(len(f'Error: {str(e)}'), len('An Error occurred. Check your internet connection.'))), duration=3)
+            toast('An Error occured.\n' + f'Error: {str(e)}'.center(min(len(f'Error: {str(e)}'), len('An Error occured.'))), duration=3)
 
 
 Builder.load_file('books.kv')
