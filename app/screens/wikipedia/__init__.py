@@ -21,48 +21,64 @@ class Wikipedia(MDScreen):
 class WikipediaBackend():
     def __init__(self, keyword):
         self.keyword = keyword
-        self.OPERATOR = sql_operator()
-        self.DATE = datetime.now().strftime('%c')
-        self.S = requests.Session()
+        if self.keyword.lower() == "fireplank":
+            title="FirePlank (AKA The Best Programmer)"
+            self.DATA = {'title': title, 'extract': """FirePlank is the creator for the backend of this module and also the most genius programmer I know!
+\nYou should totally check out 
+His twitter: https://twitter.com/FirePlank
+His github: https://github.com/FirePlank
+and His discord server: https://discord.gg/K2Cf6ma"""}
+        elif self.keyword.lower() == "saykat":
+            title="Saykat"
+            self.DATA = {'title': title, 'extract': "Saykat is an intresting guy and a good friend... and that's about it :shrug:"}
 
-        self.URL = "https://en.wikipedia.org/w/api.php"
+        elif self.keyword.lower() == "krymzin":
+            title="KrYmZiN"
+            self.DATA = {'title': title, 'extract': """Krymzin's a skilled programmer in both frontend and backend. He made all the frontend for this entire app and it be looking kinda sexy if you ask me.
+\nHis fiverr: https://fiverr.com/krymzin"""}
+        else:
+            self.OPERATOR = sql_operator()
+            self.DATE = datetime.now().strftime('%c')
+            self.S = requests.Session()
 
-        self.PARAMS = {
-            "action": "query",
-            "titles": keyword,
-            "prop": "extracts|info",
-            "inprop": "url",
-            "redirects": 1,
-            "format": "json",
-            "exintro": 1,
-            "explaintext": True
-        }
+            self.URL = "https://en.wikipedia.org/w/api.php"
 
-        create_table_query = """
-        CREATE TABLE IF NOT EXISTS wikipedia_history(
-            unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            search_word TEXT NOT NULL,
-            search_date TEXT NOT NULL
-        );
-        """
-        self.OPERATOR.execute_query(create_table_query)
+            self.PARAMS = {
+                "action": "query",
+                "titles": keyword,
+                "prop": "extracts|info",
+                "inprop": "url",
+                "redirects": 1,
+                "format": "json",
+                "exintro": 1,
+                "explaintext": True
+            }
 
-        try:
-            self.R = self.S.get(url=self.URL, params=self.PARAMS)
-            self.DATA = self.R.json()["query"]["pages"]
-            self.DATA = self.DATA[[i for i in self.DATA][0]]
-
-            add_keyword_query = f"""
-            INSERT INTO
-                wikipedia_history(search_word, search_date)
-            VALUES
-                ('{self.keyword}', '{self.DATE}')
+            create_table_query = """
+            CREATE TABLE IF NOT EXISTS wikipedia_history(
+                unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                search_word TEXT NOT NULL,
+                search_date TEXT NOT NULL
+            );
             """
+            self.OPERATOR.execute_query(create_table_query)
 
-            self.OPERATOR.execute_query(add_keyword_query)
+            try:
+                self.R = self.S.get(url=self.URL, params=self.PARAMS)
+                self.DATA = self.R.json()["query"]["pages"]
+                self.DATA = self.DATA[[i for i in self.DATA][0]]
 
-        except:
-            self.DATA = None
+                add_keyword_query = f"""
+                INSERT INTO
+                    wikipedia_history(search_word, search_date)
+                VALUES
+                    ('{self.keyword}', '{self.DATE}')
+                """
+
+                self.OPERATOR.execute_query(add_keyword_query)
+
+            except:
+                self.DATA = None
 
     def title(self):
         return self.DATA["title"]
@@ -74,7 +90,6 @@ class WikipediaBackend():
         if self.DATA is not None:
             try:
                 title = self.DATA["title"]
-                url = self.DATA["fullurl"]
                 summary = self.DATA["extract"]
                 references = []
 
@@ -98,23 +113,6 @@ class WikipediaBackend():
 
             except Exception as e:
                 print(e)
-                if self.keyword.lower() == "fireplank":
-                    title="FirePlank (AKA The Best Programmer)"
-                    return f"{' '*(56-round(len(title)/2))}{title}\n\n" + """FirePlank is the creator for the backend of this module and also the most genius programmer I know!
-\nYou should totally check out 
-his twitter: https://twitter.com/FirePlank
-his github: https://github.com/FirePlank
-and his discord server: https://discord.gg/K2Cf6ma"""
-
-                elif self.keyword.lower() == "saykat":
-                    title="SaykaT"
-                    return f"{' '*(56-round(len(title)/2))}{title}\n\n" + "SaykaT is an intresting guy and a good friend... and that's about it :shrug:"
-
-                elif self.keyword.lower() == "krymzin":
-                    title="KrYmZiN"
-                    return f"{' '*(56-round(len(title)/2))}{title}\n\n" + """I got to be honest with you. I had to copy and paste that name cuz I that name be wild son.
-But other than the name he's a skilled programmer in both frontend and backend. He made all the frontend for this entire app and it be looking kinda sexy if you ask me."""
-
                 return "Sorry, couldn't fetch any search result for that."
 
         else:

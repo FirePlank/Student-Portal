@@ -131,12 +131,12 @@ class StudentPortal(MDApp):
             Animation.cancel_all(self)
         except:
             pass
-        self.bg_color = [71/255, 93/255, 102/255, 1]
-        self.tile_color = [133/255, 144/255, 149/255, 1]
-        self.raised_button_color = [144/255, 159/255, 165/255, 1]
-        self.text_color = [0, 0, 0, 1]
-        self.title_text_color = [1, 1, 1, 1]
-        self.accent_color = [0.5, 0.7, 0.5, 1]
+        self.bg_color = [0.989, 0.989, 0.989, 1.0]
+        self.tile_color = [0.94, 0.94, 0.94, 1.0]
+        self.raised_button_color = [0.823, 0.823, 0.823, 1.0]
+        self.text_color = [0.0, 0.0, 0.0, 1.0]
+        self.title_text_color = [0.0, 0.0, 0.0, 1.0]
+        self.accent_color = [0.212, 0.099, 1.0, 1.0]
 
     def color_theme_rgb(self):
         self.color_theme = 'rgb'

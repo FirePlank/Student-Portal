@@ -100,12 +100,12 @@ class ColorField():
 
 class PopupColorPicker(Popup):
     components = {
-        'Background color:': 'bg_color',
-        'Tile color:': 'tile_color',
-        'Button background color:': 'raised_button_color',
-        'Tile text color:': 'text_color',
-        'Background text color:': 'title_text_color',
-        'Accent color:': 'accent_color'
+        'Bg color': 'bg_color',
+        'Tile color': 'tile_color',
+        'Button color': 'raised_button_color',
+        'Tile text color': 'text_color',
+        'Bg text color': 'title_text_color',
+        'Accent color': 'accent_color'
     }
 
     def __init__(self, component, **kwargs):

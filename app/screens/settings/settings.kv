@@ -1,4 +1,5 @@
 #:import Window kivy.core.window.Window
+#:import Clipboard kivy.core.clipboard.Clipboard
 
 <Settings>:
     name: 'settings'
@@ -61,7 +62,7 @@
                             size_hint: 1, None
                             height: self.minimum_height
                             font_name: app.app_font
-                            font_size: str((Window.height/720)*40) + 'sp'
+                            font_size: str(min(Window.height/720*40, Window.width/720*40)) + 'sp'
                             background_color: (0, 0, 0, 0)
                             background_disabled_normal: ''
                             disabled_foreground_color: app.text_color
@@ -81,7 +82,7 @@
                                     size_hint: 1, None
                                     height: self.minimum_height
                                     font_name: app.app_font
-                                    font_size: str((Window.height/720)*20) + 'sp'
+                                    font_size: str(min(Window.height/720*25, Window.width/720*25)) + 'sp'
                                     background_color: (0, 0, 0, 0)
                                     background_disabled_normal: ''
                                     disabled_foreground_color: app.text_color
@@ -98,7 +99,7 @@
                                     size_hint: 1, None
                                     height: self.minimum_height
                                     font_name: app.app_font
-                                    font_size: str((Window.height/720)*20) + 'sp'
+                                    font_size: str(min(Window.height/720*25, Window.width/720*25)) + 'sp'
                                     background_color: (0, 0, 0, 0)
                                     background_disabled_normal: ''
                                     disabled_foreground_color: app.text_color
@@ -115,7 +116,7 @@
         Line:
             width: 2
             rectangle: self.x+1, self.y+1, self.width-2, self.height-2
-    font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'
+    font_size: str(min(Window.height/720*20, Window.width/720*20)) + 'sp'
     font_name: app.app_font
     background_normal: ''
     background_down: ''
@@ -129,26 +130,26 @@
     padding: dp(15), 0
     spacing: dp((Window.height/720)*20)
     ColorField:
-        component: 'Background color:'
+        component: 'Bg color'
         display_color: app.bg_color
     ColorField:
-        component: 'Tile color:'
+        component: 'Tile color'
         display_color: app.tile_color
     ColorField:
-        component: 'Button background color:'
+        component: 'Button color'
         display_color: app.raised_button_color
     ColorField:
-        component: 'Tile text color:'
+        component: 'Tile text color'
         display_color: app.text_color
     ColorField:
-        component: 'Background text color:'
+        component: 'Bg text color'
         display_color: app.title_text_color
     ColorField:
-        component: 'Accent color:'
+        component: 'Accent color'
         display_color: app.accent_color
 
 <ColorField@GridLayout>:
-    cols: 3
+    cols: 4
     size_hint_y: None
     height: self.minimum_height
     component: ''
@@ -158,14 +159,13 @@
         size_hint: 1, None
         height: self.minimum_height
         font_name: app.app_font
-        font_size: str((Window.height/720)*20) + 'sp'
+        font_size: str(min(Window.height/720*20, Window.width/1000*20)) + 'sp'
         background_color: (0, 0, 0, 0)
         background_disabled_normal: ''
         disabled_foreground_color: app.text_color
         disabled: True
+        halign: 'left'
     AnchorLayout:
-        size_hint_x: None
-        width: color_tile.width
         Widget:
             id: color_tile
             size_hint_x: None
@@ -185,8 +185,14 @@
                     rectangle: self.x-dp((Window.height/720)*2), self.y-dp((Window.height/720)*2), self.width+dp((Window.height/720)*4), self.height+dp((Window.height/720)*4)
     AnchorLayout:
         HoverFlatButton:
+            text: 'Copy color'
+            size_hint_x: 0.6
+            on_release:
+                Clipboard.copy(str([float(str(i)[:5]) for i in root.display_color]))
+    AnchorLayout:
+        HoverFlatButton:
             text: 'Edit'
-            size_hint_x: 0.3
+            size_hint_x: 0.4
             on_release:
                 root.parent.parent.parent.parent.parent.parent.parent.parent.edit_color(root.component, root.display_color)
 
@@ -196,7 +202,7 @@
     background_normal: ''
     background_down: ''
     background_color: app.raised_button_color
-    font_size: str(min((Window.height/720)*20, (Window.width/1280)*20)) + 'sp'
+    font_size: str(min(Window.height/720*20, Window.width/1000*20)) + 'sp'
 
 <PopupColorPicker>:
     size: Window.size
