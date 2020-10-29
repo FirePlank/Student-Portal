@@ -75,57 +75,112 @@
                     height: self.minimum_height
                     padding: dp(15), 0
                     spacing: dp((Window.height/720)*20)
+
 <BookCard>:
-    orientation: 'vertical'
+    cols: 1
     size_hint: 1, None
-    height: Window.height/3.5
-    MDBoxLayout:
+    height: self.minimum_height
+    md_bg_color: app.tile_color
+    GridLayout:
+        rows: 1
         id: box_top
-        md_bg_color: app.tile_color
         spacing: dp(20*Window.width/1280)
-        size_hint: 1, 0.7
         padding: dp(10*Window.height/720)
-        AsyncImage:
-            id: cover
-            source: ''
-            size_hint: 0.25, 1
-            allow_stretch: True
-            nocache: True
+        size_hint: 1, None
+        height: self.minimum_height
+        AnchorLayout:
+            size_hint: 0.25, None
+            height: max(cover.height, title.height)
+            AsyncImage:
+                id: cover
+                source: ''
+                size_hint_y: None
+                height: Window.height/5
+                allow_stretch: True
+                nocache: True
         MDSeparator:
             orientation: 'vertical'
             color: app.text_color
-        MDBoxLayout:
-            id: title
-            orientation: 'vertical'
-            spacing: dp(10*Window.height/720)
-            size_hint: 0.75, 1
-            MDLabel:
-                id: book_name
-                text: "My Book name"
-                theme_text_color: 'Custom'
-                text_color: app.text_color
-                font_name: app.app_font
-                font_size: str((Window.height/720)*20) + 'sp'
-                bold: True
-            MDLabel:
-                id: author_name
-                text: "My name"
-                theme_text_color: 'Custom'
-                text_color: app.text_color
-                font_name: app.app_font
-                font_size: str((Window.height/720)*20) + 'sp'
+        AnchorLayout:
+            size_hint_y: None
+            height: max(cover.height, title.height)
+            anchor_x: 'left'
+            GridLayout:
+                id: title
+                cols: 1
+                spacing: dp(10*Window.height/720)
+                size_hint_y: None
+                height: self.minimum_height
+                TextInput:
+                    id: book_name
+                    text: "My Book name"
+                    size_hint: 1, None
+                    height: self.minimum_height
+                    font_name: app.app_font
+                    font_size: str(min(Window.height/720*22, Window.width/720*22)) + 'sp'
+                    background_color: (0, 0, 0, 0)
+                    background_disabled_normal: ''
+                    disabled_foreground_color: app.text_color
+                    disabled: True
+                TextInput:
+                    id: author_name
+                    text: "My name"
+                    size_hint: 1, None
+                    height: self.minimum_height
+                    font_name: app.app_font
+                    font_size: str(min(Window.height/720*22, Window.width/720*22)) + 'sp'
+                    background_color: (0, 0, 0, 0)
+                    background_disabled_normal: ''
+                    disabled_foreground_color: app.text_color
+                    disabled: True
+                TextInput:
+                    id: book_summary
+                    text: "Summary"
+                    size_hint: 1, None
+                    height: self.minimum_height
+                    font_name: app.app_font
+                    font_size: str(min(Window.height/720*22, Window.width/720*22)) + 'sp'
+                    background_color: (0, 0, 0, 0)
+                    background_disabled_normal: ''
+                    disabled_foreground_color: app.text_color
+                    disabled: True
+                HoverFlatButton:
+                    text: "Show description" if book_summary.text == "" else "Hide description"
+                    size_hint_y: None
+                    height: author_name.height
+                    on_release:
+                        root.parent.parent.parent.parent.parent.description(root)
     MDSeparator:
         color: app.text_color
-    MDBoxLayout:
+    GridLayout:
         id: box_bottom
-        size_hint: (1, 0.3)
-        md_bg_color: app.tile_color
+        rows: 1
+        size_hint_y: None
+        height: self.minimum_height
         spacing: dp(20*Window.width/1280)
         padding: dp(10*Window.height/720)
-        AnchorLayout:
+        TextInput:
+            id: book_price
+            text: "$69,420"
+            size_hint: 0.25, None
+            height: self.minimum_height
+            font_name: app.app_font
+            font_size: str(min(Window.height/720*22, Window.width/720*22)) + 'sp'
+            background_color: (0, 0, 0, 0)
+            background_disabled_normal: ''
+            disabled_foreground_color: app.text_color
+            disabled: True
+            halign: 'center'
+        MDSeparator:
+            orientation: 'vertical'
+            spacing: dp(10*Window.height/720)
+            color: app.text_color
+        MDBoxLayout:
+            spacing: dp(10*Window.height/720)
+            AnchorLayout:
             HoverFlatButton:
                 text: "Open in Browser"
-                size_hint: (0.2, 1)
+                size_hint: (0.6, 1)
                 on_release:
                     root.parent.parent.parent.parent.parent.open_in_browser(root)
 

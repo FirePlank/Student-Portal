@@ -10,6 +10,7 @@ from datetime import datetime
 from kivy.lang import Builder
 from ..widgets.custom_scroll import CustomScroll
 from kivymd.uix.gridlayout import MDGridLayout
+from kivymd.toast import toast
 
 
 class Youtube(MDScreen):
@@ -17,7 +18,11 @@ class Youtube(MDScreen):
         self.OPERATOR = sql_operator()
         self.DATE = datetime.now().strftime("%c")
         self.ids.scroll_box.clear_widgets()
-        self.results = json.loads(SearchVideos(query.strip(), offset=1, mode="json", max_results=10).result())["search_result"]
+        try:
+            self.results = json.loads(SearchVideos(query.strip(), offset=1, mode="json", max_results=10).result())["search_result"]
+        except:
+            toast('Your internet connection might be slow...', duration=1)
+            return
         for result in self.results:
             result_widget = ResultCard()
             result_widget.ids.thumbnail.source = str(result.get('thumbnails')[0])

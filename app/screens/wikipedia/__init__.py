@@ -113,7 +113,7 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
                 return "Sorry, couldn't fetch any search result for that."
 
         else:
-            toast('Not Connected to the internet.', duration=1)
+            toast('Your internet connection might be slow...', duration=1)
             return 'Please check your internet connection.'
 
 
