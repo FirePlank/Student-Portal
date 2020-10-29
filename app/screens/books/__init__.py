@@ -1,6 +1,6 @@
 import requests
 from kivymd.uix.screen import MDScreen
-from kivymd.uix.card import MDCard
+from kivymd.uix.gridlayout import MDGridLayout
 import webbrowser
 from ..modules import sql_operator
 from ..widgets.hover_icon_button import HoverIconButton
@@ -27,6 +27,9 @@ class Books(MDScreen):
                 result_widget.ids.cover.source = str(result[2])
                 result_widget.ids.book_name.text = str(result[0])
                 result_widget.ids.author_name.text = str(result[1])
+                result_widget.ids.book_summary.text = ''
+                result_widget.description = str(result[4])
+                result_widget.ids.book_price.text = str(result[5])
                 result_widget.link = str(result[3])
                 self.ids.scroll_box.add_widget(result_widget)
 
@@ -55,8 +58,14 @@ class Books(MDScreen):
     def open_in_browser(self, result_widget):
         webbrowser.open(result_widget.link)
 
+    def description(self, instance):
+        if instance.ids.book_summary.text == "":
+            instance.ids.book_summary.text = instance.description
+        else:
+            instance.ids.book_summary.text = ""
 
-class BookCard(MDCard):
+
+class BookCard(MDGridLayout):
     pass
 
 
