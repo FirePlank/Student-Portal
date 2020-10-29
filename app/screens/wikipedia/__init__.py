@@ -91,7 +91,7 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
                 summary = self.DATA["extract"]
                 references = []
 
-                if "may refer to" in summary:
+                if "may refer to" in summary[-14:]:
                     params = {
                         'action': 'query',
                         'list': 'search',
@@ -105,7 +105,7 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
                     for search in data:
                         references.append(search['title'])
 
-                summary += '\n'.join(references)
+                summary += '\n\n' + '\n'.join(references)
 
                 return f"{' '*(56-round(len(title)/2))}{title}\n\n" + summary[:2000] + ('...' if len(summary) > 2000 else '')
 
@@ -113,8 +113,8 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
                 return "Sorry, couldn't fetch any search result for that."
 
         else:
-            toast('Your internet connection might be slow...', duration=1)
-            return 'Please check your internet connection.'
+            toast('Could not connect to the internet/slow connection', duration=1)
+            return ''
 
 
 Builder.load_file('wikipedia.kv')

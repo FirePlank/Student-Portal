@@ -13,12 +13,13 @@
             size_hint: (1, 0.2)
             AnchorLayout:
                 HoverIconButton:
-                    icon: 'arrow-left-bold'
+                    icon: app.home_icon
+                    tooltip_text: app.home_icon_tooltip
                     theme_text_color: 'Custom'
                     text_color: app.title_text_color
                     user_font_size: str((Window.height/720)*80) + 'sp'
                     on_release:
-                        app.switch_screen('mainmenu', 'right')
+                        app.switch_screen('mainmenu', 'left')
                         self.canvas_opacity = 0
             MDLabel:
                 text: 'Wikipedia'
@@ -50,7 +51,8 @@
                     cursor_color: app.accent_color
                     cursor_width: app.cursor_width
                 HoverIconButton:
-                    icon: 'magnify'
+                    icon: app.search_icon
+                    tooltip_text: app.search_icon_tooltip
                     user_font_size: str((Window.height/720)*30) + 'sp'
                     theme_text_color: 'Custom'
                     text_color: app.title_text_color

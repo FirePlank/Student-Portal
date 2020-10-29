@@ -21,7 +21,7 @@ class Youtube(MDScreen):
         try:
             self.results = json.loads(SearchVideos(query.strip(), offset=1, mode="json", max_results=10).result())["search_result"]
         except:
-            toast('Your internet connection might be slow...', duration=1)
+            toast('Could not connect to the internet.', duration=1)
             return
         for result in self.results:
             result_widget = ResultCard()
