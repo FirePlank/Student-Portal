@@ -53,6 +53,12 @@ class StudentPortal(MDApp):
     accent_color = ListProperty([0.5, 0.7, 0.5, 1])
     app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'Code2000', 'CODE2000.ttf')))
     cursor_width = NumericProperty(3)
+    home_icon = StringProperty('home')
+    home_icon_tooltip = StringProperty('Back')
+    add_icon = StringProperty('plus-circle-outline')
+    add_icon_tooltip = StringProperty('Create new')
+    search_icon = StringProperty('magnify')
+    search_icon_tooltip = StringProperty('Search')
 
     def build(self):
         self.themes = {

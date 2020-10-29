@@ -35,48 +35,56 @@
                 CustomIconButton:
                     display_icon: 'wikipedia'
                     icon_text: '[b]Wikipedia[/b]'
+                    tooltip_text: 'Search anything\non wikipedia!'
                     on_release:
-                        app.switch_screen('wikipedia', 'left')
-                        self.canvas_opacity = 0
-                CustomIconButton:
-                    display_icon: 'youtube'
-                    icon_text: '[b]Youtube[/b]'
-                    on_release:
-                        app.switch_screen('youtube', 'right')
-                        self.canvas_opacity = 0
-                CustomIconButton:
-                    display_icon: 'google-translate'
-                    icon_text: '[b]Translation[/b]'
-                    on_release:
-                        app.switch_screen('translation', 'left')
-                        self.canvas_opacity = 0
-                CustomIconButton:
-                    display_icon: 'information'
-                    icon_text: '[b]About[/b]'
-                    on_release:
-                        app.switch_screen('about', 'right')
-                        self.canvas_opacity = 0
-                CustomIconButton:
-                    display_icon: 'notebook'
-                    icon_text: '[b]Notebook[/b]'
-                    on_release:
-                        app.switch_screen('notebook', 'right')
-                        self.canvas_opacity = 0
-                CustomIconButton:
-                    display_icon: 'bookshelf'
-                    icon_text: '[b]Books[/b]'
-                    on_release:
-                        app.switch_screen('books', 'left')
+                        app.switch_screen('wikipedia', 'right')
                         self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'calendar-check-outline'
                     icon_text: '[b]To-do[/b]'
+                    tooltip_text: 'A to-do list\nGet those tasks done!'
                     on_release:
-                        app.switch_screen('todo', 'right')
+                        app.switch_screen('todo', 'down')
+                        self.canvas_opacity = 0
+                CustomIconButton:
+                    display_icon: 'notebook'
+                    icon_text: '[b]Notebook[/b]'
+                    tooltip_text: 'Easy to\naccess notes'
+                    on_release:
+                        app.switch_screen('notebook', 'down')
+                        self.canvas_opacity = 0
+                CustomIconButton:
+                    display_icon: 'google-translate'
+                    icon_text: '[b]Translation[/b]'
+                    tooltip_text: 'Translate\nalmost\nany\nlanguage!'
+                    on_release:
+                        app.switch_screen('translation', 'left')
+                        self.canvas_opacity = 0
+                CustomIconButton:
+                    display_icon: 'bookshelf'
+                    icon_text: '[b]Books[/b]'
+                    tooltip_text: 'Search for\nbooks'
+                    on_release:
+                        app.switch_screen('books', 'right')
+                        self.canvas_opacity = 0
+                CustomIconButton:
+                    display_icon: 'youtube'
+                    icon_text: '[b]Youtube[/b]'
+                    tooltip_text: 'Search for\nyoutube videos'
+                    on_release:
+                        app.switch_screen('youtube', 'up')
+                        self.canvas_opacity = 0
+                CustomIconButton:
+                    display_icon: 'information'
+                    icon_text: '[b]About[/b]'
+                    tooltip_text: 'About\nthis app'
+                    on_release:
+                        app.switch_screen('about', 'up')
                         self.canvas_opacity = 0
                 CustomIconButton:
                     display_icon: 'cog'
                     icon_text: '[b]Settings[/b]'
+                    tooltip_text: 'Customize\nthe app!'
                     on_release:
                         app.switch_screen('settings', 'left')
                         self.canvas_opacity = 0
