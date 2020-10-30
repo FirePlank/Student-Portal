@@ -47,14 +47,16 @@ class Books(MDScreen):
             self.searching_text.text = "No results"
         self.ids.scroller.scroll_y = 1
         self.ids.search_button.disabled = False
-        self.ids.search_button.canvas.get_group('hidden')[0].rgba = (0, 0, 0, 0)
+        self.ids.search_button.canvas.get_group(
+            'hidden')[0].rgba = (0, 0, 0, 0)
 
     def search(self, query):
         if query != '':
             self.ids.scroll_box.clear_widgets()
             self.searching_text = SearchingText()
             self.ids.scroll_box.add_widget(self.searching_text)
-            self.thread = threading.Thread(target=self.search_thread, args=(query,))
+            self.thread = threading.Thread(
+                target=self.search_thread, args=(query,))
             self.thread.start()
         else:
             show_toast("There's nothing to search...", duration=1)
@@ -62,7 +64,7 @@ class Books(MDScreen):
     @mainthread
     def no_internet(self):
         self.ids.scroll_box.remove_widget(self.searching_text)
-        
+
     def search_thread(self, query):
         self.DATE = datetime.now().strftime("%c")
         self.results = None
@@ -105,8 +107,9 @@ class BooksBackend():
 
     def scrape_all(self, text):
         try:
-            page = requests.get(f"https://www.googleapis.com/books/v1/volumes?q={text}&filter=ebooks").json()
-            if page["totalItems"]==0:
+            page = requests.get(
+                f"https://www.googleapis.com/books/v1/volumes?q={text}&filter=ebooks").json()
+            if page["totalItems"] == 0:
                 show_toast("No results found.", duration=1)
                 return False
             titles = []
@@ -117,23 +120,41 @@ class BooksBackend():
             prices = []
             items = page["items"][:31]
             for i in items:
-                try:titles.append(i["volumeInfo"]["title"])
-                except:titles.append("Could not find")
-                try:authors.append(i["volumeInfo"]["authors"][0])
-                except:authors.append('Could not find')
-                try:links.append(i["volumeInfo"]["infoLink"])
-                except:links.append("https://bit.ly/2EqoBMo")
-                try:descriptions.append(i["volumeInfo"]["description"])
-                except:descriptions.append("NONE")
-                try:book_covers.append(i["volumeInfo"]["imageLinks"]["thumbnail"])
-                except:book_covers.append("https://www.archgard.com/assets/upload_fallbacks/image_not_found-54bf2d65c203b1e48fea1951497d4f689907afe3037d02a02dcde5775746765c.png")
-                try:prices.append(f'{i["saleInfo"]["listPrice"]["amount"]} {i["saleInfo"]["listPrice"]["currencyCode"]}')
-                except:prices.append("Not Listed")
+                try:
+                    titles.append(i["volumeInfo"]["title"])
+                except BaseException:
+                    titles.append("Could not find")
+                try:
+                    authors.append(i["volumeInfo"]["authors"][0])
+                except BaseException:
+                    authors.append('Could not find')
+                try:
+                    links.append(i["volumeInfo"]["infoLink"])
+                except BaseException:
+                    links.append("https://bit.ly/2EqoBMo")
+                try:
+                    descriptions.append(i["volumeInfo"]["description"])
+                except BaseException:
+                    descriptions.append("NONE")
+                try:
+                    book_covers.append(
+                        i["volumeInfo"]["imageLinks"]["thumbnail"])
+                except BaseException:
+                    book_covers.append(
+                        "https://www.archgard.com/assets/upload_fallbacks/image_not_found-54bf2d65c203b1e48fea1951497d4f689907afe3037d02a02dcde5775746765c.png")
+                try:
+                    prices.append(
+                        f'{i["saleInfo"]["listPrice"]["amount"]} {i["saleInfo"]["listPrice"]["currencyCode"]}')
+                except BaseException:
+                    prices.append("Not Listed")
 
-            return [[titles[i], authors[i], book_covers[i], links[i], descriptions[i], prices[i]] for i in range (0, len(items))]
+            return [[titles[i], authors[i], book_covers[i], links[i],
+                     descriptions[i], prices[i]] for i in range(0, len(items))]
         except Exception as e:
             print(e)
-            show_toast('An Error occured.\nEither you have exhausted daily book searches, or you are not connected to the internet.', duration=3)
+            show_toast(
+                'An Error occured.\nEither you have exhausted daily book searches, or you are not connected to the internet.',
+                duration=3)
             return None
 
 

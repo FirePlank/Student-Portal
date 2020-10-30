@@ -35,7 +35,8 @@ class Youtube(MDScreen):
             self.ids.scroll_box.clear_widgets()
             self.searching_text = SearchingText()
             self.ids.scroll_box.add_widget(self.searching_text)
-            self.thread = threading.Thread(target=self.search_thread, args=(query,))
+            self.thread = threading.Thread(
+                target=self.search_thread, args=(query,))
             self.thread.start()
         else:
             show_toast("There's nothing to search...", duration=1)
@@ -46,18 +47,23 @@ class Youtube(MDScreen):
             self.ids.scroll_box.remove_widget(self.searching_text)
             for result in self.results:
                 result_widget = ResultCard()
-                result_widget.ids.thumbnail.source = str(result.get('thumbnails')[0])
+                result_widget.ids.thumbnail.source = str(
+                    result.get('thumbnails')[0])
                 result_widget.ids.video_name.text = str(result.get('title'))
-                result_widget.ids.channel_name.text = str(result.get('channel'))
-                result_widget.ids.video_duration.text = str(result.get('duration'))
-                result_widget.ids.video_views.text = str(result.get('views')) + ' views'
+                result_widget.ids.channel_name.text = str(
+                    result.get('channel'))
+                result_widget.ids.video_duration.text = str(
+                    result.get('duration'))
+                result_widget.ids.video_views.text = str(
+                    result.get('views')) + ' views'
                 result_widget.link = str(result.get('link'))
                 self.ids.scroll_box.add_widget(result_widget)
         else:
             self.searching_text.text = "No results"
         self.ids.scroller.scroll_y = 1
         self.ids.search_button.disabled = False
-        self.ids.search_button.canvas.get_group('hidden')[0].rgba = (0, 0, 0, 0)
+        self.ids.search_button.canvas.get_group(
+            'hidden')[0].rgba = (0, 0, 0, 0)
 
     @mainthread
     def no_internet(self):
@@ -67,12 +73,17 @@ class Youtube(MDScreen):
         self.DATE = datetime.now().strftime("%c")
         self.results = None
         try:
-            self.results = json.loads(SearchVideos(query.strip(), offset=1, mode="json", max_results=10).result())["search_result"]
-        except:
+            self.results = json.loads(
+                SearchVideos(
+                    query.strip(),
+                    offset=1,
+                    mode="json",
+                    max_results=10).result())["search_result"]
+        except BaseException:
             show_toast('Could not connect to the internet.', 1)
             self.no_internet()
             return
-        
+
         self.OPERATOR.execute_query(create_table_query)
 
         add_keyword_query = f"""
@@ -87,7 +98,7 @@ class Youtube(MDScreen):
         if check_status == 1:
             self.OPERATOR.execute_query(add_keyword_query)
         self.add_video_widgets()
-        
+
     def open_in_browser(self, result_widget):
         webbrowser.open(result_widget.link)
 

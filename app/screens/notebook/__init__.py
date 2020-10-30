@@ -35,7 +35,11 @@ class Notebook(MDScreen):
             note_widget.ids.body.background_normal = 'atlas://data/images/defaulttheme/textinput_active'
             note_widget.ids.title.background_active = 'atlas://data/images/defaulttheme/textinput_active'
             note_widget.ids.body.background_active = 'atlas://data/images/defaulttheme/textinput_active'
-            self.database.edit_notes({'unique_id': note_widget.unique_id, 'title': note_widget.ids.title.text, 'body': note_widget.ids.body.text})
+            self.database.edit_notes(
+                {
+                    'unique_id': note_widget.unique_id,
+                    'title': note_widget.ids.title.text,
+                    'body': note_widget.ids.body.text})
             toast('Note data saved.', duration=0.3)
             note_widget.ids.edit_button.text = "EDIT"
         elif note_widget.ids.edit_button.text == "EDIT":
@@ -106,6 +110,7 @@ class Note(MDGridLayout):
 
 class TitleInput(TextInput):
     max_characters = 26
+
     def insert_text(self, substring, from_undo=False):
         if len(self.text) > self.max_characters and self.max_characters > 0:
             substring = ""
@@ -139,7 +144,7 @@ class NotebookBackend():
         try:
             self.OPERATOR.execute_query(add_note_in_table)
             return True
-        except:
+        except BaseException:
             return False
 
     def delete_note(self, data):

@@ -30,7 +30,8 @@ class Wikipedia(MDScreen):
             toast('Please input a search query.', duration=1)
         else:
             self.ids.results.text = 'Searching...'
-            self.thread = threading.Thread(target=self.search_thread, args=(query,))
+            self.thread = threading.Thread(
+                target=self.search_thread, args=(query,))
             self.thread.start()
 
     def search_thread(self, query):
@@ -42,26 +43,32 @@ class Wikipedia(MDScreen):
     def show_result(self, summary):
         self.ids.results.text = summary
         self.ids.search_button.disabled = False
-        self.ids.search_button.canvas.get_group('hidden')[0].rgba = (0, 0, 0, 0)
+        self.ids.search_button.canvas.get_group(
+            'hidden')[0].rgba = (0, 0, 0, 0)
 
 
 class WikipediaBackend():
     def __init__(self, keyword):
         self.keyword = keyword.lower()
         if self.keyword.lower() == "fireplank":
-            title="FirePlank (AKA The Best Programmer)"
-            self.DATA = {'title': title, 'extract': """FirePlank is the creator for the backend of this module and also the most genius programmer I know!
-\nYou should totally check out 
+            title = "FirePlank (AKA The Best Programmer)"
+            self.DATA = {
+                'title': title,
+                'extract': """FirePlank is the creator for the backend of this module and also the most genius programmer I know!
+\nYou should totally check out
 His twitter: https://twitter.com/FirePlank
 His github: https://github.com/FirePlank
 and His discord server: https://discord.gg/K2Cf6ma"""}
         elif self.keyword.lower() == "saykat":
-            title="Saykat"
-            self.DATA = {'title': title, 'extract': "Saykat is an intresting guy and a good friend... and that's about it :shrug:"}
+            title = "Saykat"
+            self.DATA = {
+                'title': title,
+                'extract': "Saykat is an intresting guy and a good friend... and that's about it :shrug:"}
 
         elif self.keyword.lower() == "krymzin":
-            title="KrYmZiN"
-            self.DATA = {'title': title, 'extract': """Krymzin's a skilled programmer in both frontend and backend. He made all the frontend for this entire app and it be looking kinda sexy if you ask me.
+            title = "KrYmZiN"
+            self.DATA = {'title': title, 'extract':
+                         """Krymzin's a skilled programmer in both frontend and backend. He made all the frontend for this entire app and it be looking kinda sexy if you ask me.
 \nHis fiverr: https://fiverr.com/krymzin"""}
         else:
             self.DATE = datetime.now().strftime('%c')
@@ -126,7 +133,8 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
 
                 summary += '\n\n' + '\n'.join(references)
 
-                return f"{' '*(56-round(len(title)/2))}{title}\n\n" + summary[:2000] + ('...' if len(summary) > 2000 else '')
+                return f"{' '*(56-round(len(title)/2))}{title}\n\n" + \
+                    summary[:2000] + ('...' if len(summary) > 2000 else '')
 
             except Exception as e:
                 return "Sorry, couldn't fetch any search result for that."

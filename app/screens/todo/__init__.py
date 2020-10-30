@@ -60,7 +60,8 @@ class ToDo(MDScreen):
             task_widget.ids.delete_button.disabled = False
             task_widget.ids.title.cursor_blink = False
             task_widget.ids.title.text = task_widget.ids.title.text.strip()
-            self.database.update_item_content(task_widget.unique_id, task_widget.ids.title.text)
+            self.database.update_item_content(
+                task_widget.unique_id, task_widget.ids.title.text)
             task_widget.ids.edit_button.text = "EDIT TASK"
             toast('Note data saved.', duration=0.3)
 
@@ -101,7 +102,7 @@ class ToDoBackend():
         try:
             self.OPERATOR.execute_query(add_item_query)
             return True
-        except:
+        except BaseException:
             return False
 
     def delete_item(self, unique_id):
@@ -110,14 +111,14 @@ class ToDoBackend():
         try:
             self.OPERATOR.execute_query(delete_query)
             return True
-        except:
+        except BaseException:
             return False
 
     def show_item(self):
         show_query = f"SELECT * FROM todo"
         try:
             items = self.OPERATOR.execute_read_query(show_query)
-        except:
+        except BaseException:
             items = []
 
         output_data = []
