@@ -6,6 +6,8 @@ from kivymd.app import MDApp
 from ..modules import sql_operator
 from datetime import datetime
 from kivy.lang import Builder
+import threading
+from kivy.clock import mainthread
 
 
 class Wikipedia(MDScreen):
@@ -13,14 +15,26 @@ class Wikipedia(MDScreen):
         if query.strip() == "":
             toast('Please input a search query.', duration=1)
         else:
-            wikipedia = WikipediaBackend(query)
-            summary = wikipedia.summary()
-            self.ids.results.text = summary
+            self.ids.results.text = 'Searching...'
+            self.thread = threading.Thread(target=self.search_thread, args=(query,))
+            self.thread.start()
+
+    def search_thread(self, query):
+        wikipedia = WikipediaBackend(query)
+        summary = wikipedia.summary()
+        self.show_result(summary)
+
+    @mainthread
+    def show_result(self, summary):
+        self.ids.results.text = summary
+        self.ids.search_button.disabled = False
+        self.ids.search_button.canvas.get_group('hidden')[0].rgba = (0, 0, 0, 0)
 
 
 class WikipediaBackend():
     def __init__(self, keyword):
-        self.keyword = keyword
+        self.OPERATOR = sql_operator()
+        self.keyword = keyword.lower()
         if self.keyword.lower() == "fireplank":
             title="FirePlank (AKA The Best Programmer)"
             self.DATA = {'title': title, 'extract': """FirePlank is the creator for the backend of this module and also the most genius programmer I know!
@@ -37,7 +51,6 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
             self.DATA = {'title': title, 'extract': """Krymzin's a skilled programmer in both frontend and backend. He made all the frontend for this entire app and it be looking kinda sexy if you ask me.
 \nHis fiverr: https://fiverr.com/krymzin"""}
         else:
-            self.OPERATOR = sql_operator()
             self.DATE = datetime.now().strftime('%c')
             self.S = requests.Session()
 
@@ -45,7 +58,7 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
 
             self.PARAMS = {
                 "action": "query",
-                "titles": keyword,
+                "titles": self.keyword,
                 "prop": "extracts|info",
                 "inprop": "url",
                 "redirects": 1,
@@ -91,7 +104,7 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
                 summary = self.DATA["extract"]
                 references = []
 
-                if "may refer to" in summary[-14:]:
+                if "may refer to" in summary[-16:]:
                     params = {
                         'action': 'query',
                         'list': 'search',
