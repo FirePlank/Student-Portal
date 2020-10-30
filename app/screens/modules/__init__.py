@@ -2,6 +2,8 @@ import sqlite3
 from sqlite3 import Error
 import os
 from kivymd.app import MDApp
+from kivymd.toast import toast
+from kivy.clock import mainthread
 
 
 def string_to_list(data_in):
@@ -19,6 +21,10 @@ def string_to_list(data_in):
             except Exception as e:
                 print(e)
     return parsed
+
+@mainthread
+def show_toast(text, duration):
+    toast(text, duration=duration)
 
 class sql_operator:
     def __init__(self):

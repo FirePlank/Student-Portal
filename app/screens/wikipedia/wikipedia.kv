@@ -51,12 +51,23 @@
                     cursor_color: app.accent_color
                     cursor_width: app.cursor_width
                 HoverIconButton:
+                    id: search_button
+                    canvas:
+                        Color:
+                            group: 'hidden'
+                            rgba: 0, 0, 0, 0
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
                     icon: app.search_icon
                     tooltip_text: app.search_icon_tooltip
                     user_font_size: str((Window.height/720)*30) + 'sp'
                     theme_text_color: 'Custom'
                     text_color: app.title_text_color
                     on_release:
+                        self.disabled = True if searchbar.text != "" else False
+                        search_button.canvas.get_group('hidden')[0].rgba = app.bg_color if searchbar.text != "" else (0, 0, 0, 0)
+                        self.canvas_opacity = 0
                         root.search(searchbar.text)
         AnchorLayout:
             size_hint: (1, 0.75)

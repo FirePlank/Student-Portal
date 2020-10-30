@@ -6,11 +6,13 @@ from kivymd.app import MDApp
 from kivy.properties import NumericProperty
 from kivymd.uix.behaviors import HoverBehavior
 from kivymd.theming import ThemableBehavior
-from kivy.clock import Clock
+from kivy.clock import Clock, mainthread
 from kivymd.toast import toast
 from functools import partial
 import os
 from kivy.lang import Builder
+import threading
+from ..modules import show_toast
 
 
 class Translation(MDScreen):
@@ -158,24 +160,39 @@ class Translation(MDScreen):
         self.ids.output_box.text = ''
         try:
             self.realtime_translator.cancel()
-        except Exception as e:
-            print(e)
-        self.realtime_translator = Clock.schedule_once(partial(self.translate, self.ids.input_box.text.strip(), self.mainbutton_from_lang.text[:-2].lower(), self.mainbutton_to_lang.text[:-2].lower()), 1)
+        except:
+            pass
+        def define_thread(self, text, from_lang, to_lang):
+            self.thread = threading.Thread(target=self.translate, args=(text, from_lang, to_lang))
+            self.translated_text = None
+            self.thread.start()
+        self.realtime_translator = Clock.schedule_once(lambda dt: define_thread(self, self.ids.input_box.text.strip(), self.mainbutton_from_lang.text[:-2].lower(), self.mainbutton_to_lang.text[:-2].lower()), 1)
 
-    def translate(self, text, from_lang, to_lang, dt):
+    def translate(self, text, from_lang, to_lang):
         if text != '':
             if from_lang == 'detect language' or from_lang == None:
                 try:
-                    self.ids.output_box.text = self.translator.translate(text, dest=to_lang).text
+                    self.translated_text = None
+                    self.translated_text = self.translator.translate(text, dest=to_lang).text
+                    self.update_output_box()
                 except Exception as e:
-                    toast('An Error occured. Check your internet connection.\n' + f'Error: {str(e)}'.center(max(len(f'Error: {str(e)}'), len('An Error occured. Check your internet connection.'))), duration=5)
+                    show_toast('An Error occured. Check your internet connection.', duration=1)
             else:
                 try:
-                    self.ids.output_box.text = self.translator.translate(text, src=from_lang, dest=to_lang).text
+                    self.translated_text = None
+                    self.translated_text = self.translator.translate(text, src=from_lang, dest=to_lang).text
+                    self.update_output_box()
                 except Exception as e:
-                    toast('An Error occured. Check your internet connection.\n' + f'Error: {str(e)}'.center(max(len(f'Error: {str(e)}'), len('An Error occured. Check your internet connection.'))), duration=5)
+                    show_toast('An Error occured. Check your internet connection.', duration=1)
         else:
             self.ids.output_box.text = ""
+
+    @mainthread
+    def update_output_box(self):
+        if self.translated_text:
+            self.ids.output_box.text = self.translated_text
+        else:
+            pass
 
 
 class DropDownButton(Button, ThemableBehavior, HoverBehavior):

@@ -1,23 +1,7 @@
 import os
+os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
+# os.environ["KIVY_NO_CONSOLELOG"] = "1"
 import sys
-
-from kivy.config import Config
-Config.set('graphics', 'width', 1280)
-Config.set('graphics', 'height', 720)
-Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
-
-import kivy
-kivy.require('2.0.0')
-
-from kivymd.app import MDApp
-from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, NoTransition, CardTransition
-from kivy.resources import resource_add_path
-from kivy.properties import ListProperty, StringProperty, NumericProperty
-from kivy.animation import Animation
-from kivy.core.window import Window
-from kivy import utils
-from kivy.clock import Clock
-Window.minimum_width, Window.minimum_height = (720, 480)
 
 def resource_path(relative_path):
     try:
@@ -26,6 +10,23 @@ def resource_path(relative_path):
         base_path = os.path.abspath(os.path.dirname(sys.argv[0]))
 
     return os.path.join(base_path, relative_path)
+
+from kivy.config import Config
+Config.set('graphics', 'window_state', 'hidden')
+Config.set('graphics', 'width', 1280)
+Config.set('graphics', 'height', 720)
+Config.set('input', 'mouse', 'mouse, multitouch_on_demand')
+Config.set('kivy', 'window_icon', resource_path('icon.ico'))
+
+from kivymd.app import MDApp
+from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, NoTransition, CardTransition
+from kivy.resources import resource_add_path
+from kivy.properties import ListProperty, StringProperty, NumericProperty
+from kivy.animation import Animation
+from kivy import utils
+from kivy.clock import Clock
+from kivy.core.window import Window
+Window.minimum_width, Window.minimum_height = (720, 480)
 
 resource_add_path(resource_path(os.path.join('data', 'logo')))
 resource_add_path(resource_path(os.path.join('data', 'fonts')))
@@ -44,7 +45,8 @@ resource_add_path(resource_path(os.path.join('screens', 'about')))
 class StudentPortal(MDApp):
 
     title = "Student Portal"
-    color_theme = 'normal'
+    icon = 'icon.ico'
+    color_theme = 'dark'
     bg_color = ListProperty([29/255, 29/255, 29/255, 1])
     tile_color = ListProperty([40/255, 40/255, 40/255, 1])
     raised_button_color = ListProperty([52/255, 52/255, 52/255, 1])
@@ -112,6 +114,9 @@ class StudentPortal(MDApp):
         except:
             self.root.transition = SlideTransition()
         self.themes.get(self.user_settings.get('theme'))()
+
+        Window.show()
+
         return self.root
 
     def switch_screen(self, screen_name, direction='left'):
