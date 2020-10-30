@@ -1,17 +1,22 @@
 #:import Window kivy.core.window.Window
 
+
 <About>:
     name: 'about'
     id: aboutscreen
     md_bg_color: app.bg_color
+
     GridLayout:
         cols: 1
         id: box_root
         padding: dp(min(Window.height/720*20, Window.width/1280*20))
         spacing: dp(20*Window.height/720)
+
         BoxLayout:
             size_hint: (1, 0.2)
+
             AnchorLayout:
+
                 HoverIconButton:
                     icon: app.home_icon
                     tooltip_text: app.home_icon_tooltip
@@ -22,6 +27,7 @@
                         app.switch_screen('mainmenu', 'down')
                         self.canvas_opacity = 0
                         scroller.scroll_y: 1
+
             MDLabel:
                 text: 'About'
                 font_name: app.app_font
@@ -30,8 +36,11 @@
                 halign: 'center'
                 valign: 'middle'
                 font_size: str((Window.height/720)*60) + 'sp'
+
             AnchorLayout:
+
         AnchorLayout:
+
             CustomScroll:
                 size_hint: (0.9, 1)
                 id: scroller
@@ -42,15 +51,18 @@
                 effect_cls : 'ScrollEffect'
                 scroll_distance: dp((Window.height/720)*20)
                 scroll_wheel_distance: dp((Window.height/720)*30)
+
                 StackLayout:
                     id: scroll_box
                     size_hint: (1, None)
                     height: self.minimum_height
                     padding: dp(15), 0
                     spacing: dp((Window.height/720)*20)
+
                     AboutCard:
                         title_text: 'General Information'
                         md_bg_color: app.tile_color
+
                         TextInput:
                             id: body
                             text: 'Student Portal is an entry for the second "Timathon Code Jam" themed "For Students". This simple application contains several small modules which may or will help the student in day to day use. Each module has their specific use cases depending on what the student needs starting from a small todo list to searching something in the internet with the help of Wikipedia.'
@@ -62,9 +74,11 @@
                             background_disabled_normal: ''
                             disabled_foreground_color: app.text_color
                             disabled: True
+
                     AboutCard:
                         title_text: 'Front-end Information'
                         md_bg_color: app.tile_color
+
                         TextInput:
                             id: body
                             text: 'All thanks to KrYmZiN for making this awesome GUI possible (I, Saykat will take the credits for designing the app tho :p).\nThis entire GUI is coded using kivy. To be honest, I never thought it is possible to make such good looking UI in python. :)'
@@ -76,9 +90,11 @@
                             background_disabled_normal: ''
                             disabled_foreground_color: app.text_color
                             disabled: True
+
                     AboutCard:
                         title_text: 'Back-end Information'
                         md_bg_color: app.tile_color
+
                         TextInput:
                             id: body
                             text: 'Heart of the app. It contains several different modules coded by FirePlank and me(Saykat). Here are some brief information on how the modules were made and their use cases.\n\nWikipedia:\nAllows you to search something in the Wikipedia and get a small summary about that topic.\nIt was made using the MediaWiki API and python requests module.\n\nYouTube:\nSo, you went to YouTube to watch some lectures but got distracted by the suggestions in the homepage and started watching Minecraft? We have implemented the YouTube search feature here so that you can search for anything you would wish and then redirect you in your browser.\nIt was made using the youtubesearchpython module.\n\nTranslation:\nAs straight forward as it sounds. Wanna see the meaning of a foreign word you just encountered? Just type it out.\nIt was made using the googletrans module.\n\nBooks:\nBook is a treasure chest for any student. It contains immense amount of knowledge which can help anyone in life. But finding out a good book can a be challenge as well. That\'s why we implemented the ebook search feature. You can take help of this module to search of any book you wish.\nUsing API and python requests module.\n\nNotebook:\nKeeping notes is an important job for every student. To make the life of a student easier, we have added a simple notebook feature to keep note of important topics.\nMade using sqlite module and sqlite3 database to store the data.\n\nTodo:\nA student can often be forgetful about what to do next. A to do list can save the day.\nMade using sqlite module and sqlite3 database to store the data.\n\nSettings:\nAllows you to do cool customizations with the UI and displays the browsing history.\n'
@@ -90,26 +106,31 @@
                             background_disabled_normal: ''
                             disabled_foreground_color: app.text_color
                             disabled: True
+
                     AboutCard:
                         title_text: 'Developers'
                         md_bg_color: app.bg_color
                         title_align: 'center'
+
                         GridLayout:
                             rows: 1
                             size_hint: (1, None)
                             height: self.minimum_height
                             spacing: dp(10*Window.width/800)
                             padding: dp(min(Window.height/720*30, Window.width/720*30))
+
                             GridLayout:
                                 cols: 1
                                 size_hint: (1, None)
                                 height: self.minimum_height
+
                                 AsyncImage:
                                     source: 'http://res.cloudinary.com/muhimen/image/upload/v1603707622/fireplank.png'
                                     size_hint: 1, None
                                     height: Window.height/10
                                     allow_stretch: True
                                     nocache: False
+
                                 TextInput:
                                     text: 'FirePlank#4189'
                                     size_hint: 1, None
@@ -123,16 +144,19 @@
                                     background_normal: ''
                                     background_active: ''
                                     halign: 'center'
+
                             GridLayout:
                                 cols: 1
                                 size_hint: (1, None)
                                 height: self.minimum_height
+
                                 AsyncImage:
                                     source: 'http://res.cloudinary.com/muhimen/image/upload/v1603707622/saykat.png'
                                     size_hint: 1, None
                                     height: Window.height/10
                                     allow_stretch: True
                                     nocache: False
+
                                 TextInput:
                                     text: 'Saykat#8288'
                                     size_hint: 1, None
@@ -146,16 +170,19 @@
                                     background_normal: ''
                                     background_active: ''
                                     halign: 'center'
+
                             GridLayout:
                                 cols: 1
                                 size_hint: (1, None)
                                 height: self.minimum_height
+
                                 AsyncImage:
                                     source: 'http://res.cloudinary.com/muhimen/image/upload/v1603707622/krmzin.png'
                                     size_hint: 1, None
                                     height: Window.height/10
                                     allow_stretch: True
                                     nocache: False
+
                                 TextInput:
                                     text: 'KrYmZiN#0311'
                                     size_hint: 1, None
@@ -169,12 +196,15 @@
                                     background_normal: ''
                                     background_active: ''
                                     halign: 'center'
+
+
 <AboutCard>:
     cols: 1
     title_text: 'category'
     size_hint: (1, None)
     height: self.minimum_height
     title_align: 'left'
+
     TextInput:
         text: root.title_text
         size_hint: 1, None

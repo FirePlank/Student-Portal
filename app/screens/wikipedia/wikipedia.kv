@@ -1,17 +1,22 @@
 #:import Window kivy.core.window.Window
 
+
 <Wikipedia>:
     name: 'wikipedia'
     id: wikipediascreen
     md_bg_color: app.bg_color
+
     GridLayout:
         cols: 1
         id: box_root
         padding: dp(min(Window.height/720*20, Window.width/1280*20))
         spacing: dp(20*Window.height/720)
+
         BoxLayout:
             size_hint: (1, 0.2)
+
             AnchorLayout:
+
                 HoverIconButton:
                     icon: app.home_icon
                     tooltip_text: app.home_icon_tooltip
@@ -21,6 +26,7 @@
                     on_release:
                         app.switch_screen('mainmenu', 'left')
                         self.canvas_opacity = 0
+
             MDLabel:
                 text: 'Wikipedia'
                 font_name: app.app_font
@@ -29,15 +35,19 @@
                 halign: 'center'
                 valign: 'middle'
                 font_size: str((Window.height/720)*60) + 'sp'
+
             AnchorLayout:
+
         AnchorLayout:
             size_hint: (1, None)
             height: search_box.height
+
             GridLayout:
                 id: search_box
                 rows: 1
                 size_hint: (0.8, None)
                 height: self.minimum_height
+
                 TextInput:
                     id: searchbar
                     size_hint: (0.95, None)
@@ -50,15 +60,9 @@
                     background_normal: 'atlas://data/images/defaulttheme/textinput_active'
                     cursor_color: app.accent_color
                     cursor_width: app.cursor_width
+
                 HoverIconButton:
                     id: search_button
-                    canvas:
-                        Color:
-                            group: 'hidden'
-                            rgba: 0, 0, 0, 0
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
                     icon: app.search_icon
                     tooltip_text: app.search_icon_tooltip
                     user_font_size: str((Window.height/720)*30) + 'sp'
@@ -69,8 +73,17 @@
                         search_button.canvas.get_group('hidden')[0].rgba = app.bg_color if searchbar.text != "" else (0, 0, 0, 0)
                         self.canvas_opacity = 0
                         root.search(searchbar.text)
+                    canvas:
+                        Color:
+                            group: 'hidden'
+                            rgba: 0, 0, 0, 0
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+
         AnchorLayout:
             size_hint: (1, 0.75)
+            
             TextInput:
                 id: results
                 font_name: app.app_font
