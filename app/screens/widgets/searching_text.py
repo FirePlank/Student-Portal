@@ -7,8 +7,8 @@ class SearchingText(TextInput):
 
 
 kv = """
-
 #:import Window kivy.core.window.Window
+
 
 <SearchingText>:
     text: "Searching..."
@@ -21,7 +21,6 @@ kv = """
     disabled_foreground_color: app.text_color
     disabled: True
     halign: 'center'
-
 """
 
 Builder.load_string(kv)

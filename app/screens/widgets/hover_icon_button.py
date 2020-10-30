@@ -50,7 +50,6 @@ class ToolTip(Label):
 
 
 kv = """
-
 <ToolTip>:
     color: app.text_color
     font_name: app.app_font
@@ -64,6 +63,7 @@ kv = """
             size: self.size
             pos: self.pos
 
+
 <HoverIconButton>:
     ripple_scale: 0
     canvas.before:
@@ -73,7 +73,6 @@ kv = """
         Line:
             width: 2
             rectangle: self.x-dp((Window.height/720)*2), self.y-dp((Window.height/720)*2), self.width+dp((Window.height/720)*4), self.height+dp((Window.height/720)*4)
-
 """
 
 Builder.load_string(kv)

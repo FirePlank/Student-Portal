@@ -1,19 +1,23 @@
 #:import Window kivy.core.window.Window
 
+
 <MainMenu>:
     name: 'mainmenu'
     id: mainmenuscreen
     md_bg_color: app.bg_color
+
     MDBoxLayout:
         id: box
         size_hint: (1, 1)
         orientation: 'vertical'
         padding: 80
+
         AnchorLayout:
             id: anchor_label
             size_hint: (1, 0.3)
             anchor_x: 'center'
             anchor_y: 'center'
+
             MDLabel:
                 text: 'Student Portal'
                 font_name: app.app_font
@@ -22,16 +26,19 @@
                 halign: 'center'
                 valign: 'center'
                 font_size: str((Window.height/720)*60) + 'sp'
+
         AnchorLayout:
             id: anchor_buttons
             size_hint: (1, 1)
             anchor_x: 'center'
             anchor_y: 'center'
+
             MDGridLayout:
                 id: grid
                 cols: 4
                 adaptive_size: True
                 spacing: (10*(Window.width/Window.height)**3, 40)
+
                 CustomIconButton:
                     display_icon: 'wikipedia'
                     icon_text: '[b]Wikipedia[/b]'
@@ -39,6 +46,7 @@
                     on_release:
                         app.switch_screen('wikipedia', 'right')
                         self.canvas_opacity = 0
+
                 CustomIconButton:
                     display_icon: 'calendar-check-outline'
                     icon_text: '[b]To-do[/b]'
@@ -46,6 +54,7 @@
                     on_release:
                         app.switch_screen('todo', 'down')
                         self.canvas_opacity = 0
+
                 CustomIconButton:
                     display_icon: 'notebook'
                     icon_text: '[b]Notebook[/b]'
@@ -53,6 +62,7 @@
                     on_release:
                         app.switch_screen('notebook', 'down')
                         self.canvas_opacity = 0
+
                 CustomIconButton:
                     display_icon: 'google-translate'
                     icon_text: '[b]Translation[/b]'
@@ -60,6 +70,7 @@
                     on_release:
                         app.switch_screen('translation', 'left')
                         self.canvas_opacity = 0
+
                 CustomIconButton:
                     display_icon: 'bookshelf'
                     icon_text: '[b]Books[/b]'
@@ -67,6 +78,7 @@
                     on_release:
                         app.switch_screen('books', 'right')
                         self.canvas_opacity = 0
+
                 CustomIconButton:
                     display_icon: 'youtube'
                     icon_text: '[b]Youtube[/b]'
@@ -74,6 +86,7 @@
                     on_release:
                         app.switch_screen('youtube', 'up')
                         self.canvas_opacity = 0
+
                 CustomIconButton:
                     display_icon: 'information'
                     icon_text: '[b]About[/b]'
@@ -81,6 +94,7 @@
                     on_release:
                         app.switch_screen('about', 'up')
                         self.canvas_opacity = 0
+
                 CustomIconButton:
                     display_icon: 'cog'
                     icon_text: '[b]Settings[/b]'
@@ -89,27 +103,31 @@
                         app.switch_screen('settings', 'left')
                         self.canvas_opacity = 0
 
+
 <CustomIconButton>:
     id: menubutton
+    display_icon: ''
+    icon_text: ''
+    height: Window.height/4.5
+    width: self.height*1.4
     canvas:
         Color:
             rgba: app.tile_color
         Rectangle:
             pos: (self.x, self.y)
             size: (self.width, self.height)
-    height: Window.height/4.5
-    width: self.height*1.4
-    display_icon: ''
-    icon_text: ''
+    
     BoxLayout:
         size_hint: (1, 1)
         orientation: 'vertical'
+
         MDIcon:
             icon: root.display_icon
             theme_text_color: 'Custom'
             text_color: app.text_color
             font_size: str((Window.height/720)*90) + 'sp'
             halign: 'center'
+
         MDLabel:
             text: root.icon_text
             theme_text_color: 'Custom'

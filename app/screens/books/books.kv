@@ -1,17 +1,22 @@
 #:import Window kivy.core.window.Window
 
+
 <Books>:
     name: 'books'
     id: booksscreen
     md_bg_color: app.bg_color
+
     GridLayout:
         cols: 1
         id: box_root
         padding: dp(min(Window.height/720*20, Window.width/1280*20))
         spacing: dp(20*Window.height/720)
+
         BoxLayout:
             size_hint: (1, 0.2)
+
             AnchorLayout:
+
                 HoverIconButton:
                     icon: app.home_icon
                     tooltip_text: app.home_icon_tooltip
@@ -22,6 +27,7 @@
                         app.switch_screen('mainmenu', 'left')
                         scroller.scroll_y = 1
                         self.canvas_opacity = 0
+
             MDLabel:
                 text: 'Books'
                 font_name: app.app_font
@@ -30,15 +36,19 @@
                 halign: 'center'
                 valign: 'middle'
                 font_size: str((Window.height/720)*60) + 'sp'
+
             AnchorLayout:
+
         AnchorLayout:
             size_hint: (1, None)
             height: search_box.height
+
             GridLayout:
                 id: search_box
                 rows: 1
                 size_hint: (0.8, None)
                 height: self.minimum_height
+
                 TextInput:
                     id: searchbar
                     size_hint: (0.95, None)
@@ -51,15 +61,9 @@
                     background_normal: 'atlas://data/images/defaulttheme/textinput_active'
                     cursor_color: app.accent_color
                     cursor_width: app.cursor_width
+
                 HoverIconButton:
                     id: search_button
-                    canvas:
-                        Color:
-                            group: 'hidden'
-                            rgba: 0, 0, 0, 0
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
                     icon: app.search_icon
                     tooltip_text: app.search_icon_tooltip
                     user_font_size: str((Window.height/720)*30) + 'sp'
@@ -70,8 +74,17 @@
                         search_button.canvas.get_group('hidden')[0].rgba = app.bg_color if searchbar.text != "" else (0, 0, 0, 0)
                         self.canvas_opacity = 0
                         root.search(searchbar.text)
+                    canvas:
+                        Color:
+                            group: 'hidden'
+                            rgba: 0, 0, 0, 0
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    
         AnchorLayout:
             size_hint: (1, 0.75)
+
             CustomScroll:
                 size_hint: (0.9, 1)
                 id: scroller
@@ -82,6 +95,7 @@
                 effect_cls : 'ScrollEffect'
                 scroll_distance: dp((Window.height/720)*20)
                 scroll_wheel_distance: dp((Window.height/720)*30)
+
                 StackLayout:
                     id: scroll_box
                     size_hint_y: None
@@ -89,11 +103,13 @@
                     padding: dp(15), 0
                     spacing: dp((Window.height/720)*20)
 
+
 <BookCard>:
     cols: 1
     size_hint: 1, None
     height: self.minimum_height
     md_bg_color: app.tile_color
+
     GridLayout:
         rows: 1
         id: box_top
@@ -101,9 +117,11 @@
         padding: dp(10*Window.height/720)
         size_hint: 1, None
         height: self.minimum_height
+
         AnchorLayout:
             size_hint: 0.25, None
             height: max(cover.height, title.height)
+
             AsyncImage:
                 id: cover
                 source: ''
@@ -111,19 +129,23 @@
                 height: Window.height/5
                 allow_stretch: True
                 nocache: True
+
         MDSeparator:
             orientation: 'vertical'
             color: app.text_color
+
         AnchorLayout:
             size_hint_y: None
             height: max(cover.height, title.height)
             anchor_x: 'left'
+
             GridLayout:
                 id: title
                 cols: 1
                 spacing: dp(10*Window.height/720)
                 size_hint_y: None
                 height: self.minimum_height
+
                 TextInput:
                     id: book_name
                     text: "My Book name"
@@ -135,6 +157,7 @@
                     background_disabled_normal: ''
                     disabled_foreground_color: app.text_color
                     disabled: True
+
                 TextInput:
                     id: author_name
                     text: "My name"
@@ -146,6 +169,7 @@
                     background_disabled_normal: ''
                     disabled_foreground_color: app.text_color
                     disabled: True
+
                 TextInput:
                     id: book_summary
                     text: "Summary"
@@ -157,14 +181,17 @@
                     background_disabled_normal: ''
                     disabled_foreground_color: app.text_color
                     disabled: True
+
                 HoverFlatButton:
                     text: "Show description" if book_summary.text == "..." else "Hide description"
                     size_hint_y: None
                     height: author_name.height
                     on_release:
                         root.parent.parent.parent.parent.parent.description(root)
+
     MDSeparator:
         color: app.text_color
+
     GridLayout:
         id: box_bottom
         rows: 1
@@ -172,6 +199,7 @@
         height: self.minimum_height
         spacing: dp(20*Window.width/1280)
         padding: dp(10*Window.height/720)
+
         TextInput:
             id: book_price
             text: "$69,420"
@@ -184,18 +212,22 @@
             disabled_foreground_color: app.text_color
             disabled: True
             halign: 'center'
+
         MDSeparator:
             orientation: 'vertical'
             spacing: dp(10*Window.height/720)
             color: app.text_color
+
         MDBoxLayout:
             spacing: dp(10*Window.height/720)
+
             AnchorLayout:
             HoverFlatButton:
                 text: "Open in Browser"
                 size_hint: (0.6, 1)
                 on_release:
                     root.parent.parent.parent.parent.parent.open_in_browser(root)
+                    
 
 <HoverFlatButton>:
     font_name: app.app_font

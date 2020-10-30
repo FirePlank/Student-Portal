@@ -1,17 +1,22 @@
 #:import Window kivy.core.window.Window
 
+
 <Translation>:
     name: 'translation'
     id: mainmenuscreen
     md_bg_color: app.bg_color
+
     GridLayout:
         cols: 1
         id: box_root
         padding: dp(min(Window.height/720*20, Window.width/1280*20))
         spacing: dp(20*Window.height/720)
+
         BoxLayout:
             size_hint: (1, 0.2)
+
             AnchorLayout:
+
                 HoverIconButton:
                     icon: app.home_icon
                     tooltip_text: app.home_icon_tooltip
@@ -21,6 +26,7 @@
                     on_release:
                         app.switch_screen('mainmenu', 'right')
                         self.canvas_opacity = 0
+
             MDLabel:
                 text: 'Translation'
                 font_name: app.app_font
@@ -29,19 +35,25 @@
                 halign: 'center'
                 valign: 'middle'
                 font_size: str((Window.height/720)*60) + 'sp'
+
             AnchorLayout:
+
         AnchorLayout:
             size_hint: (1, 0.8)
+
             GridLayout:
                 cols: 2
                 size_hint: (0.8, 1)
                 spacing: dp(10)
+
                 BoxLayout:
                     orientation: 'vertical'
                     spacing: dp(10)
+
                     BoxLayout:
                         size_hint: (1, 0.1)
                         orientation: 'horizontal'
+
                         MDLabel:
                             size_hint_x: 0.4
                             text: 'Input'
@@ -49,10 +61,12 @@
                             theme_text_color: 'Custom'
                             text_color: app.title_text_color
                             font_size: str(min((Window.height/720)*30, (Window.width/1280)*30)) + 'sp'
+
                         AnchorLayout:
                             id: from_lang
                             anchor_x: 'center'
                             anchor_y: 'center'
+
                     TextInput:
                         id: input_box
                         font_name: app.app_font
@@ -68,12 +82,15 @@
                         on_text:
                             self.text = self.text.lstrip()
                             root.initiate_translator()
+
                 BoxLayout:
                     orientation: 'vertical'
                     spacing: dp(10)
+
                     BoxLayout:
                         size_hint: (1, 0.1)
                         orientation: 'horizontal'
+
                         MDLabel:
                             size_hint_x: 0.4
                             text: 'Output'
@@ -81,10 +98,12 @@
                             theme_text_color: 'Custom'
                             text_color: app.title_text_color
                             font_size: str(min((Window.height/720)*30, (Window.width/1280)*30)) + 'sp'
+
                         AnchorLayout:
                             id: to_lang
                             anchor_x: 'center'
                             anchor_y: 'center'
+
                     TextInput:
                         id: output_box
                         font_name: app.app_font
@@ -97,6 +116,7 @@
                         cursor_blink: False
                         cursor_width: app.cursor_width
                         background_normal: 'atlas://data/images/defaulttheme/textinput_active'
+                        
 
 <DropDownButton>:
     canvas.after:
