@@ -12,6 +12,14 @@ from kivy.lang import Builder
 import threading
 from kivy.clock import mainthread
 
+create_table_query = """
+    CREATE TABLE IF NOT EXISTS books_history(
+        unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        search_word TEXT NOT NULL,
+        search_date TEXT NOT NULL
+    );
+"""
+
 
 class Books(MDScreen):
     def __init__(self, **kwargs):
@@ -19,6 +27,7 @@ class Books(MDScreen):
         self.backend = BooksBackend()
         self.results = None
         self.OPERATOR = sql_operator()
+        self.OPERATOR.execute_query(create_table_query)
 
     @mainthread
     def add_book_widgets(self):
@@ -62,14 +71,6 @@ class Books(MDScreen):
         if self.results is None:
             self.no_internet()
             return
-
-        create_table_query = """
-        CREATE TABLE IF NOT EXISTS books_history(
-            unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            search_word TEXT NOT NULL,
-            search_date TEXT NOT NULL
-        );
-        """
 
         self.OPERATOR.execute_query(create_table_query)
 
