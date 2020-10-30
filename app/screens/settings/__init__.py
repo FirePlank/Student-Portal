@@ -109,7 +109,6 @@ class Settings(MDScreen):
 
     def history_status(self, component):
         setting = f'{component.history_component.lower()}_history'
-        print(setting)
         if self.backend.show_settings().get(setting):
             self.backend.edit_settings(setting, 0)
             component.history_status = 0
@@ -236,7 +235,15 @@ class SettingsBackend:
 
     def delete_history(self, table):
         query = f"DROP TABLE IF EXISTS {table}"
-        self.OPERATOR.execute_read_query(query)
+        create_table_query = f"""
+            CREATE TABLE IF NOT EXISTS {table}(
+                unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                search_word TEXT NOT NULL,
+                search_date TEXT NOT NULL
+            );
+        """
+        self.OPERATOR.execute_query(query)
+        self.OPERATOR.execute_query(create_table_query)
 
 
 Builder.load_file('settings.kv')

@@ -14,12 +14,21 @@ from kivymd.uix.gridlayout import MDGridLayout
 import threading
 from kivy.clock import mainthread
 
+create_table_query = """
+    CREATE TABLE IF NOT EXISTS youtube_history(
+        unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        search_word TEXT NOT NULL,
+        search_date TEXT NOT NULL
+    );
+"""
+
 
 class Youtube(MDScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.results = None
         self.OPERATOR = sql_operator()
+        self.OPERATOR.execute_query(create_table_query)
 
     def search(self, query):
         if query != '':
@@ -63,14 +72,6 @@ class Youtube(MDScreen):
             show_toast('Could not connect to the internet.', 1)
             self.no_internet()
             return
-
-        create_table_query = """
-        CREATE TABLE IF NOT EXISTS youtube_history(
-            unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            search_word TEXT NOT NULL,
-            search_date TEXT NOT NULL
-        );
-        """
         
         self.OPERATOR.execute_query(create_table_query)
 

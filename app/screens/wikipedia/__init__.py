@@ -10,7 +10,21 @@ import threading
 from kivy.clock import mainthread
 
 
+OPERATOR = sql_operator()
+create_table_query = """
+    CREATE TABLE IF NOT EXISTS wikipedia_history(
+        unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        search_word TEXT NOT NULL,
+        search_date TEXT NOT NULL
+    );
+"""
+
+
 class Wikipedia(MDScreen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        OPERATOR.execute_query(create_table_query)
+
     def search(self, query):
         if query.strip() == "":
             toast('Please input a search query.', duration=1)
@@ -33,7 +47,6 @@ class Wikipedia(MDScreen):
 
 class WikipediaBackend():
     def __init__(self, keyword):
-        self.OPERATOR = sql_operator()
         self.keyword = keyword.lower()
         if self.keyword.lower() == "fireplank":
             title="FirePlank (AKA The Best Programmer)"
@@ -67,14 +80,7 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
                 "explaintext": True
             }
 
-            create_table_query = """
-            CREATE TABLE IF NOT EXISTS wikipedia_history(
-                unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                search_word TEXT NOT NULL,
-                search_date TEXT NOT NULL
-            );
-            """
-            self.OPERATOR.execute_query(create_table_query)
+            OPERATOR.execute_query(create_table_query)
 
             try:
                 self.R = self.S.get(url=self.URL, params=self.PARAMS)
@@ -89,9 +95,9 @@ and His discord server: https://discord.gg/K2Cf6ma"""}
                 """
 
                 check_status = "SELECT wikipedia_history from settings_data"
-                check_status = self.OPERATOR.execute_read_query(check_status)[0][0]
+                check_status = OPERATOR.execute_read_query(check_status)[0][0]
                 if check_status == 1:
-                    self.OPERATOR.execute_query(add_keyword_query)
+                    OPERATOR.execute_query(add_keyword_query)
 
             except Exception as e:
                 print(e)
