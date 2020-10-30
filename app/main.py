@@ -1,7 +1,17 @@
+from kivy.config import Config
+from kivy.core.window import Window
+from kivy.clock import Clock
+from kivy import utils
+from kivy.animation import Animation
+from kivy.properties import ListProperty, StringProperty, NumericProperty
+from kivy.resources import resource_add_path
+from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, NoTransition, CardTransition
+from kivymd.app import MDApp
+import sys
 import os
 os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
 # os.environ["KIVY_NO_CONSOLELOG"] = "1"
-import sys
+
 
 def resource_path(relative_path):
     try:
@@ -11,21 +21,13 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-from kivy.config import Config
+
 Config.set('graphics', 'window_state', 'hidden')
 Config.set('graphics', 'width', 1280)
 Config.set('graphics', 'height', 720)
 Config.set('input', 'mouse', 'mouse, multitouch_on_demand')
 Config.set('kivy', 'window_icon', resource_path('icon.ico'))
 
-from kivymd.app import MDApp
-from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, NoTransition, CardTransition
-from kivy.resources import resource_add_path
-from kivy.properties import ListProperty, StringProperty, NumericProperty
-from kivy.animation import Animation
-from kivy import utils
-from kivy.clock import Clock
-from kivy.core.window import Window
 Window.minimum_width, Window.minimum_height = (720, 480)
 
 resource_add_path(resource_path(os.path.join('data', 'logo')))
@@ -47,13 +49,19 @@ class StudentPortal(MDApp):
     title = "Student Portal"
     icon = 'icon.ico'
     color_theme = 'dark'
-    bg_color = ListProperty([29/255, 29/255, 29/255, 1])
-    tile_color = ListProperty([40/255, 40/255, 40/255, 1])
-    raised_button_color = ListProperty([52/255, 52/255, 52/255, 1])
+    bg_color = ListProperty([29 / 255, 29 / 255, 29 / 255, 1])
+    tile_color = ListProperty([40 / 255, 40 / 255, 40 / 255, 1])
+    raised_button_color = ListProperty([52 / 255, 52 / 255, 52 / 255, 1])
     text_color = ListProperty([1, 1, 1, 1])
     title_text_color = ListProperty([1, 1, 1, 1])
     accent_color = ListProperty([0.5, 0.7, 0.5, 1])
-    app_font = StringProperty(resource_path(os.path.join('data', 'fonts', 'Code2000', 'CODE2000.ttf')))
+    app_font = StringProperty(
+        resource_path(
+            os.path.join(
+                'data',
+                'fonts',
+                'Code2000',
+                'CODE2000.ttf')))
     cursor_width = NumericProperty(3)
     home_icon = StringProperty('home')
     home_icon_tooltip = StringProperty('Back')
@@ -110,8 +118,9 @@ class StudentPortal(MDApp):
         self.themes['custom'] = self.settings.color_theme_custom
         self.root.switch_to(self.mainmenu)
         try:
-            self.root.transition = self.transitions.get(self.user_settings.get('page_transition'))()
-        except:
+            self.root.transition = self.transitions.get(
+                self.user_settings.get('page_transition'))()
+        except BaseException:
             self.root.transition = SlideTransition()
         self.themes.get(self.user_settings.get('theme'))()
 
@@ -127,11 +136,11 @@ class StudentPortal(MDApp):
         self.color_theme = 'dark'
         try:
             Animation.cancel_all(self)
-        except:
+        except BaseException:
             pass
-        self.bg_color = [29/255, 29/255, 29/255, 1]
-        self.tile_color = [40/255, 40/255, 40/255, 1]
-        self.raised_button_color = [52/255, 52/255, 52/255, 1]
+        self.bg_color = [29 / 255, 29 / 255, 29 / 255, 1]
+        self.tile_color = [40 / 255, 40 / 255, 40 / 255, 1]
+        self.raised_button_color = [52 / 255, 52 / 255, 52 / 255, 1]
         self.text_color = [1, 1, 1, 1]
         self.title_text_color = [1, 1, 1, 1]
         self.accent_color = [0.5, 0.7, 0.5, 1]
@@ -140,7 +149,7 @@ class StudentPortal(MDApp):
         self.color_theme = 'light'
         try:
             Animation.cancel_all(self)
-        except:
+        except BaseException:
             pass
         self.bg_color = [0.989, 0.989, 0.989, 1.0]
         self.tile_color = [0.94, 0.94, 0.94, 1.0]
@@ -151,34 +160,53 @@ class StudentPortal(MDApp):
 
     def color_theme_rgb(self):
         self.color_theme = 'rgb'
+
         def update_bg_anim(self):
-            self.bg_color_animation = Animation(bg_color=utils.get_random_color(), duration=4.)
-            self.bg_color_animation.bind(on_complete=lambda idk, a=self: update_bg_anim(a))
+            self.bg_color_animation = Animation(
+                bg_color=utils.get_random_color(), duration=4.)
+            self.bg_color_animation.bind(
+                on_complete=lambda idk,
+                a=self: update_bg_anim(a))
             self.bg_color_animation.start(self)
         update_bg_anim(self)
+
         def update_tile_anim(self):
-            self.tile_color_animation = Animation(tile_color=utils.get_random_color(), duration=4.)
-            self.tile_color_animation.bind(on_complete=lambda idk, a=self: update_tile_anim(a))
+            self.tile_color_animation = Animation(
+                tile_color=utils.get_random_color(), duration=4.)
+            self.tile_color_animation.bind(
+                on_complete=lambda idk, a=self: update_tile_anim(a))
             self.tile_color_animation.start(self)
         update_tile_anim(self)
+
         def update_raised_button_anim(self):
-            self.raised_button_color_animation = Animation(raised_button_color=utils.get_random_color(), duration=4.)
-            self.raised_button_color_animation.bind(on_complete=lambda idk, a=self: update_raised_button_anim(a))
+            self.raised_button_color_animation = Animation(
+                raised_button_color=utils.get_random_color(), duration=4.)
+            self.raised_button_color_animation.bind(
+                on_complete=lambda idk, a=self: update_raised_button_anim(a))
             self.raised_button_color_animation.start(self)
         update_raised_button_anim(self)
+
         def update_text_anim(self):
-            self.text_color_animation = Animation(text_color=utils.get_random_color(), duration=4.)
-            self.text_color_animation.bind(on_complete=lambda idk, a=self: update_text_anim(a))
+            self.text_color_animation = Animation(
+                text_color=utils.get_random_color(), duration=4.)
+            self.text_color_animation.bind(
+                on_complete=lambda idk, a=self: update_text_anim(a))
             self.text_color_animation.start(self)
         update_text_anim(self)
+
         def update_title_text_anim(self):
-            self.title_text_color_animation = Animation(title_text_color=utils.get_random_color(), duration=4.)
-            self.title_text_color_animation.bind(on_complete=lambda idk, a=self: update_title_text_anim(a))
+            self.title_text_color_animation = Animation(
+                title_text_color=utils.get_random_color(), duration=4.)
+            self.title_text_color_animation.bind(
+                on_complete=lambda idk, a=self: update_title_text_anim(a))
             self.title_text_color_animation.start(self)
         update_title_text_anim(self)
+
         def update_accent_anim(self):
-            self.accent_color_animation = Animation(accent_color=utils.get_random_color(), duration=4.)
-            self.accent_color_animation.bind(on_complete=lambda idk, a=self: update_accent_anim(a))
+            self.accent_color_animation = Animation(
+                accent_color=utils.get_random_color(), duration=4.)
+            self.accent_color_animation.bind(
+                on_complete=lambda idk, a=self: update_accent_anim(a))
             self.accent_color_animation.start(self)
         update_accent_anim(self)
 
@@ -186,14 +214,23 @@ class StudentPortal(MDApp):
         self.color_theme = 'custom'
         try:
             Animation.cancel_all(self)
-        except:
+        except BaseException:
             pass
-        self.bg_color = user_settings.get('bg_color') if len(user_settings.get('bg_color')) == 4 else [29/255, 29/255, 29/255, 1]
-        self.tile_color = user_settings.get('tile_color') if len(user_settings.get('tile_color')) == 4 else [40/255, 40/255, 40/255, 1]
-        self.raised_button_color = user_settings.get('raised_button_color') if len(user_settings.get('raised_button_color')) == 4 else [52/255, 52/255, 52/255, 1]
-        self.text_color = user_settings.get('text_color') if len(user_settings.get('text_color')) == 4 else [1, 1, 1, 1]
-        self.title_text_color = user_settings.get('title_text_color') if len(user_settings.get('title_text_color')) == 4 else [1, 1, 1, 1]
-        self.accent_color = user_settings.get('accent_color') if len(user_settings.get('accent_color')) == 4 else [0.5, 0.7, 0.5, 1]
+        self.bg_color = user_settings.get('bg_color') if len(
+            user_settings.get('bg_color')) == 4 else [
+            29 / 255, 29 / 255, 29 / 255, 1]
+        self.tile_color = user_settings.get('tile_color') if len(
+            user_settings.get('tile_color')) == 4 else [
+            40 / 255, 40 / 255, 40 / 255, 1]
+        self.raised_button_color = user_settings.get('raised_button_color') if len(
+            user_settings.get('raised_button_color')) == 4 else [
+            52 / 255, 52 / 255, 52 / 255, 1]
+        self.text_color = user_settings.get('text_color') if len(
+            user_settings.get('text_color')) == 4 else [1, 1, 1, 1]
+        self.title_text_color = user_settings.get('title_text_color') if len(
+            user_settings.get('title_text_color')) == 4 else [1, 1, 1, 1]
+        self.accent_color = user_settings.get('accent_color') if len(
+            user_settings.get('accent_color')) == 4 else [0.5, 0.7, 0.5, 1]
 
 
 if __name__ == '__main__':

@@ -30,15 +30,15 @@ class HoverIconButton(MDIconButton):
     def close_tooltip(self, *args):
         try:
             self.schedule.cancel()
-        except:
+        except BaseException:
             pass
         try:
             Window.remove_widget(self.tooltip)
-        except:
+        except BaseException:
             pass
 
     def display_tooltip(self, *args):
-        self.tooltip.text=self.tooltip_text
+        self.tooltip.text = self.tooltip_text
         Window.add_widget(self.tooltip)
 
     def on_release(self):
