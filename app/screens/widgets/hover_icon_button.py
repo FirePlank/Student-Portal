@@ -62,6 +62,13 @@ kv = """
         Rectangle:
             size: self.size
             pos: self.pos
+    canvas.after:
+        Color:
+            id: line_color
+            rgba: app.text_color
+        Line:
+            width: 1
+            rectangle: self.x-dp((Window.height/720)*1), self.y-dp((Window.height/720)*1), self.width+dp((Window.height/720)*2), self.height+dp((Window.height/720)*2)
 
 
 <HoverIconButton>:
