@@ -27,6 +27,7 @@
                         app.switch_screen('mainmenu', 'down')
                         self.canvas_opacity = 0
                         scroller.scroll_y: 1
+                        Window.remove_widget(self.tooltip)
 
             MDLabel:
                 text: 'About'
