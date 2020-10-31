@@ -163,6 +163,7 @@
                                     size_hint_x: 0.4
                                     on_release:
                                         history_box.current = history_box.previous()
+                                        scroller.scroll_y = 1
 
                             AnchorLayout:
                                 HoverFlatButton:
@@ -171,6 +172,7 @@
                                     size_hint_x: 0.4
                                     on_release:
                                         history_box.current = history_box.next()
+                                        scroller.scroll_y = 1
 
                         ScreenManager:
                             id: history_box
@@ -380,6 +382,7 @@
                 text: 'Clear history'
                 size_hint_x: 0.6
                 on_release:
+                    print('press')
                     root.parent.parent.parent.parent.parent.parent.parent.parent.delete_history(root.history_component)
                     
     TextInput:

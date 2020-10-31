@@ -121,14 +121,13 @@ class Settings(MDScreen):
                 None, None), auto_dismiss=False)
         self.popup.open()
 
-    def on_enter(self):
+    def display_settings(self):
         self.ids.wikipedia_history.history = self.backend.show_history(
             'wikipedia_history')
         self.ids.youtube_history.history = self.backend.show_history(
             'youtube_history')
         self.ids.books_history.history = self.backend.show_history(
             'books_history')
-
         def change(self):
             self.ids.history_box.current = self.ids.history_box.next()
         Clock.schedule_once(lambda dt: change(self), 0.1)
@@ -142,7 +141,7 @@ class Settings(MDScreen):
 
     def delete_history(self, table):
         self.backend.delete_history(f'{table.lower()}_history')
-        self.on_enter()
+        self.display_settings()
 
     def history_status(self, component):
         setting = f'{component.history_component.lower()}_history'
