@@ -57,27 +57,27 @@ Here is a simple gif on how to install it if you are still confused.
 ### Wikipedia
 Search for anything in the search bar, and depending on the existence of the page in Wikipedia, you will get a quick summary on that topic.
 
-![How to Wikipedia](place holder)
+![How to Wikipedia](http://res.cloudinary.com/muhimen/image/upload/v1604124914/sp_how_to_wiki.gif)
 
 ### To-do
 Keep track of what you have to do and what you have done so far with this simple to do list. Not the best out in the market, but it can surely get the work done.
 
-![How to to do](place holder)
+![How to to do](http://res.cloudinary.com/muhimen/image/upload/v1604124914/sp_how_to_todo.gif)
 
 ### Notebook
 Keeping note of important stuffs can be really crucial. And a good habit to. In order to help you grow a good habit, we added a simple note keeping module.
 
-![how to notebook](place holder)
+![how to notebook](http://res.cloudinary.com/muhimen/image/upload/v1604124914/sp_how_to_notebook.gif)
 
 ### Translation
 As straight forward as it sounds. A student might often face some foreign or new words the s/he have never met before. A simple translation app will come in handy in this situation.
 
-![how to translation](place holder)
+![how to translation](http://res.cloudinary.com/muhimen/image/upload/v1604124914/sp_how_to_translate.gif)
 
 ### Books
 Books are the best friends of a student. But finding a good app can often be a challenging stuff. So, with the help of google books API, we implemented a E-book search feature to find the best book available in the market!
 
-![how to ebook](place holder)
+![how to ebook](http://res.cloudinary.com/muhimen/image/upload/v1604124914/sp_how_to_books.gif)
 
 ### YouTube
 YouTube's homepage recommendations can often be a bit distracting when you are trying search for some study lectures. To not get distracted with the recommendations, search for some videos in the YouTube module and then open that on the browser. 
@@ -87,4 +87,4 @@ YouTube's homepage recommendations can often be a bit distracting when you are t
 ### Settings
 Allows you to customize the app appearance. Also, view the search history for `Wikipedia`, `YouTube` and `Books` module.
 
-![how to settings](place holder)
+![how to settings](http://res.cloudinary.com/muhimen/image/upload/v1604124914/sp_how_to_settings.gif)

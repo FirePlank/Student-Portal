@@ -107,8 +107,10 @@ class BooksBackend():
 
     def scrape_all(self, text):
         try:
+            # page = requests.get(
+            #     f"https://www.googleapis.com/books/v1/volumes?q={text}&filter=ebooks").json()
             page = requests.get(
-                f"https://www.googleapis.com/books/v1/volumes?q={text}&filter=ebooks").json()
+                f"https://www.googleapis.com/books/v1/volumes?q={text}").json()
             if page["totalItems"] == 0:
                 show_toast("No results found.", duration=1)
                 return False
