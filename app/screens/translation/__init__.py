@@ -10,15 +10,24 @@ from kivy.clock import Clock, mainthread
 from kivymd.toast import toast
 from functools import partial
 import os
+import sys
 from kivy.lang import Builder
 import threading
 from ..modules import show_toast
 import json
 
 
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(os.path.dirname(sys.argv[0]))
+
+    return os.path.join(base_path, relative_path)
+
 
 class Translation(MDScreen):
-    with open(os.path.join('screens', 'translation', 'langs.json')) as lang_json:
+    with open(resource_path(os.path.join('screens', 'translation', 'langs.json'))) as lang_json:
         langs = json.load(lang_json)
     translator = Translator()
 
