@@ -29,6 +29,7 @@
                         app.switch_screen('mainmenu', 'right')
                         self.canvas_opacity = 0
                         scroller.scroll_y = 1
+                        Window.remove_widget(self.tooltip)
 
             MDLabel:
                 text: 'Settings'
@@ -158,18 +159,23 @@
                             spacing: dp((Window.height/720)*20)
 
                             AnchorLayout:
-                                HoverFlatButton:
-                                    text: '◄'
-                                    size_hint_x: 0.4
+                                HoverIconButton:
+                                    icon: 'arrow-left-circle-outline'
+                                    tooltip_text: 'Switch left'
+                                    theme_text_color: 'Custom'
+                                    text_color: app.title_text_color
+                                    user_font_size: str((Window.height/720)*40) + 'sp'
                                     on_release:
                                         history_box.current = history_box.previous()
                                         scroller.scroll_y = 1
 
                             AnchorLayout:
-                                HoverFlatButton:
-                                    id: next_button
-                                    text: '►'
-                                    size_hint_x: 0.4
+                                HoverIconButton:
+                                    icon: 'arrow-right-circle-outline'
+                                    tooltip_text: 'Switch right'
+                                    theme_text_color: 'Custom'
+                                    text_color: app.title_text_color
+                                    user_font_size: str((Window.height/720)*40) + 'sp'
                                     on_release:
                                         history_box.current = history_box.next()
                                         scroller.scroll_y = 1

@@ -26,6 +26,7 @@
                     on_release:
                         app.switch_screen('mainmenu', 'left')
                         self.canvas_opacity = 0
+                        Window.remove_widget(self.tooltip)
 
             MDLabel:
                 text: 'Wikipedia'
