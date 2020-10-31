@@ -84,6 +84,8 @@ YouTube's homepage recommendations can often be a bit distracting when you are t
 
 ![meme](https://en.meming.world/images/en/thumb/4/4a/Modern_Problems_Require_Modern_Solutions.jpg/300px-Modern_Problems_Require_Modern_Solutions.jpg)
 
+![youtube](http://res.cloudinary.com/muhimen/image/upload/v1604124914/sp_how_to_youtube.gif)
+
 ### Settings
 Allows you to customize the app appearance. Also, view the search history for `Wikipedia`, `YouTube` and `Books` module.
 
