@@ -1,12 +1,3 @@
-from kivy.config import Config
-from kivy.core.window import Window
-from kivy.clock import Clock
-from kivy import utils
-from kivy.animation import Animation
-from kivy.properties import ListProperty, StringProperty, NumericProperty
-from kivy.resources import resource_add_path
-from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, NoTransition, CardTransition
-from kivymd.app import MDApp
 import sys
 import os
 os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
@@ -22,11 +13,23 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
+from kivy.config import Config
+
 Config.set('graphics', 'window_state', 'hidden')
 Config.set('graphics', 'width', 1280)
 Config.set('graphics', 'height', 720)
 Config.set('input', 'mouse', 'mouse, multitouch_on_demand')
 Config.set('kivy', 'window_icon', resource_path('icon.ico'))
+Config.set('kivy', 'exit_on_escape', '0')
+
+from kivy.core.window import Window
+from kivy.clock import Clock
+from kivy import utils
+from kivy.animation import Animation
+from kivy.properties import ListProperty, StringProperty, NumericProperty
+from kivy.resources import resource_add_path
+from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, NoTransition, CardTransition
+from kivymd.app import MDApp
 
 Window.minimum_width, Window.minimum_height = (720, 480)
 
