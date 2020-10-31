@@ -153,7 +153,7 @@ class BooksBackend():
         except Exception as e:
             print(e)
             show_toast(
-                'An Error occured.\nEither you have exhausted daily book searches, or you are not connected to the internet.',
+                'An Error occurred.\nEither you have exhausted daily book searches, or you are not connected to the internet.',
                 duration=3)
             return None
 

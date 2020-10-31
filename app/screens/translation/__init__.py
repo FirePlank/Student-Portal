@@ -13,119 +13,13 @@ import os
 from kivy.lang import Builder
 import threading
 from ..modules import show_toast
+import json
+
 
 
 class Translation(MDScreen):
-    langs = {
-        'detect language': '',
-        'afrikaans': '',
-        'albanian': '',
-        'amharic': '',
-        'arabic': '',
-        'armenian': '',
-        'azerbaijani': '',
-        'basque': '',
-        'belarusian': '',
-        'bengali': '',
-        'bosnian': '',
-        'bulgarian': '',
-        'catalan': '',
-        'cebuano': '',
-        'chichewa': '',
-        'chinese (simplified)': '',
-        'chinese (traditional)': '',
-        'corsican': '',
-        'croatian': '',
-        'czech': '',
-        'danish': '',
-        'dutch': '',
-        'english': '',
-        'esperanto': '',
-        'estonian': '',
-        'filipino': '',
-        'finnish': '',
-        'french': '',
-        'frisian': '',
-        'galician': '',
-        'georgian': '',
-        'german': '',
-        'greek': '',
-        'gujarati': '',
-        'haitian creole': '',
-        'hausa': '',
-        'hawaiian': '',
-        'hebrew': '',
-        'hebrew': '',
-        'hindi': '',
-        'hmong': '',
-        'hungarian': '',
-        'icelandic': '',
-        'igbo': '',
-        'indonesian': '',
-        'irish': '',
-        'italian': '',
-        'japanese': '',
-        'javanese': '',
-        'kannada': '',
-        'kazakh': '',
-        'khmer': '',
-        'korean': '',
-        'kurdish (kurmanji)': '',
-        'kyrgyz': '',
-        'lao': '',
-        'latin': '',
-        'latvian': '',
-        'lithuanian': '',
-        'luxembourgish': '',
-        'macedonian': '',
-        'malagasy': '',
-        'malay': '',
-        'malayalam': '',
-        'maltese': '',
-        'maori': '',
-        'marathi': '',
-        'mongolian': '',
-        'myanmar (burmese)': '',
-        'nepali': '',
-        'norwegian': '',
-        'odia': '',
-        'pashto': '',
-        'persian': '',
-        'polish': '',
-        'portuguese': '',
-        'punjabi': '',
-        'romanian': '',
-        'russian': '',
-        'samoan': '',
-        'scots gaelic': '',
-        'serbian': '',
-        'sesotho': '',
-        'shona': '',
-        'sindhi': '',
-        'sinhala': '',
-        'slovak': '',
-        'slovenian': '',
-        'somali': '',
-        'spanish': '',
-        'sundanese': '',
-        'swahili': '',
-        'swedish': '',
-        'tajik': '',
-        'tamil': '',
-        'telugu': '',
-        'thai': '',
-        'turkish': '',
-        'ukrainian': '',
-        'urdu': '',
-        'uyghur': '',
-        'uzbek': '',
-        'vietnamese': '',
-        'welsh': '',
-        'xhosa': '',
-        'yiddish': '',
-        'yoruba': '',
-        'zulu': '',
-    }
+    with open(os.path.join('screens', 'translation', 'langs.json')) as lang_json:
+        langs = json.load(lang_json)
     translator = Translator()
 
     def __init__(self, **kwargs):
@@ -207,7 +101,7 @@ class Translation(MDScreen):
                     self.update_output_box()
                 except Exception as e:
                     show_toast(
-                        'An Error occured. Check your internet connection.',
+                        'An Error occurred. Check your internet connection.',
                         duration=1)
             else:
                 try:
@@ -217,7 +111,7 @@ class Translation(MDScreen):
                     self.update_output_box()
                 except Exception as e:
                     show_toast(
-                        'An Error occured. Check your internet connection.',
+                        'An Error occurred. Check your internet connection.',
                         duration=1)
         else:
             self.ids.output_box.text = ""

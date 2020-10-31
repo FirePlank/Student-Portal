@@ -19,7 +19,7 @@ Config.set('graphics', 'window_state', 'hidden')
 Config.set('graphics', 'width', 1280)
 Config.set('graphics', 'height', 720)
 Config.set('input', 'mouse', 'mouse, multitouch_on_demand')
-Config.set('kivy', 'window_icon', resource_path('icon.ico'))
+Config.set('kivy', 'window_icon', os.path.abspath(resource_path('icon.ico')))
 Config.set('kivy', 'exit_on_escape', '0')
 
 from kivy.core.window import Window
