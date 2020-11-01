@@ -1,6 +1,7 @@
 #:import Window kivy.core.window.Window
 #:import Clipboard kivy.core.clipboard.Clipboard
 #:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import toast kivymd.toast.toast
 
 
 <Settings>:
@@ -167,7 +168,6 @@
                                     user_font_size: str((Window.height/720)*40) + 'sp'
                                     on_release:
                                         history_box.current = history_box.previous()
-                                        scroller.scroll_y = 1
 
                             AnchorLayout:
                                 HoverIconButton:
@@ -178,7 +178,6 @@
                                     user_font_size: str((Window.height/720)*40) + 'sp'
                                     on_release:
                                         history_box.current = history_box.next()
-                                        scroller.scroll_y = 1
 
                         ScreenManager:
                             id: history_box
@@ -300,6 +299,7 @@
             size_hint_x: 0.6
             on_release:
                 Clipboard.copy(str([float(str(i)[:5]) for i in root.display_color]))
+                toast('Color copied to clipboard', 0.4)
 
     AnchorLayout:
         HoverFlatButton:
