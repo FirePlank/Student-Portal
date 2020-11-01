@@ -13,6 +13,8 @@ from kivy.lang import Builder
 from kivymd.uix.gridlayout import MDGridLayout
 import threading
 from kivy.clock import mainthread
+from kivy.core.window import Window
+
 
 create_table_query = """
     CREATE TABLE IF NOT EXISTS youtube_history(
@@ -31,6 +33,7 @@ class Youtube(MDScreen):
         self.OPERATOR.execute_query(create_table_query)
 
     def search(self, query):
+        self.query = query.lower()
         if query != '':
             self.ids.scroll_box.clear_widgets()
             self.searching_text = SearchingText()
@@ -58,6 +61,10 @@ class Youtube(MDScreen):
                     result.get('views')) + ' views'
                 result_widget.link = str(result.get('link'))
                 self.ids.scroll_box.add_widget(result_widget)
+            if self.query == 'tech with tim':
+                self.secret_button = HoverFlatButton(text='Secret Button DO NOT CLICK', size_hint_y=None, height=Window.height/2)
+                self.secret_button.bind(on_release=lambda instance: webbrowser.open('https://bit.ly/2EqoBMo'))
+                self.ids.scroll_box.add_widget(self.secret_button)
         else:
             self.searching_text.text = "No results"
         self.ids.scroller.scroll_y = 1
