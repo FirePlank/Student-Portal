@@ -15,6 +15,7 @@ from kivy.uix.popup import Popup
 from kivy.core.window import Window
 from kivy.clock import Clock
 import json
+from kivymd.toast import toast
 
 
 class Settings(MDScreen):
@@ -107,8 +108,8 @@ class Settings(MDScreen):
     def transition_changed(self, transition):
         setattr(self.mainbutton_transition, 'text', transition.title() + ' ↓')
         self.backend.edit_settings('page_transition', transition.lower())
-        MDApp.get_running_app().root.transition = MDApp.get_running_app(
-        ).transitions.get(transition.lower())()
+        user_settings = self.backend.show_settings()
+        MDApp.get_running_app().transition_changed(user_settings)
 
     def color_theme_custom(self):
         self.ids.appearance_settings.add_widget(self.choose_color, index=1)
@@ -179,8 +180,11 @@ class PopupColorPicker(Popup):
         self.ids.picker.color = (1, 1, 1, 1)
 
     def save_color(self):
-        self.backend.edit_settings(self.color_editing, self.ids.picker.color)
-        MDApp.get_running_app().settings.theme_changed('custom')
+        if self.color_editing == 'bg_color' and self.ids.picker.color[3] < 1:
+            toast('Bg color opacity cannot be less than 1', duration=1)
+        else:
+            self.backend.edit_settings(self.color_editing, self.ids.picker.color)
+            MDApp.get_running_app().settings.theme_changed('custom')
 
 
 class HistoryView(GridLayout):

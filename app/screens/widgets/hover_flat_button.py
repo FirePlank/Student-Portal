@@ -17,9 +17,6 @@ class HoverFlatButton(Button, ThemableBehavior, HoverBehavior):
 
 
 kv = """
-#:import Window kivy.core.window.Window
-
-
 <HoverFlatButton>:
     ripple_scale: 0
     canvas.after:
