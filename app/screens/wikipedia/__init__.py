@@ -58,7 +58,8 @@ class WikipediaBackend():
 \nYou should totally check out
 His twitter: https://twitter.com/FirePlank
 His github: https://github.com/FirePlank
-and His discord server: https://discord.gg/K2Cf6ma"""}
+His discord server: https://discord.gg/K2Cf6ma
+and his fiverr: https://www.fiverr.com/fireplank"""}
         elif self.keyword.lower() == "saykat":
             title = "Saykat"
             self.DATA = {
