@@ -17,6 +17,7 @@ class HoverIconButton(MDIconButton):
         self.tooltip = ToolTip(text=self.tooltip_text)
 
     def on_mouse_pos(self, *args):
+        self.close_tooltip()
         if not self.get_root_window():
             return
         pos = args[1]
@@ -40,6 +41,9 @@ class HoverIconButton(MDIconButton):
     def display_tooltip(self, *args):
         self.tooltip.text = self.tooltip_text
         Window.add_widget(self.tooltip)
+
+    def on_press(self):
+        self.close_tooltip()
 
     def on_release(self):
         self.close_tooltip()

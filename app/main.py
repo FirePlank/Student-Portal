@@ -1,7 +1,7 @@
 import sys
 import os
 os.environ['KIVY_GL_BACKEND'] = 'sdl2'
-# os.environ["KIVY_NO_CONSOLELOG"] = "1"
+os.environ["KIVY_NO_CONSOLELOG"] = '1'
 
 
 def resource_path(relative_path):
@@ -28,7 +28,7 @@ from kivy import utils
 from kivy.animation import Animation
 from kivy.properties import ListProperty, StringProperty, NumericProperty
 from kivy.resources import resource_add_path
-from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, NoTransition, CardTransition
+from kivy.uix.screenmanager import ScreenManager, SlideTransition, WipeTransition, FadeTransition, FallOutTransition, NoTransition
 from kivymd.app import MDApp
 
 Window.minimum_width, Window.minimum_height = (720, 480)
@@ -86,7 +86,6 @@ class StudentPortal(MDApp):
             'wipe': WipeTransition,
             'fade': FadeTransition,
             'fall out': FallOutTransition,
-            'card': CardTransition,
             'none': NoTransition
         }
 
@@ -234,6 +233,13 @@ class StudentPortal(MDApp):
             user_settings.get('title_text_color')) == 4 else [1, 1, 1, 1]
         self.accent_color = user_settings.get('accent_color') if len(
             user_settings.get('accent_color')) == 4 else [0.5, 0.7, 0.5, 1]
+
+    def transition_changed(self, user_settings):
+        try:
+            self.root.transition = self.transitions.get(
+                user_settings.get('page_transition'))()
+        except BaseException:
+            self.root.transition = SlideTransition()
 
 
 if __name__ == '__main__':
