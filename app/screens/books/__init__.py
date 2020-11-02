@@ -57,6 +57,7 @@ class Books(MDScreen):
             self.ids.scroll_box.add_widget(self.searching_text)
             self.thread = threading.Thread(
                 target=self.search_thread, args=(query,))
+            self.thread.daemon = True
             self.thread.start()
         else:
             show_toast("There's nothing to search...", duration=1)
@@ -151,7 +152,6 @@ class BooksBackend():
             return [[titles[i], authors[i], book_covers[i], links[i],
                      descriptions[i], prices[i]] for i in range(0, len(items))]
         except Exception as e:
-            print(e)
             show_toast(
                 'An Error occurred.\nEither you have exhausted daily book searches, or you are not connected to the internet.',
                 duration=3)
