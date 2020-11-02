@@ -1,6 +1,6 @@
 <div align="center"> <img src="http://res.cloudinary.com/muhimen/image/upload/v1604122377/student_portal_logo.png" alt="logo"> 
   
-![Generic badge](https://img.shields.io/badge/CodeJam-Timathon-orange.svg)  ![exec](https://img.shields.io/badge/Executable-Windows%20%7C%20Linux-green.png)  ![Platforms](https://img.shields.io/badge/Platforms-Windows%20%7C%20Mac%20%7C%20Linux-blue.png)  ![version](https://img.shields.io/badge/Python%20Version-Python%203-blue.png)  ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/fireplank/Student-Portal)  [![Discord](https://img.shields.io/discord/713785142597910549?label=Discord)](discord.gg/K2Cf6ma)
+![Generic badge](https://img.shields.io/badge/CodeJam-Timathon-orange.svg)  ![exec](https://img.shields.io/badge/Executable-Windows%20%7C%20Linux-green.png)  ![Platforms](https://img.shields.io/badge/Platforms-Windows%20%7C%20Mac%20%7C%20Linux-blue.png)  ![version](https://img.shields.io/badge/Python%20Version-Python%203-blue.png)  ![GitHub repo size](https://img.shields.io/github/repo-size/fireplank/student-portal)  [![Discord](https://img.shields.io/discord/713785142597910549?label=Discord)](discord.gg/K2Cf6ma)
 
 </div>
 
@@ -16,10 +16,10 @@ This app is bundled with 8 different modules with their own use cases starting f
 
 We provided with 2 ways to install the app. 
 
-- Install the executable from the releases
-- Run the script
+- By installing the installer from the releases
+- By running the script
 
-We recommend using the executable file if you don't have python properly installed in your machine.
+We recommend using the installer if you don't have python properly installed in your machine.
 
 However, if you want to run the scripts, then you must have [python](https://www.python.org/downloads/) and [git](https://git-scm.com/downloads) properly installed in your machine. Then use these 5 simple commands to run the app.
 
@@ -99,7 +99,7 @@ However, once the judgement phase finishes, we will make this app open source ag
 ***
 
 ## Easter Eggs! 🥚🥚
-Oh, yeah! Forgot to mention, our app is full of easter eggs. Try finding you some. Here is a quick one, search `fireplank` in `wikipedia` module. 
+Oh, yeah! Forgot to mention, our app is full of easter eggs. Try finding some. Here is a quick one, search `fireplank` in `wikipedia` module. 
 
 I am pretty sure that's not what you expected. 😆
 
