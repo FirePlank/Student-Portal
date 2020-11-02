@@ -1,5 +1,4 @@
 import sqlite3
-from sqlite3 import Error
 import os
 from kivymd.app import MDApp
 from kivymd.toast import toast
@@ -18,8 +17,8 @@ def string_to_list(data_in):
             try:
                 num, denom = i.split('/')
                 parsed.append(float(num)/float(denom))
-            except Exception as e:
-                print(e)
+            except BaseException:
+                pass
     return parsed
 
 @mainthread
@@ -38,9 +37,8 @@ class sql_operator:
         connection = None
         try:
             connection = sqlite3.connect(self.PATH, timeout=10)
-        except Error as e:
-            print(e)
-            print(self.PATH)
+        except BaseException:
+            pass
         return connection
 
     def execute_query(self, query):
@@ -49,8 +47,8 @@ class sql_operator:
         try:
             cursor.execute(query)
             connection.commit()
-        except Error as e:
-            print(e)
+        except BaseException:
+            pass
 
     def execute_read_query(self, query):
         connection = self.create_connection()
@@ -63,5 +61,5 @@ class sql_operator:
             result = cursor.fetchall()
             connection.commit()
             return result
-        except Error as e:
-            print(e)
+        except BaseException:
+            pass

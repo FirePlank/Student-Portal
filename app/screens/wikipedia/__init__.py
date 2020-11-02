@@ -26,13 +26,14 @@ class Wikipedia(MDScreen):
         OPERATOR.execute_query(create_table_query)
 
     def search(self, query):
-        if query.strip() == "":
-            toast('Please input a search query.', duration=1)
-        else:
+        if query.strip() != '':
             self.ids.results.text = 'Searching...'
             self.thread = threading.Thread(
                 target=self.search_thread, args=(query,))
+            self.thread.daemon = True
             self.thread.start()
+        else:
+            show_toast("There's nothing to search...", duration=1)
 
     def search_thread(self, query):
         wikipedia = WikipediaBackend(query)
@@ -49,7 +50,7 @@ class Wikipedia(MDScreen):
 
 class WikipediaBackend():
     def __init__(self, keyword):
-        self.keyword = keyword.lower()
+        self.keyword = keyword
         if self.keyword.lower() == "fireplank":
             title = "FirePlank (AKA The Best Programmer)"
             self.DATA = {
@@ -99,7 +100,7 @@ and his fiverr: https://www.fiverr.com/fireplank"""}
                 INSERT INTO
                     wikipedia_history(search_word, search_date)
                 VALUES
-                    ('{self.keyword}', '{self.DATE}')
+                    ("{self.keyword.replace('"', "'")}", '{self.DATE}')
                 """
 
                 check_status = "SELECT wikipedia_history from settings_data"
@@ -108,7 +109,6 @@ and his fiverr: https://www.fiverr.com/fireplank"""}
                     OPERATOR.execute_query(add_keyword_query)
 
             except Exception as e:
-                print(e)
                 self.DATA = None
 
     def summary(self):

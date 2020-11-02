@@ -95,6 +95,7 @@ class Translation(MDScreen):
             self.thread = threading.Thread(
                 target=self.translate, args=(
                     text, from_lang, to_lang))
+            self.thread.daemon = True
             self.translated_text = None
             self.thread.start()
         self.realtime_translator = Clock.schedule_once(lambda dt: define_thread(self, self.ids.input_box.text.strip(
@@ -123,7 +124,7 @@ class Translation(MDScreen):
                         'An Error occurred. Check your internet connection.',
                         duration=1)
         else:
-            self.ids.output_box.text = ""
+            pass
 
     @mainthread
     def update_output_box(self):

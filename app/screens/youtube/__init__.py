@@ -33,13 +33,14 @@ class Youtube(MDScreen):
         self.OPERATOR.execute_query(create_table_query)
 
     def search(self, query):
-        self.query = query.lower()
-        if query != '':
+        self.query = query.strip().lower()
+        if query.strip() != '':
             self.ids.scroll_box.clear_widgets()
             self.searching_text = SearchingText()
             self.ids.scroll_box.add_widget(self.searching_text)
             self.thread = threading.Thread(
                 target=self.search_thread, args=(query,))
+            self.thread.daemon = True
             self.thread.start()
         else:
             show_toast("There's nothing to search...", duration=1)
@@ -97,7 +98,7 @@ class Youtube(MDScreen):
         INSERT INTO
             youtube_history(search_word, search_date)
         VALUES
-            ('{query}', '{self.DATE}')
+            ("{query.replace('"', "'")}", '{self.DATE}')
         """
 
         check_status = "SELECT youtube_history from settings_data"

@@ -131,11 +131,17 @@ class Settings(MDScreen):
             'books_history')
         def change(self):
             self.ids.history_box.current = self.ids.history_box.next()
-        Clock.schedule_once(lambda dt: change(self), 0.1)
-        Clock.schedule_once(lambda dt: change(self), 0.2)
+        try:
+            self.switch1.cancel()
+            self.switch2.cancel()
+            self.switch3.cancel()
+        except BaseException:
+            pass
+        self.switch1 = Clock.schedule_once(lambda dt: change(self), 0.1)
+        self.switch2 = Clock.schedule_once(lambda dt: change(self), 0.2)
         # Had to do this weird hack cause the height was not being adjusted
         # properly
-        Clock.schedule_once(lambda dt: change(self), 0.2)
+        self.switch3 = Clock.schedule_once(lambda dt: change(self), 0.3)
 
     def on_leave(self):
         self.ids.history_box.current = self.ids.wikipedia_history_screen.name
