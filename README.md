@@ -99,11 +99,9 @@ However, once the judgement phase finishes, we will make this app open source ag
 ***
 
 ## Easter Eggs! 🥚🥚
-Oh, yeah! Forgot to mention, our app is full of easter eggs. Try finding some. Here is a quick one, search `fireplank` in `wikipedia` module. 
+Oh, yeah! Forgot to mention, our app also has easter eggs. Try finding some. Here is a quick one, search `fireplank` in `wikipedia` module. 
 
 I am pretty sure that's not what you expected. 😆
-
-Keep finding the easter eggs. If you are lucky, you can even find a discord nitro gift card. 😱
 
 ***
 
