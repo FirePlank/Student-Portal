@@ -11,6 +11,9 @@ from datetime import datetime
 from kivy.lang import Builder
 import threading
 from kivy.clock import mainthread
+from kivymd.toast import toast
+
+
 
 create_table_query = """
     CREATE TABLE IF NOT EXISTS books_history(
@@ -91,7 +94,10 @@ class Books(MDScreen):
         self.add_book_widgets()
 
     def open_in_browser(self, result_widget):
-        webbrowser.open(result_widget.link)
+        try:
+            webbrowser.open(result_widget.link)
+        except:
+            toast("Couldn't find any browser.", duration=1)
 
     def description(self, instance):
         if instance.ids.book_summary.text == "...":

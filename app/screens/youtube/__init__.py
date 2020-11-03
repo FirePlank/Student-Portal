@@ -14,6 +14,8 @@ from kivymd.uix.gridlayout import MDGridLayout
 import threading
 from kivy.clock import mainthread
 from kivy.core.window import Window
+from kivymd.toast import toast
+
 
 
 create_table_query = """
@@ -108,7 +110,10 @@ class Youtube(MDScreen):
         self.add_video_widgets()
 
     def open_in_browser(self, result_widget):
-        webbrowser.open(result_widget.link)
+        try:
+            webbrowser.open(result_widget.link)
+        except:
+            toast("Can't find any web browser.", duration=1)
 
 
 class ResultCard(MDGridLayout):
