@@ -17,7 +17,6 @@ from kivy.core.window import Window
 from kivymd.toast import toast
 
 
-
 create_table_query = """
     CREATE TABLE IF NOT EXISTS youtube_history(
         unique_id INTEGER PRIMARY KEY AUTOINCREMENT,

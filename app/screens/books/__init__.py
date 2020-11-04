@@ -14,7 +14,6 @@ from kivy.clock import mainthread
 from kivymd.toast import toast
 
 
-
 create_table_query = """
     CREATE TABLE IF NOT EXISTS books_history(
         unique_id INTEGER PRIMARY KEY AUTOINCREMENT,
