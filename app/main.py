@@ -51,6 +51,7 @@ class StudentPortal(MDApp):
 
     title = "Student Portal"
     icon = 'icon.ico'
+    use_kivy_settings = False
     color_theme = 'dark'
     bg_color = ListProperty([29 / 255, 29 / 255, 29 / 255, 1])
     tile_color = ListProperty([40 / 255, 40 / 255, 40 / 255, 1])
@@ -72,6 +73,9 @@ class StudentPortal(MDApp):
     add_icon_tooltip = StringProperty('Create new')
     search_icon = StringProperty('magnify')
     search_icon_tooltip = StringProperty('Search')
+
+    def open_settings(self, *largs):
+        self.mainmenu.ids.settings_button.trigger_action()
 
     def build(self):
         self.themes = {
